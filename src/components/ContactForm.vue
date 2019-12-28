@@ -11,7 +11,7 @@
                 <input type="text" name="phone" v-model="phone" placeholder="Phone - Optional">
             </div>
             <div class="field message">
-                <textarea name="message" rows="3" v-model="message" placeholder="Enter your message"></textarea>
+                <textarea name="message" rows="3" v-model="message" placeholder="Your message"></textarea>
             </div>
             <div class="field center-align">
                 <p v-if="feedback" class="feedback">{{ feedback }}</p>

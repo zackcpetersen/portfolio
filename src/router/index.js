@@ -1,14 +1,20 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import About from "../components/About";
+import About from "../views/About";
+import Contact from "../views/Contact";
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'about',
+    name: 'About',
     component: About
+  },
+  {
+    path: '/contact',
+    name: 'Contact',
+    component: Contact
   },
   // {
     // path: '/contact',

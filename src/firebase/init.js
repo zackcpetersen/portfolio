@@ -5,7 +5,7 @@ const firebaseConfig = {
     authDomain: "personal-portfolio-50d2d.firebaseapp.com",
     databaseURL: "https://personal-portfolio-50d2d.firebaseio.com",
     projectId: "personal-portfolio-50d2d",
-    storageBucket: "personal-portfolio-50d2d.appspot.com",
+    storageBucket: "gs://personal-portfolio-50d2d.appspot.com",
     messagingSenderId: "1014703258874",
     appId: "1:1014703258874:web:b80d0c0a5de6796d3f1d43",
     measurementId: "G-LXR49JJZVL"

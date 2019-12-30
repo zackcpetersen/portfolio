@@ -3,7 +3,7 @@
         <h1>Software Engineer Portfolio</h1>
         <p>{{ about.description }}</p>
 
-        <div class="tagList ">
+        <div class="tagList">
             <li v-for="(tag, index) in about.tags" :key="index" class="tags">{{ tag }}</li>
         </div>
 
@@ -30,9 +30,19 @@
                     description: null,
                     tags: []
                 },
-                projects: []
+                projects: [],
+                // tagFilter: null,
             }
         },
+        // computed: {
+        //     filterProjects() {
+        //         return this.projects.filter(project => {
+        //             project.tags.forEach(tag => {
+        //                 return tag.includes(this.tagFilter)
+        //             })
+        //         })
+        //     }
+        // },
         created() {
             db.collection('projects-overview').doc('AkkQ9ueU8NnhKRWyLH7F').get()
                 .then(doc => {

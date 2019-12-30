@@ -48,25 +48,6 @@
         data() {
             return {
                 project: null,
-                // project: {
-                //     name: 'Portfolio Website',
-                //     liveUrl: 'https://www.behance.com',
-                //     slug: 'portfolio-website',
-                //     githubUrl: 'https://github.com/zackcpetersen/portfolio',
-                //     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                //     images: [
-                //         {url: require('@/assets/friends.jpg')},
-                //         {url: require('@/assets/liqueur.jpg')},
-                //         {url: require('@/assets/logo.jpg')}
-                //     ],
-                //     technology: {
-                //         sheet: ['UX/UI Design', 'UX/UI Animations', 'UX/UI Architecture', 'Vue.js', 'Firebase', 'HTML5',
-                //             'Bootstrap', 'Material']
-                //     },
-                //     resources:
-                //         [`See this project live at <a href="https://www.behance.com">https://www.behance.com</a>`,
-                //             `See project source at <a href="https://github.com/zackcpetersen/portfolio">GITHUB</a>`]
-                // },
                 feedback: null,
             }
         },

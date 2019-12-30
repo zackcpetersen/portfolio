@@ -11,7 +11,10 @@
         <hr>
 
         <div class="card" v-for="project in projects" :key="project.id">
-            <router-link :to="{ name: 'PortfolioView', params: {project_slug: project.slug} }">
+            <router-link :to="{ name: 'PortfolioView', params: {
+                project_slug: project.slug,
+                project_id: project.id,
+                project_tags: project.tags }}"> <!--can maybe use this for filters?-->
                 <img src="@/assets/friends.jpg">
             </router-link>
         </div>
@@ -54,6 +57,7 @@
                 .then(snapshot => {
                     snapshot.forEach(doc => {
                         let project = doc.data()
+                        project.id = doc.id
                         this.projects.push(project)
                     })
                 })

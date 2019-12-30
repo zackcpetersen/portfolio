@@ -60,7 +60,6 @@
             ref.get().then(snapshot => {
                 snapshot.forEach(doc => {
                     this.project = doc.data()
-                    this.project.id = doc.id
                 })
             })
         }
@@ -82,6 +81,7 @@
         max-width: 100%;
         margin: 5px;
     }
+
     /*@media  {*/
     /*    div.resourceList {*/
     /*        padding-bottom: 5em;*/

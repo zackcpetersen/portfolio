@@ -1,36 +1,52 @@
 <template>
     <div class="portfolio-list container">
         <h1>Software Engineer Portfolio</h1>
-        <p>{{ list.description }}</p>
+        <p>{{ about.description }}</p>
 
         <div class="tagList ">
-                <li v-for="(tag, index) in list.tags" :key="index" class="tags">{{ tag }}</li>
+            <li v-for="(tag, index) in about.tags" :key="index" class="tags">{{ tag }}</li>
         </div>
 
         <p class="my-4">Use tags to filter by project type or technology</p>
         <hr>
 
-        <PortfolioView />
+        <div class="card" v-for="project in projects" :key="project.id">
+            <router-link :to="{ name: 'PortfolioView', params: {project_slug: project.slug} }">
+                <img src="@/assets/friends.jpg">
+            </router-link>
+        </div>
     </div>
 </template>
 
 <script>
-    import PortfolioView from "./PortfolioView";
+    import db from '@/firebase/init'
 
     export default {
         name: "PortfolioList",
-        components: {
-            PortfolioView
-        },
+        components: {},
         data() {
             return {
-                list: {
-                    description: 'From Web Components and UI/UX animations to React.JS, Redux, Vue.JS, and Node.JS. ' +
-                        'Check out my latest web software development portfolio projects.',
-                    tags: ['VUEJS', 'FIREBASE', 'FRONT-END', 'BACKEND', 'PYTHON', 'DJANGO', 'MARKETING',
-                        'POSTGRESQL', 'UX/UI DESIGN', 'JAVASCRIPT', 'GOOGLE SCRIPTS']
-                }
+                about: {
+                    description: null,
+                    tags: []
+                },
+                projects: []
             }
+        },
+        created() {
+            db.collection('projects-overview').doc('AkkQ9ueU8NnhKRWyLH7F').get()
+                .then(doc => {
+                    let overview = doc.data()
+                    this.about.description = overview.description
+                    this.about.tags = overview.tags
+                })
+            db.collection('projects').get()
+                .then(snapshot => {
+                    snapshot.forEach(doc => {
+                        let project = doc.data()
+                        this.projects.push(project)
+                    })
+                })
         }
     }
 </script>

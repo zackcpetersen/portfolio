@@ -15,7 +15,7 @@
                 project_slug: project.slug,
                 project_id: project.id,
                 project_tags: project.tags }}"> <!--can maybe use this for filters?-->
-                <img src="@/assets/friends.jpg">
+                <img :src="project.images[0]">
             </router-link>
         </div>
     </div>

@@ -1,5 +1,5 @@
 <template>
-    <div class="portfolio-view container">
+    <div v-if="project" class="portfolio-view container">
         <div class="title">
             <h1>{{ project.name }}</h1>
             <a v-if="project.liveUrl" :href="project.liveUrl">Visit Website</a>
@@ -7,7 +7,7 @@
 
         <div class="slider">
             <div v-for="(image, index) in project.images" :key="index">
-                <img :src="image.url" alt=""/>
+                <img :src="image" alt=""/>
             </div>
             <hr>
         </div>

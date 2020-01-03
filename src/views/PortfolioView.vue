@@ -5,14 +5,15 @@
             <a v-if="project.liveUrl" :href="project.liveUrl">Visit Website</a>
         </div>
 
-        <div class="slider">
-            <div v-for="(image, index) in project.images" :key="index">
-                <img :src="image" alt=""/>
+        <transition-group name="fade" tag="div">
+            <div v-for="img in [imageIndex]" :key="img">
+                <img :src="currentImg" alt="" />
             </div>
-            <hr>
-        </div>
+        </transition-group>
+        <a class="prev" @click="prevImage" href="#">&#10094; Previous</a>
+        <a class="next" @click="nextImage" href="#">&#10095; Next</a>
 
-        <div class="about">
+        <div class="about mt-4">
             <h2>About This Project</h2>
             <p>{{ project.description }}</p>
             <hr>
@@ -49,9 +50,22 @@
             return {
                 project: null,
                 feedback: null,
+                imageIndex: 0,
             }
         },
-        methods: {},
+        methods: {
+            nextImage() {
+                this.imageIndex += 1
+            },
+            prevImage() {
+                this.imageIndex -= 1
+            }
+        },
+        computed: {
+            currentImg() {
+                return this.project.images[Math.abs(this.imageIndex) % this.project.images.length]
+            }
+        },
         created() {
             let ref = db.collection('projects').where(
                 'slug',
@@ -78,8 +92,35 @@
     }
 
     img {
-        max-width: 100%;
+        max-height: 500px;
         margin: 5px;
+    }
+
+    .prev, .next {
+        cursor: pointer;
+        position: absolute;
+        top: 40%;
+        width: auto;
+        padding: 16px;
+        color: black;
+        font-weight: bold;
+        font-size: 18px;
+        transition: 0.7s ease;
+        border-radius: 0 4px 4px 0;
+        text-decoration: none;
+        user-select: none;
+    }
+
+    .next {
+        right: 0;
+    }
+
+    .prev {
+        left: 0;
+    }
+
+    .prev:hover, .next:hover {
+        background-color: rgba(0,0,0,0.9);
     }
 
     /*@media  {*/

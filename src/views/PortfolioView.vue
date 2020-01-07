@@ -129,10 +129,4 @@
         border: 3px solid black;
         margin-top: 10px;
     }
-
-    /*@media  {*/
-    /*    div.resourceList {*/
-    /*        padding-bottom: 5em;*/
-    /*    }*/
-    /*}*/
 </style>

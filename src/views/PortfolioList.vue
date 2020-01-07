@@ -10,13 +10,19 @@
         <p class="my-4">Use tags to filter by project type or technology</p>
         <hr>
 
-        <div class="card" v-for="project in projects" :key="project.id">
-            <router-link :to="{ name: 'PortfolioView', params: {
-                project_slug: project.slug,
-                project_id: project.id,
-                project_tags: project.tags }}"> <!--can maybe use this for filters?-->
-                <img :src="project.images[0]">
-            </router-link>
+        <div class="row">
+            <div class="projects" v-for="project in projects" :key="project.id">
+                <div class="col">
+                    <div class="card p-1 my-2">
+                        <router-link :to="{ name: 'PortfolioView', params: {
+                            project_slug: project.slug,
+                            project_id: project.id,
+                            project_tags: project.tags }}"> <!--can maybe use this for filters?-->
+                            <img :src="project.images[0]">
+                        </router-link>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -72,5 +78,23 @@
         border: solid black 1px;
         margin: 4px;
         padding: 4px;
+    }
+    .projects img {
+        max-width: 95%;
+        position: relative;
+    }
+    .projects .card {
+        border-width: 2px;
+    }
+    .row {
+        margin-bottom: 100px;
+    }
+    @media only screen and (min-width: 768px) {
+        .projects img {
+            max-width: 100%;
+        }
+        .row {
+            margin-bottom: 0px;
+        }
     }
 </style>

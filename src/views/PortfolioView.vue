@@ -6,7 +6,7 @@
         </div>
 
         <transition-group name="fade" tag="div">
-            <div v-for="img in [imageIndex]" :key="img">
+            <div v-for="img in [imageIndex]" :key="img" class="slider">
                 <img :src="currentImg" alt="" />
             </div>
         </transition-group>
@@ -31,10 +31,10 @@
             <h2>Resources</h2>
             <div class="resourceList">
                 <p v-if="project.liveUrl" class="my-1">
-                    See this project live at <a :href="project.liveUrl">{{ project.liveUrl }}</a>
+                    See this project live at <a :href="project.liveUrl">{{ project.liveUrl.split("www.")[1] }}</a>
                 </p>
                 <p v-if="project.githubUrl">
-                    See project source at <a :href="project.githubUrl">GITHUB</a>
+                    See project source at <a :href="project.githubUrl">Github</a>
                 </p>
             </div>
         </div>
@@ -99,14 +99,15 @@
     .prev, .next {
         cursor: pointer;
         position: absolute;
-        top: 40%;
         width: auto;
+        top: 63%;
         padding: 16px;
-        color: black;
+        color: white;
+        background: rgb(0, 0, 0, 0.4);
         font-weight: bold;
         font-size: 18px;
         transition: 0.7s ease;
-        border-radius: 0 4px 4px 0;
+        border-radius: 4px 4px 4px 4px;
         text-decoration: none;
         user-select: none;
     }
@@ -120,7 +121,13 @@
     }
 
     .prev:hover, .next:hover {
-        background-color: rgba(0,0,0,0.9);
+        background-color: rgba(0,0,0,0.7);
+        color: white;
+    }
+    .slider img {
+        max-width: 100%;
+        border: 3px solid black;
+        margin-top: 10px;
     }
 
     /*@media  {*/

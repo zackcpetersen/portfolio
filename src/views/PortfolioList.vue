@@ -16,13 +16,14 @@
             />
         </div>
 
-        <p class="my-4">Use tags to filter by project type or technology</p>
+        <p class="mt-4">Use tags to filter by project type or technology</p>
+        <p>Currently sorting by {{ tagFilter }}</p>
         <hr>
 
         <div class="row">
             <div class="projects" v-for="project in filterProjects" :key="project.id">
                 <div class="col">
-                    <div class="card p-1 my-2">
+                    <div class="card my-2">
                         <router-link :to="{ name: 'PortfolioView', params: {
                             project_slug: project.slug,
                             project_id: project.id }}">
@@ -88,31 +89,30 @@
 </script>
 
 <style>
-    .tags {
-        display: inline-block;
-        white-space: pre-wrap;
-        border: solid black 1px;
-        margin: 4px;
-        padding: 4px;
-    }
-    .projects img {
-        max-width: 95%;
-        position: relative;
-    }
-    .projects .card {
-        border-width: 2px;
-    }
-    .row {
-        margin-bottom: 100px;
-    }
-    .tagList input {
-        text-align: center;
+    /*tags*/
+    input.tags {
         border: 1px black solid;
+        border-radius: 8px;
+        margin: 4px;
         padding: 4px 0;
-        width: auto;
+        font-size: .9em;
+        text-align: center;
     }
     .tagList ::placeholder {
         color: black
+    }
+
+    /*project cards*/
+    .row {
+        justify-content: center;
+    }
+    .projects .card, img {
+        border-radius: 2.5em;
+        border: none;
+    }
+    .projects img {
+        max-width: 95%;
+        padding: 0;
     }
     @media only screen and (min-width: 768px) {
         .projects img {

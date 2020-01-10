@@ -17,7 +17,7 @@
         </div>
 
         <p class="mt-4">Use tags to filter by project type or technology</p>
-        <p>Currently sorting by {{ tagFilter }}</p>
+        <p>< Sorting by {{ tagFilter }} ></p>
         <hr>
 
         <div class="row">

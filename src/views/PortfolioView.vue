@@ -2,7 +2,7 @@
     <div v-if="project" class="portfolio-view container">
         <div class="title">
             <h1>{{ project.name }}</h1>
-            <a v-if="project.liveUrl" :href="project.liveUrl" class="btn btn-success my-2">Visit Website</a>
+            <a v-if="project.liveUrl" :href="project.liveUrl" class="website btn btn-primary my-2">Visit Website</a>
         </div>
 
         <div class="row">
@@ -147,7 +147,7 @@
     }
 
     h2 {
-        text-align: left;
+        /*text-align: left;*/
     }
 
     @media only screen and (min-width: 768px) {

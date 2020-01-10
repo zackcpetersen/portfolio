@@ -37,6 +37,8 @@
             </ul>
         </div>
 
+        <hr>
+
         <div class="resources">
             <h2>Resources</h2>
             <div class="resourceList">

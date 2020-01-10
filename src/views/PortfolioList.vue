@@ -1,6 +1,6 @@
 <template>
     <div class="portfolio-list container">
-        <h1>Software Engineer Portfolio</h1>
+        <h1>Portfolio Examples</h1>
         <p>{{ about.description }}</p>
 
         <div class="tagList">
@@ -20,9 +20,8 @@
         <p>< Sorting by {{ tagFilter }} ></p>
         <hr>
 
-        <div class="row">
-            <div class="projects" v-for="project in filterProjects" :key="project.id">
-                <div class="col">
+        <div class="projects">
+            <div class="project" v-for="project in filterProjects" :key="project.id">
                     <div class="card my-2">
                         <router-link :to="{ name: 'PortfolioView', params: {
                             project_slug: project.slug,
@@ -30,9 +29,8 @@
                             <img :src="project.images[0]">
                         </router-link>
                     </div>
-                </div>
             </div>
-        </div>
+            </div>
     </div>
 </template>
 
@@ -61,11 +59,10 @@
             filterProjects() {
                 if (this.tagFilter === 'ALL') {
                     return this.projects
-                }
-                else {
+                } else {
                     return this.projects.filter(project => {
                         return project.tags.includes(this.tagFilter)
-                })
+                    })
                 }
             }
         },
@@ -98,26 +95,37 @@
         font-size: .9em;
         text-align: center;
     }
+
     .tagList ::placeholder {
         color: black
+    }
+
+    /*projects list*/
+    .projects {
+        padding-bottom: 5em;
     }
 
     /*project cards*/
     .row {
         justify-content: center;
     }
-    .projects .card, img {
-        border-radius: 2.5em;
+
+    .project .card, img {
+        /*border-radius: 2.5em;*/
         border: none;
     }
-    .projects img {
+
+    .project img {
         max-width: 95%;
         padding: 0;
+        border: 1px solid black;
     }
+
     @media only screen and (min-width: 768px) {
-        .projects img {
+        .project img {
             max-width: 100%;
         }
+
         .row {
             margin-bottom: 0px;
         }

@@ -6,13 +6,15 @@
             <router-link :to="{ name: 'PortfolioList' }" class="link">PORTFOLIO</router-link>
 
             <div class="social-links">
-            <a class="btn btn-lg btn-social-icon btn-instagram instagram">
+            <a class="btn btn-lg btn-social-icon btn-instagram instagram"
+               href="https://www.instagram.com/zackcpetersen/" target="_blank">
                 <span class="fab fa-instagram insta_icon"></span>
             </a>
-            <a class="btn btn-lg btn-social-icon btn-github">
+            <a class="btn btn-lg btn-social-icon btn-github" href="https://github.com/zackcpetersen" target="_blank">
                 <span class="fab fa-github github-icon"></span>
             </a>
-            <a class="btn btn-lg btn-social-icon btn-linkedin">
+            <a class="btn btn-lg btn-social-icon btn-linkedin" href="https://www.linkedin.com/in/zackcpetersen/"
+               target="_blank">
                 <span class="fab fa-linkedin-in linkedin-icon"></span>
             </a>
         </div>

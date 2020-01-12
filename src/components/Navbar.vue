@@ -7,14 +7,15 @@
 
             <div class="social-links">
             <a class="btn btn-lg btn-social-icon btn-instagram instagram"
-               href="https://www.instagram.com/zackcpetersen/" target="_blank">
+               href="https://www.instagram.com/zackcpetersen/" target="_blank" rel="noopener noreferrer">
                 <span class="fab fa-instagram insta_icon"></span>
             </a>
-            <a class="btn btn-lg btn-social-icon btn-github" href="https://github.com/zackcpetersen" target="_blank">
+            <a class="btn btn-lg btn-social-icon btn-github" href="https://github.com/zackcpetersen" target="_blank"
+               rel="noopener noreferrer">
                 <span class="fab fa-github github-icon"></span>
             </a>
             <a class="btn btn-lg btn-social-icon btn-linkedin" href="https://www.linkedin.com/in/zackcpetersen/"
-               target="_blank">
+               target="_blank" rel="noopener noreferrer">
                 <span class="fab fa-linkedin-in linkedin-icon"></span>
             </a>
         </div>

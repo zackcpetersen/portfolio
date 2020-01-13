@@ -4,22 +4,21 @@
             <router-link :to="{ name: 'About' }" class="link">ABOUT</router-link>
             <router-link :to="{ name: 'Contact' }" class="link">CONTACT</router-link>
             <router-link :to="{ name: 'PortfolioList' }" class="link">PORTFOLIO</router-link>
-
             <div class="social-links">
-            <a class="btn btn-lg btn-social-icon btn-instagram instagram"
-               href="https://www.instagram.com/zackcpetersen/" target="_blank" rel="noopener noreferrer">
-                <span class="fab fa-instagram insta_icon"></span>
-            </a>
-            <a class="btn btn-lg btn-social-icon btn-github" href="https://github.com/zackcpetersen" target="_blank"
-               rel="noopener noreferrer">
-                <span class="fab fa-github github-icon"></span>
-            </a>
-            <a class="btn btn-lg btn-social-icon btn-linkedin" href="https://www.linkedin.com/in/zackcpetersen/"
-               target="_blank" rel="noopener noreferrer">
-                <span class="fab fa-linkedin-in linkedin-icon"></span>
-            </a>
-        </div>
-
+                <a class="btn btn-lg btn-social-icon btn-instagram instagram"
+                   href="https://www.instagram.com/zackcpetersen/" target="_blank" rel="noopener noreferrer">
+                    <span class="fab fa-instagram insta_icon"></span>
+                </a>
+                <a class="btn btn-lg btn-social-icon btn-github" href="https://github.com/zackcpetersen"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    <span class="fab fa-github github-icon"></span>
+                </a>
+                <a class="btn btn-lg btn-social-icon btn-linkedin" href="https://www.linkedin.com/in/zackcpetersen/"
+                   target="_blank" rel="noopener noreferrer">
+                    <span class="fab fa-linkedin-in linkedin-icon"></span>
+                </a>
+            </div>
         </Push>
 
     </div>
@@ -43,26 +42,24 @@
 
 <style>
     /*menu*/
-    .bm-menu {
-        left: 0;
-        right: 0;
-        background-color: rgb(63, 63, 65);
-    }
-
     .bm-burger-button {
         z-index: 999;
         position: fixed;
+        top: 1.5em;
+        left: 1.5em;
         width: 36px;
         height: 30px;
-        /*left: 36px;*/
-        /*top: 3%;*/
         cursor: pointer;
     }
 
     /*nav*/
     .nav {
-        margin: 2em;
+        z-index: 999;
         display: inline-block;
+        position: fixed;
+        width: 100%;
+        left: 0;
+        top: 1.5em;
     }
 
     .nav .link {

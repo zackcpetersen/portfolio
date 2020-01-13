@@ -1,7 +1,9 @@
 <template>
     <div id="app">
-        <Navbar />
-        <router-view id="page-wrap"/>
+        <Navbar id="navbar"/>
+        <div class="content">
+            <router-view id="page-wrap"/>
+        </div>
     </div>
 </template>
 
@@ -13,6 +15,9 @@
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
         color: #2c3e50;
+    }
+    .content {
+        margin-top: 4em;
     }
 </style>
 <script>

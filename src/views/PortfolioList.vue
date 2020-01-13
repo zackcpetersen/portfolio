@@ -3,7 +3,14 @@
         <h1>Portfolio Examples</h1>
         <p>{{ about.description }}</p>
 
-        <div class="tagList">
+        <hr>
+
+        <div class="filter-toggle" @click="filterToggle = !filterToggle">
+            <p class="filter-button" v-if="!filterToggle"><strong>Show Filters</strong></p>
+            <p class="filter-button" v-if="filterToggle"><strong>Hide Filters</strong></p>
+            <i class="fas fa-angle-down arrow"></i>
+        </div>
+        <div class="tagList" v-if="filterToggle">
             <input class="tags" type="text" placeholder="ALL" value="ALL" @click="updateTagFilter('ALL')" readonly/>
             <input v-for="(tag, index) in about.tags"
                    :key="index"
@@ -22,15 +29,15 @@
 
         <div class="projects">
             <div class="project" v-for="project in filterProjects" :key="project.id">
-                    <div class="card my-2">
-                        <router-link :to="{ name: 'PortfolioView', params: {
+                <div class="card my-2">
+                    <router-link :to="{ name: 'PortfolioView', params: {
                             project_slug: project.slug,
                             project_id: project.id }}">
-                            <img :src="project.images[0]">
-                        </router-link>
-                    </div>
+                        <img :src="project.images[0]">
+                    </router-link>
+                </div>
             </div>
-            </div>
+        </div>
     </div>
 </template>
 
@@ -48,12 +55,13 @@
                 },
                 projects: [],
                 tagFilter: 'ALL',
+                filterToggle: false,
             }
         },
         methods: {
             updateTagFilter(tag) {
                 this.tagFilter = tag
-            }
+            },
         },
         computed: {
             filterProjects() {
@@ -89,11 +97,17 @@
     /*tags*/
     input.tags {
         border: 1px black solid;
-        border-radius: 8px;
+        border-radius: 1em;
         margin: 4px;
         padding: 4px 0;
         font-size: .9em;
         text-align: center;
+    }
+
+    .tagList {
+        border: 1px grey solid;
+        border-radius: 1em;
+        padding: 1em 0;
     }
 
     .tagList ::placeholder {
@@ -121,13 +135,24 @@
         border: 1px solid black;
     }
 
+    .filter-toggle {
+        cursor: pointer;
+    }
+    .arrow {
+        font-size: 2em;
+    }
+    .filter-button {
+        padding: 1px;
+        margin: 1px;
+    }
+
     @media only screen and (min-width: 768px) {
         .project img {
             max-width: 100%;
         }
 
         .row {
-            margin-bottom: 0px;
+            margin-bottom: 0;
         }
     }
 </style>

@@ -23,7 +23,6 @@
             />
             <p class="m-2">Use tags to filter by project type or technology</p>
         </div>
-        <hr>
 
         <div class="projects">
             <div class="project" v-for="project in filterProjects" :key="project.id">

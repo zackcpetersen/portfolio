@@ -4,6 +4,7 @@
         <div class="content">
             <router-view id="page-wrap"/>
         </div>
+        <Footer />
     </div>
 </template>
 
@@ -26,7 +27,8 @@
 </style>
 <script>
     import Navbar from "./components/Navbar";
+    import Footer from "./components/Footer";
     export default {
-        components: {Navbar}
+        components: {Footer, Navbar}
     }
 </script>

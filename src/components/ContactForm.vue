@@ -14,11 +14,9 @@
                 <textarea name="message" rows="3" v-model="message" placeholder="Your message"/>
             </div>
             <div class="field center-align">
-                <p v-if="feedback.length > 0" class="feedback">
-                <ul>
+                <ul v-if="feedback.length > 0" class="feedback">
                     <li v-for="(error, index) in feedback" :key="index">{{ error }}</li>
                 </ul>
-                </p>
                 <button class="btn btn-sm btn-success">Send</button>
             </div>
         </form>
@@ -67,5 +65,9 @@
 <style>
     .feedback {
         color: red;
+        list-style-type: none;
+        text-align: center;
+        padding: 0;
+        margin: 1em 0;
     }
 </style>

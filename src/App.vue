@@ -17,7 +17,11 @@
         color: #2c3e50;
     }
     .content {
-        margin-top: 4em;
+        margin-top: 30%;
+    }
+    h1 {
+        text-align: left;
+        margin: 1em 0;
     }
 </style>
 <script>

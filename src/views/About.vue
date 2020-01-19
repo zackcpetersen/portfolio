@@ -1,7 +1,7 @@
 <template>
     <div class="about container">
         <!--        <h1>About Me</h1>-->
-        <h2>{{ myName }}</h2>
+        <h1>{{ myName }}</h1>
         <img :src="photo">
         <p>{{ aboutMe }}</p>
         <SocialLinks />
@@ -38,16 +38,10 @@
 </script>
 
 <style>
-    .about {
-        margin: 20% 0;
-    }
     .about img {
         max-width: 60%;
         border-radius: 50%;
-    }
-    .about h2 {
-        text-align: left;
-        padding: .5em;
+        margin: 1em;
     }
     .about p {
         text-align: left;

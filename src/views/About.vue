@@ -4,14 +4,17 @@
         <h2>{{ myName }}</h2>
         <img :src="photo">
         <p>{{ aboutMe }}</p>
+        <SocialLinks />
     </div>
 </template>
 
 <script>
     import db from '@/firebase/init'
+    import SocialLinks from "../components/SocialLinks";
 
     export default {
         name: "About",
+        components: {SocialLinks},
         data() {
             return {
                 aboutMe:

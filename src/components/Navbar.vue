@@ -4,21 +4,7 @@
             <router-link :to="{ name: 'About' }" class="link">ABOUT</router-link>
             <router-link :to="{ name: 'Contact' }" class="link">CONTACT</router-link>
             <router-link :to="{ name: 'PortfolioList' }" class="link">PORTFOLIO</router-link>
-            <div class="social-links">
-                <a class="btn btn-lg btn-social-icon btn-instagram instagram"
-                   href="https://www.instagram.com/zackcpetersen/" target="_blank" rel="noopener noreferrer">
-                    <span class="fab fa-instagram insta_icon"></span>
-                </a>
-                <a class="btn btn-lg btn-social-icon btn-github" href="https://github.com/zackcpetersen"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                    <span class="fab fa-github github-icon"></span>
-                </a>
-                <a class="btn btn-lg btn-social-icon btn-linkedin" href="https://www.linkedin.com/in/zackcpetersen/"
-                   target="_blank" rel="noopener noreferrer">
-                    <span class="fab fa-linkedin-in linkedin-icon"></span>
-                </a>
-            </div>
+            <SocialLinks />
         </Push>
 
     </div>
@@ -28,6 +14,7 @@
 
 <script>
     import {Push} from 'vue-burger-menu'
+    import SocialLinks from "./SocialLinks";
 
     export default {
         name: "Navbar",
@@ -35,6 +22,7 @@
             return {}
         },
         components: {
+            SocialLinks,
             Push
         }
     }
@@ -64,28 +52,5 @@
 
     .nav .link {
         color: white;
-    }
-
-    /*social links*/
-    .instagram {
-        text-align: center;
-        vertical-align: middle;
-        background: #d6249f;
-        background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
-        border: none;
-    }
-
-    .insta_icon, .github-icon, .linkedin-icon {
-        color: white;
-    }
-
-    .btn {
-        border-radius: 25%;
-        margin: 0 .2em;
-    }
-
-    .social-links {
-        position: relative;
-        padding-left: .5em;
     }
 </style>

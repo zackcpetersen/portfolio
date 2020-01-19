@@ -37,28 +37,29 @@
             Send Message
         </v-btn>
     </v-form>
-    <!--        <div class="contact-form">-->
-    <!--            <form @submit.prevent="addContact">-->
-    <!--                <div class="field name">-->
-    <!--                    <input type="text" name="name" v-model="name" placeholder="Name">-->
-    <!--                </div>-->
-    <!--                <div class="field email">-->
-    <!--                    <input type="text" name="email" v-model="email" placeholder="Email">-->
-    <!--                </div>-->
-    <!--                <div class="field phone">-->
-    <!--                    <input type="text" name="phone" v-model="phone" placeholder="Phone - Optional">-->
-    <!--                </div>-->
-    <!--                <div class="field message">-->
-    <!--                    <textarea name="message" rows="3" v-model="message" placeholder="Your message"/>-->
-    <!--                </div>-->
-    <!--                <div class="field center-align">-->
-    <!--                    <ul v-if="feedback.length > 0" class="feedback">-->
-    <!--                        <li v-for="(error, index) in feedback" :key="index">{{ error }}</li>-->
-    <!--                    </ul>-->
-    <!--                    <button class="btn btn-sm btn-success">Send</button>-->
-    <!--                </div>-->
-    <!--            </form>-->
-    <!--        </div>-->
+
+<!--        <div class="contact-form">-->
+<!--        <form @submit.prevent="addContact">-->
+<!--            <div class="field name">-->
+<!--                <input type="text" name="name" v-model="name" placeholder="Name">-->
+<!--            </div>-->
+<!--            <div class="field email">-->
+<!--                <input type="text" name="email" v-model="email" placeholder="Email">-->
+<!--            </div>-->
+<!--            <div class="field phone">-->
+<!--                <input type="text" name="phone" v-model="phone" placeholder="Phone - Optional">-->
+<!--            </div>-->
+<!--            <div class="field message">-->
+<!--                <textarea name="message" rows="3" v-model="message" placeholder="Your message"/>-->
+<!--            </div>-->
+<!--            <div class="field center-align">-->
+<!--                <ul v-if="feedback.length > 0" class="feedback">-->
+<!--                    <li v-for="(error, index) in feedback" :key="index">{{ error }}</li>-->
+<!--                </ul>-->
+<!--                <button class="btn btn-sm btn-success">Send</button>-->
+<!--            </div>-->
+<!--        </form>-->
+<!--    </div>-->
 
 </template>
 

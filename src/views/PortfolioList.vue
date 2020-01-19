@@ -1,6 +1,6 @@
 <template>
     <div class="portfolio-list container">
-        <h1>Portfolio Examples</h1>
+        <h1>Here's Some Of My Work</h1>
         <p>{{ about.description }}</p>
 
         <hr>
@@ -21,10 +21,8 @@
                    @click="updateTagFilter(tag)"
                    readonly
             />
+            <p class="m-2">Use tags to filter by project type or technology</p>
         </div>
-
-        <p class="mt-4">Use tags to filter by project type or technology</p>
-        <p>< Sorting by {{ tagFilter }} ></p>
         <hr>
 
         <div class="projects">
@@ -114,14 +112,8 @@
         color: black
     }
 
-    /*projects list*/
-    .projects {
-        padding-bottom: 5em;
-    }
-
-    /*project cards*/
-    .row {
-        justify-content: center;
+    .project {
+        display: inline-block;
     }
 
     .project .card, img {
@@ -131,6 +123,7 @@
 
     .project img {
         max-width: 95%;
+        height: auto;
         padding: 0;
         border: 1px solid black;
     }
@@ -148,11 +141,6 @@
 
     @media only screen and (min-width: 768px) {
         .project img {
-            max-width: 100%;
-        }
-
-        .row {
-            margin-bottom: 0;
         }
     }
 </style>

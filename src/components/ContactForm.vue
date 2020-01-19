@@ -119,6 +119,10 @@
 <style>
     .feedback {
         color: red;
+        list-style-type: none;
+        text-align: center;
+        padding: 0;
+        margin: 1em 0;
     }
 
     .feedback {

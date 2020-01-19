@@ -1,18 +1,15 @@
 <template>
     <div id="app">
-        <div id="nav">
-            <router-link :to="{ name: 'About' }">About</router-link>
-            |
-            <router-link :to="{ name: 'Contact' }">Contact</router-link>
-            |
-            <router-link :to="{ name: 'PortfolioList' }">Portfolio</router-link>
-            <hr>
+        <Navbar id="navbar"/>
+        <div class="content" id="page-wrap">
+            <router-view />
+            <Footer />
         </div>
-        <router-view/>
     </div>
 </template>
 
 <style>
+    @import "assets/bootstrap-social.css";
     #app {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
@@ -20,17 +17,18 @@
         text-align: center;
         color: #2c3e50;
     }
-
-    #nav {
-        padding: 30px;
+    .content {
+        margin-top: 30%;
     }
-
-    #nav a {
-        font-weight: bold;
-        color: #2c3e50;
-    }
-
-    #nav a.router-link-exact-active {
-        color: #42b983;
+    h1 {
+        text-align: left;
+        margin: 1em 0;
     }
 </style>
+<script>
+    import Navbar from "./components/Navbar";
+    import Footer from "./components/Footer";
+    export default {
+        components: {Footer, Navbar}
+    }
+</script>

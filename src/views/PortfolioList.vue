@@ -1,22 +1,39 @@
 <template>
     <div class="portfolio-list container">
-        <h1>Software Engineer Portfolio</h1>
+        <h1>Here's Some Of My Work</h1>
         <p>{{ about.description }}</p>
 
-        <div class="tagList">
-            <li v-for="(tag, index) in about.tags" :key="index" class="tags">{{ tag }}</li>
-        </div>
-
-        <p class="my-4">Use tags to filter by project type or technology</p>
         <hr>
 
-        <div class="card" v-for="project in projects" :key="project.id">
-            <router-link :to="{ name: 'PortfolioView', params: {
-                project_slug: project.slug,
-                project_id: project.id,
-                project_tags: project.tags }}"> <!--can maybe use this for filters?-->
-                <img :src="project.images[0]">
-            </router-link>
+        <div class="filter-toggle" @click="filterToggle = !filterToggle">
+            <p class="filter-button" v-if="!filterToggle"><strong>Show Filters</strong></p>
+            <p class="filter-button" v-if="filterToggle"><strong>Hide Filters</strong></p>
+            <i class="fas fa-angle-down arrow"></i>
+        </div>
+        <div class="tagList" v-if="filterToggle">
+            <input class="tags" type="text" placeholder="ALL" value="ALL" @click="updateTagFilter('ALL')" readonly/>
+            <input v-for="(tag, index) in about.tags"
+                   :key="index"
+                   class="tags"
+                   type="text"
+                   :value="tag"
+                   :placeholder="tag"
+                   @click="updateTagFilter(tag)"
+                   readonly
+            />
+            <p class="m-2">Use tags to filter by project type or technology</p>
+        </div>
+
+        <div class="projects">
+            <div class="project" v-for="project in filterProjects" :key="project.id">
+                <div class="card my-2">
+                    <router-link :to="{ name: 'PortfolioView', params: {
+                            project_slug: project.slug,
+                            project_id: project.id }}">
+                        <img :src="project.images[0]">
+                    </router-link>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -34,18 +51,26 @@
                     tags: []
                 },
                 projects: [],
-                // tagFilter: null,
+                tagFilter: 'ALL',
+                filterToggle: false,
             }
         },
-        // computed: {
-        //     filterProjects() {
-        //         return this.projects.filter(project => {
-        //             project.tags.forEach(tag => {
-        //                 return tag.includes(this.tagFilter)
-        //             })
-        //         })
-        //     }
-        // },
+        methods: {
+            updateTagFilter(tag) {
+                this.tagFilter = tag
+            },
+        },
+        computed: {
+            filterProjects() {
+                if (this.tagFilter === 'ALL') {
+                    return this.projects
+                } else {
+                    return this.projects.filter(project => {
+                        return project.tags.includes(this.tagFilter)
+                    })
+                }
+            }
+        },
         created() {
             db.collection('projects-overview').doc('AkkQ9ueU8NnhKRWyLH7F').get()
                 .then(doc => {
@@ -66,11 +91,55 @@
 </script>
 
 <style>
-    .tags {
-        display: inline-block;
-        white-space: pre-wrap;
-        border: solid black 1px;
+    /*tags*/
+    input.tags {
+        border: 1px black solid;
+        border-radius: 1em;
         margin: 4px;
-        padding: 4px;
+        padding: 4px 0;
+        font-size: .9em;
+        text-align: center;
+    }
+
+    .tagList {
+        border: 1px grey solid;
+        border-radius: 1em;
+        padding: 1em 0;
+    }
+
+    .tagList ::placeholder {
+        color: black
+    }
+
+    .project {
+        display: inline-block;
+    }
+
+    .project .card, img {
+        /*border-radius: 2.5em;*/
+        border: none;
+    }
+
+    .project img {
+        max-width: 95%;
+        height: auto;
+        padding: 0;
+        border: 1px solid black;
+    }
+
+    .filter-toggle {
+        cursor: pointer;
+    }
+    .arrow {
+        font-size: 2em;
+    }
+    .filter-button {
+        padding: 1px;
+        margin: 1px;
+    }
+
+    @media only screen and (min-width: 768px) {
+        .project img {
+        }
     }
 </style>

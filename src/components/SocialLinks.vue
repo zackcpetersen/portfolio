@@ -1,15 +1,15 @@
 <template>
     <div class="social-links">
-                <a class="btn btn-lg btn-social-icon btn-instagram instagram"
+                <a class="btn btn-lg btn-social-icon btn-instagram instagram social-link"
                    href="https://www.instagram.com/zackcpetersen/" target="_blank" rel="noopener noreferrer">
                     <span class="fab fa-instagram insta_icon"></span>
                 </a>
-                <a class="btn btn-lg btn-social-icon btn-github" href="https://github.com/zackcpetersen"
+                <a class="btn btn-lg btn-social-icon btn-github social-link" href="https://github.com/zackcpetersen"
                    target="_blank"
                    rel="noopener noreferrer">
                     <span class="fab fa-github github-icon"></span>
                 </a>
-                <a class="btn btn-lg btn-social-icon btn-linkedin" href="https://www.linkedin.com/in/zackcpetersen/"
+                <a class="btn btn-lg btn-social-icon btn-linkedin social-link" href="https://www.linkedin.com/in/zackcpetersen/"
                    target="_blank" rel="noopener noreferrer">
                     <span class="fab fa-linkedin-in linkedin-icon"></span>
                 </a>
@@ -35,7 +35,7 @@
         color: white;
     }
 
-    .btn {
+    .social-link {
         border-radius: 25%;
         margin: 0 .2em;
     }

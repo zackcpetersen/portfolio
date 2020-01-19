@@ -2,7 +2,7 @@
     <div class="contact container">
         <h1>{{ header }}</h1>
         <hr>
-        <ContactForm class="m-5"></ContactForm>
+        <ContactForm />
     </div>
 </template>
 

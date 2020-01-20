@@ -1,6 +1,7 @@
 <template>
     <div class="contact container">
         <h1>{{ header }}</h1>
+        <p>Fill out the fields below and I'll be in touch!</p>
         <hr>
         <ContactForm />
     </div>
@@ -20,5 +21,7 @@
 </script>
 
 <style>
-
+    .contact p {
+        text-align: left;
+    }
 </style>

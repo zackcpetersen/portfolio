@@ -24,17 +24,28 @@
             <p class="m-2">Use tags to filter by project type or technology</p>
         </div>
 
-        <div class="projects">
-            <div class="project" v-for="project in filterProjects" :key="project.id">
-                <div class="card my-2">
-                    <router-link :to="{ name: 'PortfolioView', params: {
-                            project_slug: project.slug,
-                            project_id: project.id }}">
-                        <img :src="project.images[0]">
-                    </router-link>
-                </div>
-            </div>
-        </div>
+        <v-container fluid>
+            <v-row dense>
+                <v-col
+                        v-for="project in filterProjects"
+                        :key="project.id"
+                        :cols=12
+                >
+                    <v-card
+                            elevation="20"
+                    >
+                        <v-img
+                                :src="project.images[0]"
+                                class="white--text align-end"
+                                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.3)"
+                                max-height="500"
+                        >
+                            <v-card-title v-text="project.name" />
+                        </v-img>
+                    </v-card>
+                </v-col>
+            </v-row>
+        </v-container>
     </div>
 </template>
 
@@ -130,9 +141,11 @@
     .filter-toggle {
         cursor: pointer;
     }
+
     .arrow {
         font-size: 2em;
     }
+
     .filter-button {
         padding: 1px;
         margin: 1px;

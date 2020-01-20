@@ -60,7 +60,9 @@
                         v => {
                             if (!!v && v.length <= 30) {
                                 this.step = 2
+                                return true
                             }
+                            return false
                         }
                     ],
                     email: '',
@@ -70,7 +72,9 @@
                         v => {
                             if (!!v && /.+@.+\..+/.test(v)) {
                                 this.step = 3
+                                return true
                             }
+                            return false
                         }
                     ],
                     phone: '',
@@ -79,7 +83,9 @@
                         v => {
                             if (!!v && /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(v)) {
                                 this.step = 4
+                                return true
                             }
+                            return false
                         }
                     ],
                     message: '',

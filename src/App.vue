@@ -1,11 +1,13 @@
 <template>
-    <div id="app">
-        <Navbar id="navbar"/>
-        <div class="content" id="page-wrap">
-            <router-view/>
-            <Footer/>
+    <v-app>
+        <div id="app">
+            <Navbar id="navbar"/>
+            <div class="content" id="page-wrap">
+                <router-view/>
+                <Footer/>
+            </div>
         </div>
-    </div>
+    </v-app>
 </template>
 
 <style>

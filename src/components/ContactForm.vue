@@ -11,6 +11,7 @@
                 label="Name"
                 required
         />
+        <v-expand-transition>
         <v-text-field
                 v-show="[2, 3, 4].includes(step)"
                 v-model="fields.email"
@@ -18,12 +19,16 @@
                 label="E-mail"
                 required
         />
+        </v-expand-transition>
+        <v-expand-transition>
         <v-text-field
                 v-show="[3, 4].includes(step)"
                 v-model="fields.phone"
                 :rules="fields.phoneRules"
                 label="Phone"
         />
+        </v-expand-transition>
+        <v-expand-transition>
         <div v-show="[4].includes(step)">
             <v-textarea
                     outlined
@@ -42,6 +47,7 @@
                 Send Message
             </v-btn>
         </div>
+        </v-expand-transition>
     </v-form>
 
 </template>

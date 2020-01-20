@@ -31,18 +31,23 @@
                         :key="project.id"
                         :cols=12
                 >
-                    <v-card
-                            elevation="20"
-                    >
-                        <v-img
-                                :src="project.images[0]"
-                                class="white--text align-end"
-                                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.3)"
-                                max-height="500"
+                    <router-link :to="{ name: 'PortfolioView', params: {
+                            project_slug: project.slug,
+                            project_id: project.id }}">
+                        <v-card
+                                elevation="10"
                         >
-                            <v-card-title v-text="project.name" />
-                        </v-img>
-                    </v-card>
+
+                            <v-img
+                                    :src="project.images[0]"
+                                    class="white--text align-end"
+                                    gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.3)"
+                                    max-height="500"
+                            >
+                                <v-card-title v-text="project.name"/>
+                            </v-img>
+                        </v-card>
+                    </router-link>
                 </v-col>
             </v-row>
         </v-container>

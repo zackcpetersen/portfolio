@@ -1,53 +1,57 @@
 <template>
     <div class="portfolio-list container">
-        <h1>Here's Some Of My Work</h1>
-        <p>{{ about.description }}</p>
-
-        <hr>
-
-        <div class="filter-toggle" @click="filterToggle = !filterToggle">
-            <p class="filter-button" v-if="!filterToggle"><strong>Show Filters</strong></p>
-            <p class="filter-button" v-if="filterToggle"><strong>Hide Filters</strong></p>
-            <i class="fas fa-angle-down arrow"></i>
-        </div>
-        <div class="tagList" v-if="filterToggle">
-            <input class="tags" type="text" placeholder="ALL" value="ALL" @click="updateTagFilter('ALL')" readonly/>
-            <input v-for="(tag, index) in about.tags"
-                   :key="index"
-                   class="tags"
-                   type="text"
-                   :value="tag"
-                   :placeholder="tag"
-                   @click="updateTagFilter(tag)"
-                   readonly
-            />
-            <p class="m-2">Use tags to filter by project type or technology</p>
-        </div>
-
         <v-container fluid>
-            <v-row dense>
+            <v-row justify="center">
+                <v-col lg="8">
+                    <h1>Here's Some Of My Work</h1>
+                    <p>{{ about.description }}</p>
+
+                    <hr>
+
+                    <div class="filter-toggle" @click="filterToggle = !filterToggle">
+                        <p class="filter-button" v-if="!filterToggle"><strong>Show Filters</strong></p>
+                        <p class="filter-button" v-if="filterToggle"><strong>Hide Filters</strong></p>
+                        <i class="fas fa-angle-down arrow"></i>
+                    </div>
+                    <div class="tagList" v-if="filterToggle">
+                        <input class="tags" type="text" placeholder="ALL" value="ALL" @click="updateTagFilter('ALL')"
+                               readonly/>
+                        <input v-for="(tag, index) in about.tags"
+                               :key="index"
+                               class="tags"
+                               type="text"
+                               :value="tag"
+                               :placeholder="tag"
+                               @click="updateTagFilter(tag)"
+                               readonly
+                        />
+                        <p class="m-2">Use tags to filter by project type or technology</p>
+                        <p>Sorting by < {{ tagFilter }} ></p>
+                    </div>
+                </v-col>
                 <v-col
+                        lg="8"
                         v-for="project in filterProjects"
                         :key="project.id"
                         :cols=12
                 >
-                    <router-link :to="{ name: 'PortfolioView', params: {
+                    <v-card
+                            elevation="24"
+                            tile
+                            :to="{ name: 'PortfolioView', params: {
                             project_slug: project.slug,
-                            project_id: project.id }}">
-                        <v-card
-                                elevation="10"
-                        >
+                            project_id: project.id }}"
+                    >
 
-                            <v-img
-                                    :src="project.images[0]"
-                                    class="white--text align-end"
-                                    gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.3)"
-                                    max-height="500"
-                            >
-                                <v-card-title v-text="project.name"/>
-                            </v-img>
-                        </v-card>
-                    </router-link>
+                        <v-img
+                                :src="project.images[0]"
+                                class="white--text align-end"
+                                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.3)"
+                                max-height="600"
+                        >
+                            <v-card-title v-text="project.name"/>
+                        </v-img>
+                    </v-card>
                 </v-col>
             </v-row>
         </v-container>
@@ -120,7 +124,8 @@
     .tagList {
         border: 1px grey solid;
         border-radius: 1em;
-        padding: 1em 0;
+        padding: 1em 0 0 0;
+        margin: .9em;
     }
 
     .tagList ::placeholder {

@@ -1,5 +1,5 @@
 <template>
-    <div v-if="project" class="portfolio-view container">
+    <v-container v-if="project" class="portfolio-view">
         <div class="title">
             <h1>{{ project.name }}</h1>
             <a v-if="project.liveUrl" :href="project.liveUrl" class="website btn btn-primary my-2">Visit Website</a>
@@ -50,7 +50,7 @@
                 </p>
             </div>
         </div>
-    </div>
+    </v-container>
 </template>
 
 <script>
@@ -160,6 +160,7 @@
         .prev-symbol, .prev-button {
             left: 1.5em;
         }
+
         .next-button, .prev-button {
             width: 30%;
         }

@@ -1,14 +1,15 @@
 <template>
-    <div class="contact container">
+    <v-container class="contact">
         <h1>{{ header }}</h1>
         <p>Fill out the fields below and I'll be in touch!</p>
         <hr>
-        <ContactForm />
-    </div>
+        <ContactForm/>
+    </v-container>
 </template>
 
 <script>
     import ContactForm from "../components/ContactForm";
+
     export default {
         name: "Contact",
         data() {

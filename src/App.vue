@@ -1,12 +1,18 @@
 <template>
     <v-app>
-        <div id="app">
-            <Navbar id="navbar"/>
-            <div class="content" id="page-wrap">
-                <router-view/>
-                <Footer/>
-            </div>
-        </div>
+        <v-container fluid>
+            <v-row justify="center">
+                <v-col lg="9">
+                    <div id="app">
+                        <Navbar id="navbar"/>
+                        <div class="content" id="page-wrap">
+                            <router-view/>
+                            <Footer/>
+                        </div>
+                    </div>
+                </v-col>
+            </v-row>
+        </v-container>
     </v-app>
 </template>
 
@@ -22,7 +28,7 @@
     }
 
     .content {
-        margin-top: 30%;
+        margin-top: 1.5em;
     }
 
     h1 {

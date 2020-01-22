@@ -1,27 +1,36 @@
 <template>
     <v-container v-if="project" class="portfolio-view">
         <div class="title">
-            <h1>{{ project.name }}</h1>
-            <a v-if="project.liveUrl" :href="project.liveUrl" class="website btn btn-primary my-2">Visit Website</a>
+            <h1 class="font-italic font-weight-bold display-1">{{ project.name }}</h1>
+            <v-hover
+                    v-slot:default="{ hover }"
+                    value
+            >
+                <v-btn v-if="project.liveUrl" :href="project.liveUrl" color="primary" block>Visit Website</v-btn>
+            </v-hover>
         </div>
 
-        <div class="row">
-            <div class="col">
-                <transition-group name="fade" tag="div">
-                    <div v-for="img in [imageIndex]" :key="img" class="slider">
-                        <img :src="currentImg" alt=""/>
-                    </div>
-                </transition-group>
-                <a class="prev-button" @click="prevImage">
-                    <span class="prev-symbol" href="#">&#10094;</span>
-                </a>
-                <a class="next-button" @click="nextImage">
-                    <span class="next-symbol" href="#">&#10095;</span>
-                </a>
-
-
-            </div>
-        </div>
+        <v-row justify="center">
+            <v-col :xl="9">
+                <v-card elevation="8">
+                    <v-carousel
+                            cycle
+                            show-arrows-on-hover
+                            height="auto"
+                            progress
+                    >
+                        <v-carousel-item
+                                v-for="(img, i) in project.images"
+                                :key="i"
+                                :src="img"
+                                transition="slide-x-transition"
+                                reverse-transition="slide-x-reverse-transition"
+                        >
+                        </v-carousel-item>
+                    </v-carousel>
+                </v-card>
+            </v-col>
+        </v-row>
 
         <div class="about mt-4">
             <h2>About This Project</h2>
@@ -62,20 +71,6 @@
             return {
                 project: null,
                 feedback: null,
-                imageIndex: 0,
-            }
-        },
-        methods: {
-            nextImage() {
-                this.imageIndex += 1
-            },
-            prevImage() {
-                this.imageIndex -= 1
-            }
-        },
-        computed: {
-            currentImg() {
-                return this.project.images[Math.abs(this.imageIndex) % this.project.images.length]
             }
         },
         created() {
@@ -106,63 +101,5 @@
     img {
         max-height: 500px;
         margin: 5px;
-    }
-
-    .prev-symbol, .next-symbol {
-        color: black;
-        opacity: .7;
-        position: absolute;
-        top: 35%;
-    }
-
-    .next-button, .prev-button {
-        font-size: 5em;
-        display: block;
-        position: absolute;
-        height: 100%;
-        top: 0;
-        width: 40%;
-        cursor: pointer;
-        background: rgba(255, 255, 255, 0.0);
-        padding: 0;
-        text-decoration: none;
-    }
-
-    .next-symbol, .next-button {
-        right: 0;
-    }
-
-    .prev-symbol, .prev-button {
-        left: 0;
-    }
-
-    .prev-symbol:hover, .next-symbol:hover {
-        background-color: rgba(0, 0, 0, 0.7);
-        color: white;
-    }
-
-    .slider img {
-        justify-content: center;
-        max-width: 95%;
-        border: 3px solid black;
-        margin-top: 10px;
-    }
-
-    h2 {
-        /*text-align: left;*/
-    }
-
-    @media only screen and (min-width: 768px) {
-        .next-symbol, .next-button {
-            right: 1.5em;
-        }
-
-        .prev-symbol, .prev-button {
-            left: 1.5em;
-        }
-
-        .next-button, .prev-button {
-            width: 30%;
-        }
     }
 </style>

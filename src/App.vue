@@ -34,6 +34,9 @@
         text-align: left;
         margin: 1em 0;
     }
+    .first-header {
+        color: #AB47BC;
+    }
 </style>
 <script>
     import Navbar from "./components/Navbar";

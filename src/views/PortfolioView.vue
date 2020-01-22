@@ -2,16 +2,18 @@
     <v-container v-if="project" class="portfolio-view">
         <div class="title">
             <h1 class="font-italic font-weight-bold display-1">{{ project.name }}</h1>
-            <v-hover
-                    v-slot:default="{ hover }"
-                    value
-            >
-                <v-btn v-if="project.liveUrl" :href="project.liveUrl" color="primary" block>Visit Website</v-btn>
-            </v-hover>
         </div>
 
         <v-row justify="center">
             <v-col :xl="9">
+                <v-hover
+                        v-slot:default="{ hover }"
+                        value
+                >
+                    <v-btn v-if="project.liveUrl" :href="project.liveUrl" color="primary" block class="mb-2">Visit
+                        Website
+                    </v-btn>
+                </v-hover>
                 <v-card elevation="8">
                     <v-carousel
                             cycle
@@ -35,7 +37,7 @@
         <div class="about mt-4">
             <h2>About This Project</h2>
             <p>{{ project.description }}</p>
-            <hr>
+            <v-divider />
         </div>
 
         <div class="techSheet">
@@ -46,7 +48,7 @@
             </ul>
         </div>
 
-        <hr>
+        <v-divider />
 
         <div class="resources">
             <h2>Resources</h2>

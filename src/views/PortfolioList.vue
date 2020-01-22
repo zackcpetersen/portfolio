@@ -5,28 +5,43 @@
                 <h1>Here's some of <span class="first-header">my Work</span></h1>
                 <p>{{ about.description }}</p>
 
-                <v-divider />
+                <v-divider/>
 
                 <div class="filter-toggle" @click="filterToggle = !filterToggle">
                     <p class="filter-button" v-if="!filterToggle"><strong>Show Filters</strong></p>
                     <p class="filter-button" v-if="filterToggle"><strong>Hide Filters</strong></p>
                     <i class="fas fa-angle-down arrow"></i>
                 </div>
-                <div class="tagList" v-if="filterToggle">
-                    <input class="tags" type="text" placeholder="ALL" value="ALL" @click="updateTagFilter('ALL')"
-                           readonly/>
-                    <input v-for="(tag, index) in about.tags"
-                           :key="index"
-                           class="tags"
-                           type="text"
-                           :value="tag"
-                           :placeholder="tag"
-                           @click="updateTagFilter(tag)"
-                           readonly
-                    />
-                    <p class="m-2">Use tags to filter by project type or technology</p>
-                    <p>Sorting by < {{ tagFilter }} ></p>
-                </div>
+                <v-card
+                        v-if="filterToggle"
+                        shaped>
+                    <v-card-title>
+                        <v-chip-group
+                                active-class="primary--text"
+                                column
+                        >
+                            <v-row justify="center">
+                                <v-chip
+                                        @click="updateTagFilter('ALL')"
+                                        value="ALL"
+                                >
+                                    ALL
+                                </v-chip>
+                                <v-chip
+                                        v-for="tag in about.tags" :key="tag"
+                                        @click="updateTagFilter(tag)"
+                                        v-ripple
+                                >
+                                    {{ tag }}
+                                </v-chip>
+                            </v-row>
+                        </v-chip-group>
+                    </v-card-title>
+                    <v-card-text class="subtitle-1">
+                        <p>Use tags to filter by project type or technology</p>
+                        <p>Sorting by < {{ tagFilter }} ></p>
+                    </v-card-text>
+                </v-card>
             </v-col>
             <v-col
                     lg="8"
@@ -37,6 +52,7 @@
                 <v-card
                         elevation="24"
                         tile
+                        class="mb-2"
                         :to="{ name: 'PortfolioView', params: {
                             project_slug: project.slug,
                             project_id: project.id }}"
@@ -52,6 +68,8 @@
                     </v-img>
                 </v-card>
             </v-col>
+
+
         </v-row>
     </v-container>
 </template>
@@ -109,25 +127,10 @@
 </script>
 
 <style>
-    /*tags*/
-    input.tags {
-        border: 1px black solid;
-        border-radius: 1em;
-        margin: 4px;
-        padding: 4px 0;
-        font-size: .9em;
-        text-align: center;
-    }
-
     .tagList {
         border: 1px grey solid;
         border-radius: 1em;
-        padding: 1em 0 0 0;
-        margin: .9em;
-    }
-
-    .tagList ::placeholder {
-        color: black
+        padding: .5em;
     }
 
     .filter-toggle {
@@ -136,15 +139,5 @@
 
     .arrow {
         font-size: 2em;
-    }
-
-    .filter-button {
-        padding: 1px;
-        margin: 1px;
-    }
-
-    @media only screen and (min-width: 768px) {
-        .project img {
-        }
     }
 </style>

@@ -93,15 +93,9 @@
     div.resourceList {
         list-style-type: none;
         text-align: left;
-        padding-bottom: 7em;
     }
 
     li.techList {
         text-align: left;
-    }
-
-    img {
-        max-height: 500px;
-        margin: 5px;
     }
 </style>

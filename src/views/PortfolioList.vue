@@ -127,12 +127,6 @@
 </script>
 
 <style>
-    .tagList {
-        border: 1px grey solid;
-        border-radius: 1em;
-        padding: .5em;
-    }
-
     .filter-toggle {
         cursor: pointer;
     }

@@ -1,6 +1,19 @@
 <template>
     <v-app>
-        <Navbar id="navbar"/>
+        <v-navigation-drawer
+                v-model="drawer"
+                app
+                temporary
+        >
+            <Navbar/>
+        </v-navigation-drawer>
+        <v-app-bar
+                app
+                dark
+        >
+
+            <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
+        </v-app-bar>
         <v-content>
             <v-container>
                 <v-row justify="center">
@@ -28,7 +41,6 @@
 
     h1 {
         text-align: left;
-        margin: 1em 0;
     }
 
     .first-header {
@@ -40,6 +52,11 @@
     import Footer from "./components/Footer";
 
     export default {
-        components: {Footer, Navbar}
+        components: {Footer, Navbar},
+        data() {
+            return {
+                drawer: false,
+            }
+        }
     }
 </script>

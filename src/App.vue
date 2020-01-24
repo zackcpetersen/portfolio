@@ -1,18 +1,18 @@
 <template>
     <v-app>
-        <v-container fluid>
-            <v-row justify="center">
-                <v-col lg="9">
-                    <div id="app">
-                        <Navbar id="navbar"/>
-                        <div class="content" id="page-wrap">
-                            <router-view/>
-                            <Footer/>
-                        </div>
-                    </div>
-                </v-col>
-            </v-row>
-        </v-container>
+        <Navbar id="navbar"/>
+        <v-content>
+            <v-container>
+                <v-row justify="center">
+                    <v-col lg="9">
+                        <router-view/>
+                    </v-col>
+                </v-row>
+            </v-container>
+        </v-content>
+        <v-footer :padless="true" absolute app>
+            <Footer/>
+        </v-footer>
     </v-app>
 </template>
 
@@ -34,6 +34,7 @@
         text-align: left;
         margin: 1em 0;
     }
+
     .first-header {
         color: #AB47BC;
     }

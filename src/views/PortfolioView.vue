@@ -37,18 +37,26 @@
         <div class="about mt-4">
             <h2>About This Project</h2>
             <p>{{ project.description }}</p>
-            <v-divider />
+            <v-divider/>
         </div>
 
         <div class="techSheet">
             <h2>Technical Sheet</h2>
             <p>Technology I used to create this project</p>
-            <ul>
-                <li v-for="(tech, index) in project.technology" :key="index" class="techList">{{ tech }}</li>
-            </ul>
+            <v-expansion-panels popout>
+                <v-expansion-panel
+                        v-for="(tech, index) in project.technology"
+                        :key="index"
+                >
+                    <v-expansion-panel-header>{{ tech }}</v-expansion-panel-header>
+                    <v-expansion-panel-content>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </v-expansion-panel-content>
+                </v-expansion-panel>
+            </v-expansion-panels>
         </div>
 
-        <v-divider />
+        <v-divider/>
 
         <div class="resources">
             <h2>Resources</h2>
@@ -92,10 +100,6 @@
 <style>
     div.resourceList {
         list-style-type: none;
-        text-align: left;
-    }
-
-    li.techList {
         text-align: left;
     }
 </style>

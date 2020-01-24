@@ -6,9 +6,9 @@
     <!--            <router-link :to="{ name: 'PortfolioList' }" class="link">PORTFOLIO</router-link>-->
     <!--            <SocialLinks />-->
     <!--        </Push>-->
-
-        <v-list>
-            <v-list-item link>
+<v-container>
+        <v-list nav shaped>
+            <v-list-item link :to="{ name: 'About' }" exact>
                 <v-list-item-action>
                     <v-icon>mdi-home</v-icon>
                 </v-list-item-action>
@@ -18,16 +18,29 @@
                 </v-list-item-content>
             </v-list-item>
 
-            <v-list-item link>
+            <v-list-item link :to="{ name: 'Contact' }" exact>
                 <v-list-item-action>
-                    <v-icon>mdi-contact-mail</v-icon>
+                    <v-icon>mdi-account-box</v-icon>
                 </v-list-item-action>
 
                 <v-list-item-content>
                     <v-list-item-title>Contact</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
+
+            <v-list-item link :to="{ name: 'PortfolioList' }" exact>
+                <v-list-item-action>
+                    <v-icon>mdi-xml</v-icon>
+                </v-list-item-action>
+
+                <v-list-item-content>
+                    <v-list-item-title>Portfolio</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
         </v-list>
+    <v-divider />
+    <SocialLinks class="mt-5"/>
+</v-container>
 </template>
 
 <script>

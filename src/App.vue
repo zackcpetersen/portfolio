@@ -11,8 +11,7 @@
                 app
                 dark
         >
-
-            <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
+            <v-app-bar-nav-icon x-large @click.stop="drawer = !drawer"/>
         </v-app-bar>
         <v-content>
             <v-container>
@@ -41,6 +40,10 @@
 
     h1 {
         text-align: left;
+    }
+
+    .v-application a {
+        text-decoration: none;
     }
 
     .first-header {

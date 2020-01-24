@@ -7,13 +7,13 @@
                     <strong>contact page!</strong>
                 </router-link>
             </p>
-            <v-btn class="mx-4" icon :to="{ name: 'About' }">
+            <v-btn class="mx-4" icon :to="{ name: 'About' }" exact>
                 <v-icon>mdi-home</v-icon>
             </v-btn>
-            <v-btn class="mx-4" icon href="mailto:zackcpetersen@gmail.com">
+            <v-btn class="mx-4" icon href="mailto:zackcpetersen@gmail.com" exact>
                 <v-icon>mdi-email</v-icon>
             </v-btn>
-            <v-btn class="mx-4" icon href="sms:3854045953">
+            <v-btn class="mx-4" icon href="sms:3854045953" exact>
                 <v-icon>mdi-message-text</v-icon>
             </v-btn>
         </v-container>

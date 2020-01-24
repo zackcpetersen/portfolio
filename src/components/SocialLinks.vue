@@ -24,9 +24,6 @@
 
 <style>
     .instagram {
-        text-align: center;
-        vertical-align: middle;
-        background: #d6249f;
         background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
         border: none;
     }
@@ -38,10 +35,5 @@
     .social-link {
         border-radius: 25%;
         margin: 0 .2em;
-    }
-
-    .social-links {
-        position: relative;
-        padding-left: .5em;
     }
 </style>

@@ -26,10 +26,6 @@
         text-align: center;
     }
 
-    .content {
-        margin-top: 1.5em;
-    }
-
     h1 {
         text-align: left;
         margin: 1em 0;

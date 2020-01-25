@@ -8,33 +8,13 @@
     <!--        </Push>-->
 <v-container>
         <v-list nav shaped>
-            <v-list-item link :to="{ name: 'About' }" exact>
+             <v-list-item link v-for="link in links" :key="link.text" :to="{ name: link.route }" exact>
                 <v-list-item-action>
-                    <v-icon>mdi-home</v-icon>
+                    <v-icon>{{ link.icon }}</v-icon>
                 </v-list-item-action>
 
                 <v-list-item-content>
-                    <v-list-item-title>Home</v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
-
-            <v-list-item link :to="{ name: 'Contact' }" exact>
-                <v-list-item-action>
-                    <v-icon>mdi-account-box</v-icon>
-                </v-list-item-action>
-
-                <v-list-item-content>
-                    <v-list-item-title>Contact</v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
-
-            <v-list-item link :to="{ name: 'PortfolioList' }" exact>
-                <v-list-item-action>
-                    <v-icon>mdi-xml</v-icon>
-                </v-list-item-action>
-
-                <v-list-item-content>
-                    <v-list-item-title>Portfolio</v-list-item-title>
+                    <v-list-item-title>{{ link.text }}</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
         </v-list>
@@ -48,10 +28,15 @@
     import SocialLinks from "./SocialLinks";
 
     export default {
-        name: "Navbar",
+        name: "NavDrawer",
         data() {
             return {
                 collapseOnScroll: true,
+                links: [
+                    { icon: 'mdi-home', text: 'Home', route: 'About' },
+                    { icon: 'mdi-account-box', text: 'Contact', route: 'Contact' },
+                    { icon: 'mdi-xml', text: 'Portfolio', route: 'PortfolioList' },
+                ],
             }
         },
         components: {

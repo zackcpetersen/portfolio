@@ -5,7 +5,7 @@
                 app
                 temporary
         >
-            <Navbar/>
+            <NavDrawer />
         </v-navigation-drawer>
         <v-app-bar
                 app
@@ -53,11 +53,11 @@
     }
 </style>
 <script>
-    import Navbar from "./components/Navbar";
+    import NavDrawer from "./components/NavDrawer";
     import Footer from "./components/Footer";
 
     export default {
-        components: {Footer, Navbar},
+        components: {Footer, NavDrawer},
         data() {
             return {
                 drawer: false,

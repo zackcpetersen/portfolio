@@ -4,7 +4,6 @@ import About from "../views/About";
 import Contact from "../views/Contact";
 import PortfolioList from "../views/PortfolioList";
 import PortfolioView from "../views/PortfolioView";
-import HelloWorld from "../components/HelloWorld";
 
 Vue.use(VueRouter)
 
@@ -28,11 +27,6 @@ const routes = [
         path: '/portfolio',
         name: 'PortfolioList',
         component: PortfolioList
-    },
-    {
-        path: '/hello-world',
-        name: 'HelloWord',
-        component: HelloWorld
     },
     // {
     // path: '/contact',

@@ -43,7 +43,7 @@
         <div class="techSheet">
             <h2>Technical Sheet</h2>
             <p>Technology I used to create this project</p>
-            <v-expansion-panels popout>
+            <v-expansion-panels popout flat>
                 <v-expansion-panel
                         v-for="(tech, index) in project.technology"
                         :key="index"
@@ -59,7 +59,6 @@
         <v-divider/>
 
         <div class="resources">
-            <h2>Resources</h2>
             <div class="resourceList">
                 <p v-if="project.liveUrl" class="my-1">
                     See this project live at <a :href="project.liveUrl">{{ project.liveUrl.split("www.")[1] }}</a>

@@ -2,52 +2,7 @@
     <v-form
             ref="form"
             v-model="valid"
-            :lazy-validation="lazy">
-        <v-text-field
-                v-show="[1, 2, 3, 4].includes(step)"
-                v-model="fields.name"
-                :counter="30"
-                :rules="fields.nameRules"
-                label="Name"
-                required
-        />
-        <v-expand-transition>
-            <v-text-field
-                    v-show="[2, 3, 4].includes(step)"
-                    v-model="fields.email"
-                    :rules="fields.emailRules"
-                    label="E-mail"
-                    required
-            />
-        </v-expand-transition>
-        <v-expand-transition>
-            <v-text-field
-                    v-show="[3, 4].includes(step)"
-                    v-model="fields.phone"
-                    :rules="fields.phoneRules"
-                    label="Phone"
-            />
-        </v-expand-transition>
-        <v-expand-transition>
-            <div v-show="[4].includes(step)">
-                <v-textarea
-                        outlined
-                        v-model="fields.message"
-                        name="input-7-1"
-                        :rules="fields.messageRules"
-                        label="Message"
-                        required
-                />
-                <v-btn
-                        :disabled="!valid"
-                        color="success"
-                        class="mr-4"
-                        @click="validate"
-                >
-                    Send Message
-                </v-btn>
-            </div>
-        </v-expand-transition>
+            lazy-validation>
         <v-progress-linear
                 :active="progress.active"
                 :background-opacity="progress.opacity"
@@ -61,9 +16,66 @@
                 :striped="progress.striped"
                 :top="progress.top"
                 :value="progress.value"
-                color="grey"
-                class="mt-10"
+                class="mt-10 mb-2"
         />
+        <p class="font-weight-light font-italic text-center">{{ progress.value }}%</p>
+        <v-text-field
+                v-show="[1, 2, 3, 4].includes(step)"
+                v-model="fields.name"
+                :counter="30"
+                :rules="fieldRules.nameRules"
+                label="Name"
+                required
+        />
+        <v-expand-transition>
+            <v-text-field
+                    v-show="[2, 3, 4].includes(step)"
+                    v-model="fields.email"
+                    :rules="fieldRules.emailRules"
+                    label="E-mail"
+                    required
+            />
+        </v-expand-transition>
+        <v-expand-transition>
+            <v-text-field
+                    v-show="[3, 4].includes(step)"
+                    v-model="fields.phone"
+                    :rules="fieldRules.phoneRules"
+                    label="Phone"
+            />
+        </v-expand-transition>
+        <v-expand-transition>
+            <div v-show="[4].includes(step)">
+                <v-textarea
+                        outlined
+                        v-model="fields.message"
+                        name="input-7-1"
+                        :rules="fieldRules.messageRules"
+                        label="Message"
+                        required
+                />
+                <v-btn
+                        :disabled="!valid"
+                        color="success"
+                        class="mr-4"
+                        @click="validate"
+                >
+                    Send Message
+                </v-btn>
+            </div>
+        </v-expand-transition>
+        <v-snackbar
+                v-model="snackbar"
+                multi-line='multi-line'
+                :timeout="4000"
+                color="primary"
+                class="text-center"
+        >
+            <v-row justify="center">
+                I'll be in touch soon!
+            </v-row>
+
+        </v-snackbar>
     </v-form>
 
 </template>
@@ -76,6 +88,11 @@
                 valid: true,
                 fields: {
                     name: '',
+                    email: '',
+                    phone: '',
+                    message: '',
+                },
+                fieldRules: {
                     nameRules: [
                         v => !!v || 'Name is required',
                         v => (v && v.length <= 30) || 'Name must be less than 30 characters',
@@ -88,7 +105,6 @@
                             return false
                         }
                     ],
-                    email: '',
                     emailRules: [
                         v => !!v || 'E-mail is required',
                         v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
@@ -101,7 +117,6 @@
                             return false
                         }
                     ],
-                    phone: '',
                     phoneRules: [
                         v => /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(v) || 'Invalid Phone Number',
                         v => {
@@ -113,7 +128,6 @@
                             return false
                         }
                     ],
-                    message: '',
                     messageRules: [
                         v => !!v || 'Message is required',
                         v => {
@@ -143,12 +157,17 @@
                 },
                 lazy: false,
                 step: 1,
+                snackbar: false,
+                mode: '',
             }
         },
         methods: {
             validate() {
                 if (this.$refs.form.validate()) {
-                    alert('You Did It!')
+                    this.snackbar = true
+                    this.$refs.form.reset()
+                    this.step = 1
+                    this.progress.value = 0
                     // what to do on form valid
                     // send data to firebase
                 }

@@ -1,11 +1,10 @@
 <template>
-    <div class="about container">
-        <!--        <h1>About Me</h1>-->
-        <h1>{{ myName }}</h1>
-        <img :src="photo">
-        <p>{{ aboutMe }}</p>
-        <SocialLinks />
-    </div>
+    <v-container class="about">
+        <h1><span class="first-header">Hello, </span>My name is Zack Petersen</h1>
+                <img :src="photo">
+                <p>{{ aboutMe }}</p>
+                <SocialLinks/>
+    </v-container>
 </template>
 
 <script>
@@ -43,6 +42,7 @@
         border-radius: 50%;
         margin: 1em;
     }
+
     .about p {
         text-align: left;
         padding: 1em;

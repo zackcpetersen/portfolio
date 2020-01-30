@@ -1,31 +1,35 @@
 <template>
-    <div class="footer">
-        <p><strong>Let's Talk!</strong></p>
-        <p>Wanna get in touch? Feel Free to contact me at
-            <br><strong>- <a href="mailto:zackcpetersen@gmail.com">zackcpetersen@gmail.com</a></strong>
-            <br><strong>- <a href="tel:3854045953">(385) 404-5953</a></strong>
-            <br>or leave me a message on the <strong><router-link :to="{ name: 'Contact' }" class="link">contact page!
-            </router-link></strong></p>
-    </div>
+
+        <v-container>
+            <strong>Let's Talk!</strong>
+            <p>Wanna get in touch? Feel Free to contact with the options below or by using the
+                <router-link :to="{ name: 'Contact' }" class="link">
+                    <strong>contact page!</strong>
+                </router-link>
+            </p>
+            <v-btn class="mx-4" :to="{ name: 'About' }" icon ripple exact>
+                <v-icon>mdi-home</v-icon>
+            </v-btn>
+
+            <v-btn v-for="link in links" :key="link.name" :href="link.link" class="mx-4" icon ripple exact>
+                <v-icon>{{ link.icon }}</v-icon>
+            </v-btn>
+        </v-container>
 </template>
 
 <script>
     export default {
         name: "Footer",
+        data() {
+            return {
+                links: [
+                    { link: 'mailto:zackcpetersen@gmail.com', icon: 'mdi-email', name: 'Email' },
+                    { link: 'sms:3854045953', icon: 'mdi-message-text' }
+                ]
+            }
+        }
     }
 </script>
 
 <style>
-    .footer {
-        position: relative;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        text-align: center;
-        margin: 2em 0 2em 0;
-    }
-    .footer p {
-        padding: 0 .5em;
-    }
-
 </style>

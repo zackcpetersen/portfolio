@@ -1,47 +1,46 @@
 <template>
-    <div class="social-links">
-                <a class="btn btn-lg btn-social-icon btn-instagram instagram social-link"
-                   href="https://www.instagram.com/zackcpetersen/" target="_blank" rel="noopener noreferrer">
-                    <span class="fab fa-instagram insta_icon"></span>
-                </a>
-                <a class="btn btn-lg btn-social-icon btn-github social-link" href="https://github.com/zackcpetersen"
-                   target="_blank"
-                   rel="noopener noreferrer">
-                    <span class="fab fa-github github-icon"></span>
-                </a>
-                <a class="btn btn-lg btn-social-icon btn-linkedin social-link" href="https://www.linkedin.com/in/zackcpetersen/"
-                   target="_blank" rel="noopener noreferrer">
-                    <span class="fab fa-linkedin-in linkedin-icon"></span>
-                </a>
-            </div>
+    <v-container>
+        <v-row justify="center">
+            <v-card
+                    v-for="button in socialButtons" :key="button.text"
+                    :href="button.link"
+                    class="social-links mx-2"
+                    :id="button.text"
+                    ripple
+                    hover
+            >
+                <v-icon large class="pa-1">{{ button.icon }}</v-icon>
+            </v-card>
+        </v-row>
+    </v-container>
 </template>
 
 <script>
     export default {
-        name: "SocialLinks"
+        name: "SocialLinks",
+        data() {
+            return {
+                socialButtons: [
+                    {icon: 'mdi-instagram', link: 'https://www.instagram.com/zackcpetersen', text: 'Instagram'},
+                    {icon: 'mdi-github-circle', link: 'https://github.com/zackcpetersen', text: 'GitHub'},
+                    {icon: 'mdi-linkedin', link: 'https://www.linkedin.com/in/zackcpetersen/', text: 'LinkedIn'}
+                ]
+            }
+        }
     }
 </script>
 
 <style>
-    .instagram {
-        text-align: center;
-        vertical-align: middle;
-        background: #d6249f;
+    #Instagram {
         background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
         border: none;
     }
 
-    .insta_icon, .github-icon, .linkedin-icon {
-        color: white;
-    }
-
-    .social-link {
-        border-radius: 25%;
-        margin: 0 .2em;
+    #LinkedIn {
+        background: #0e76a8;
     }
 
     .social-links {
-        position: relative;
-        padding-left: .5em;
+        border-radius: 25% !important;
     }
 </style>

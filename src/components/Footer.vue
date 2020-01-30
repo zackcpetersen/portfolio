@@ -7,14 +7,12 @@
                     <strong>contact page!</strong>
                 </router-link>
             </p>
-            <v-btn class="mx-4" icon :to="{ name: 'About' }" exact>
+            <v-btn class="mx-4" :to="{ name: 'About' }" icon ripple exact>
                 <v-icon>mdi-home</v-icon>
             </v-btn>
-            <v-btn class="mx-4" icon href="mailto:zackcpetersen@gmail.com" exact>
-                <v-icon>mdi-email</v-icon>
-            </v-btn>
-            <v-btn class="mx-4" icon href="sms:3854045953" exact>
-                <v-icon>mdi-message-text</v-icon>
+
+            <v-btn v-for="link in links" :key="link.name" :href="link.link" class="mx-4" icon ripple exact>
+                <v-icon>{{ link.icon }}</v-icon>
             </v-btn>
         </v-container>
 </template>
@@ -22,6 +20,14 @@
 <script>
     export default {
         name: "Footer",
+        data() {
+            return {
+                links: [
+                    { link: 'mailto:zackcpetersen@gmail.com', icon: 'mdi-email', name: 'Email' },
+                    { link: 'sms:3854045953', icon: 'mdi-message-text' }
+                ]
+            }
+        }
     }
 </script>
 

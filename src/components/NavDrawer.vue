@@ -1,11 +1,4 @@
 <template>
-    <!--    <div class="nav">-->
-    <!--        <Push>-->
-    <!--            <router-link :to="{ name: 'About' }" class="link">ABOUT</router-link>-->
-    <!--            <router-link :to="{ name: 'Contact' }" class="link">CONTACT</router-link>-->
-    <!--            <router-link :to="{ name: 'PortfolioList' }" class="link">PORTFOLIO</router-link>-->
-    <!--            <SocialLinks />-->
-    <!--        </Push>-->
 <v-container>
         <v-list nav shaped>
              <v-list-item link v-for="link in links" :key="link.text" :to="{ name: link.route }" exact>
@@ -24,7 +17,6 @@
 </template>
 
 <script>
-    import {Push} from 'vue-burger-menu'
     import SocialLinks from "./SocialLinks";
 
     export default {
@@ -41,7 +33,6 @@
         },
         components: {
             SocialLinks,
-            Push
         }
     }
 </script>

@@ -1,6 +1,5 @@
 <template>
     <v-container class="about">
-<!--                <h1>{{ myName }}</h1>-->
         <h1><span class="first-header">Hello, </span>My name is Zack Petersen</h1>
                 <img :src="photo">
                 <p>{{ aboutMe }}</p>

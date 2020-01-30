@@ -6,14 +6,9 @@
 
         <v-row justify="center">
             <v-col :xl="9">
-                <v-hover
-                        v-slot:default="{ hover }"
-                        value
-                >
-                    <v-btn v-if="project.liveUrl" :href="project.liveUrl" color="primary" block class="mb-2">Visit
-                        Website
+                    <v-btn v-if="project.liveUrl" :href="project.liveUrl" color="primary" block class="mb-2">
+                        Visit Website
                     </v-btn>
-                </v-hover>
                 <v-card elevation="8">
                     <v-carousel
                             cycle
@@ -25,8 +20,6 @@
                                 v-for="(img, i) in project.images"
                                 :key="i"
                                 :src="img"
-                                transition="slide-x-transition"
-                                reverse-transition="slide-x-reverse-transition"
                         >
                         </v-carousel-item>
                     </v-carousel>

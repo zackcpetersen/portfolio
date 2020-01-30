@@ -1,6 +1,5 @@
 <template>
     <v-container class="contact">
-<!--        <h1>{{ header }}</h1>-->
         <h1>Have a<span class="first-header"> question</span>?</h1>
         <p>Fill out the fields below and I'll be in touch!</p>
         <v-divider />
@@ -18,7 +17,9 @@
                 header: 'Have A Question?'
             }
         },
-        components: {ContactForm}
+        components: {
+            ContactForm
+        }
     }
 </script>
 

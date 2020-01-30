@@ -7,14 +7,16 @@
 
                 <v-divider/>
 
-                <div class="filter-toggle" @click="filterToggle = !filterToggle">
+                <div class="filter-toggle mt-4" @click="filterToggle = !filterToggle">
                     <p class="filter-button" v-if="!filterToggle"><strong>Show Filters</strong></p>
+                    <v-icon v-if="!filterToggle">mdi-chevron-down</v-icon>
                     <p class="filter-button" v-if="filterToggle"><strong>Hide Filters</strong></p>
-                    <i class="fas fa-angle-down arrow"></i>
+                    <v-icon v-if="filterToggle">mdi-chevron-up</v-icon>
                 </div>
                 <v-card
+                        raised
                         v-if="filterToggle"
-                        shaped>
+                >
                     <v-card-title>
                         <v-chip-group
                                 active-class="primary--text"
@@ -68,8 +70,6 @@
                     </v-img>
                 </v-card>
             </v-col>
-
-
         </v-row>
     </v-container>
 </template>
@@ -129,9 +129,5 @@
 <style>
     .filter-toggle {
         cursor: pointer;
-    }
-
-    .arrow {
-        font-size: 2em;
     }
 </style>

@@ -17,7 +17,7 @@
         <v-content>
             <v-container>
                 <v-row justify="center">
-                    <v-col lg="9">
+                    <v-col>
                         <router-view/>
                     </v-col>
                 </v-row>
@@ -30,8 +30,6 @@
 </template>
 
 <style>
-    @import "assets/bootstrap-social.css";
-
     #app {
         font-family: 'Roboto', sans-serif;
         -webkit-font-smoothing: antialiased;
@@ -56,7 +54,10 @@
     import Footer from "./components/Footer";
 
     export default {
-        components: {Footer, NavDrawer},
+        components: {
+            Footer,
+            NavDrawer
+        },
         data() {
             return {
                 drawer: false,

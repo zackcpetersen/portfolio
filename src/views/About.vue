@@ -1,8 +1,9 @@
 <template>
     <v-container class="about">
         <h1><span class="first-header">Hello, </span>My name is Zack Petersen</h1>
-                <img :src="photo">
+                <img :src="photo" class="my-10">
                 <p>{{ aboutMe }}</p>
+        <v-divider class="my-10" />
                 <SocialLinks/>
     </v-container>
 </template>

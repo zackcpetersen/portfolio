@@ -1,6 +1,6 @@
 <template>
 
-        <v-container>
+        <v-container class="my-2">
             <strong>Let's Talk!</strong>
             <p>Wanna get in touch? Feel Free to contact with the options below or by using the
                 <router-link :to="{ name: 'Contact' }" class="link">

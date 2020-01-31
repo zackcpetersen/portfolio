@@ -5,7 +5,7 @@
                 <h1>Here's some of <span class="first-header">my Work</span></h1>
                 <p>{{ about.description }}</p>
 
-                <v-divider/>
+                <v-divider class="my-10" />
 
                 <div class="filter-toggle mt-4" @click="filterToggle = !filterToggle">
                     <p class="filter-button" v-if="!filterToggle"><strong>Show Filters</strong></p>

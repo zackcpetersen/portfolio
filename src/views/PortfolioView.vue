@@ -6,9 +6,9 @@
 
         <v-row justify="center">
             <v-col :xl="9">
-                    <v-btn v-if="project.liveUrl" :href="project.liveUrl" color="primary" block class="mb-2">
-                        Visit Website
-                    </v-btn>
+                <v-btn v-if="project.liveUrl" :href="project.liveUrl" color="primary" block class="mb-2">
+                    Visit Website
+                </v-btn>
                 <v-card elevation="8">
                     <v-carousel
                             cycle
@@ -27,39 +27,39 @@
             </v-col>
         </v-row>
 
-        <div class="about mt-4">
+        <div class="about mt-10">
             <h2>About This Project</h2>
             <p>{{ project.description }}</p>
-            <v-divider/>
+            <v-divider class="my-10"/>
         </div>
 
         <div class="techSheet">
             <h2>Technical Sheet</h2>
             <p>Technology I used to create this project</p>
-            <v-expansion-panels popout flat>
+            <v-expansion-panels popout flat class="mt-5">
                 <v-expansion-panel
                         v-for="(tech, index) in project.technology"
                         :key="index"
                 >
                     <v-expansion-panel-header>{{ tech }}</v-expansion-panel-header>
                     <v-expansion-panel-content>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat.
                     </v-expansion-panel-content>
                 </v-expansion-panel>
             </v-expansion-panels>
         </div>
 
-        <v-divider/>
+        <v-divider class="my-10" />
 
-        <div class="resources">
-            <div class="resourceList">
-                <p v-if="project.liveUrl" class="my-1">
-                    See this project live at <a :href="project.liveUrl">{{ project.liveUrl.split("www.")[1] }}</a>
-                </p>
-                <p v-if="project.githubUrl">
-                    See project source at <a :href="project.githubUrl">Github</a>
-                </p>
-            </div>
+        <div class="resourceList">
+            <p v-if="project.liveUrl" class="my-1">
+                See this project live at <a :href="project.liveUrl">{{ project.liveUrl.split("www.")[1] }}</a>
+            </p>
+            <p v-if="project.githubUrl">
+                See project source at <a :href="project.githubUrl">Github</a>
+            </p>
         </div>
     </v-container>
 </template>

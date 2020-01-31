@@ -2,7 +2,7 @@
     <v-container class="contact">
         <h1>Have a<span class="first-header"> question</span>?</h1>
         <p>Fill out the fields below and I'll be in touch!</p>
-        <v-divider />
+        <v-divider class="my-10" />
         <ContactForm/>
     </v-container>
 </template>

@@ -1,17 +1,17 @@
 <template>
     <v-container v-if="project" class="portfolio-view">
-        <div class="title">
-            <h1 class="font-italic font-weight-bold display-1">{{ project.name }}</h1>
-        </div>
-
         <v-row justify="center">
-            <v-col :xl="9">
-                <v-btn v-if="project.liveUrl" :href="project.liveUrl" color="primary" block class="mb-2">
-                    Visit Website
-                </v-btn>
+            <v-col xl="7" lg="10">
+                <v-row justify="center" class="mb-5">
+                    <h1 class="font-italic font-weight-bold display-1">{{ project.name }}</h1>
+                </v-row>
+                <v-row justify="start">
+                    <v-btn v-if="project.liveUrl" :href="project.liveUrl" color="primary" class="ma-3">
+                        Visit Website
+                    </v-btn>
+                </v-row>
                 <v-card elevation="8">
                     <v-carousel
-                            cycle
                             show-arrows-on-hover
                             height="auto"
                             progress

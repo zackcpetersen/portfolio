@@ -55,9 +55,7 @@
                         elevation="24"
                         tile
                         class="mb-2"
-                        :to="{ name: 'PortfolioView', params: {
-                            project_slug: project.slug,
-                            project_id: project.id }}"
+                        :to="{ name: 'PortfolioView', params: { project_slug: project.slug }}"
                 >
 
                     <v-img

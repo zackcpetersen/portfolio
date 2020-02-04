@@ -81,6 +81,7 @@
 </template>
 
 <script>
+    import db from '@/firebase/init'
     export default {
         name: "ContactForm",
         data() {
@@ -164,12 +165,18 @@
         methods: {
             validate() {
                 if (this.$refs.form.validate()) {
+                    db.collection('contact').add({
+                        name: this.fields.name,
+                        email: this.fields.email,
+                        phone: this.fields.phone,
+                        message: this.fields.message
+                    }).catch(err => {
+                        console.log(err)
+                    })
                     this.snackbar = true
                     this.$refs.form.reset()
                     this.step = 1
                     this.progress.value = 0
-                    // what to do on form valid
-                    // send data to firebase
                 }
             },
         }

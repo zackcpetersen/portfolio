@@ -1,9 +1,12 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+  match /contact/{document=**} {
+    allow write;
+    }
     match /{document=**} {
       allow read;
-      allow write: if false;
+      allow write: if false
     }
   }
 }

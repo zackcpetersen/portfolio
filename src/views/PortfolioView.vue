@@ -28,24 +28,22 @@
         </v-row>
 
         <div class="about mt-10">
-            <h2>About This Project</h2>
+            <h2 class="text-left pl-4">About This Project</h2>
             <p>{{ project.description }}</p>
             <v-divider class="my-10"/>
         </div>
 
         <div class="techSheet">
-            <h2>Technical Sheet</h2>
-            <p>Technology I used to create this project</p>
+            <h2 class="text-left pl-4">Technical Sheet</h2>
+            <p class="text-left pl-4">Technology I used to create this project</p>
             <v-expansion-panels popout flat class="mt-5">
                 <v-expansion-panel
                         v-for="(tech, index) in project.technology"
                         :key="index"
                 >
                     <v-expansion-panel-header>{{ tech }}</v-expansion-panel-header>
-                    <v-expansion-panel-content>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat.
+                    <v-expansion-panel-content class="text-left">
+                        {{ project[tech] }}
                     </v-expansion-panel-content>
                 </v-expansion-panel>
             </v-expansion-panels>

@@ -82,6 +82,7 @@
 
 <script>
     import db from '@/firebase/init'
+
     export default {
         name: "ContactForm",
         data() {
@@ -166,10 +167,14 @@
             validate() {
                 if (this.$refs.form.validate()) {
                     db.collection('contact').add({
-                        name: this.fields.name,
-                        email: this.fields.email,
-                        phone: this.fields.phone,
-                        message: this.fields.message
+                        to: ['zackcpetersen@gmail.com'],
+                        message: {
+                            subject: 'New Contact Form Submission From: ' + this.fields.name + '!',
+                            text: 'Name: ' + this.fields.name +
+                                '\n\nPhone: ' + this.fields.phone +
+                                '\n\nEmail: ' + this.fields.email +
+                                '\n\nMessage Below: \n\n' + this.fields.message
+                        }
                     }).catch(err => {
                         console.log(err)
                     })
@@ -178,7 +183,7 @@
                     this.step = 1
                     this.progress.value = 0
                 }
-            },
+            }
         }
     }
 </script>

@@ -8,6 +8,7 @@
                     :id="button.text"
                     ripple
                     hover
+                    target="_blank"
             >
                 <v-icon large class="pa-1">{{ button.icon }}</v-icon>
             </v-card>

@@ -3,9 +3,9 @@
         <v-row justify="center">
             <v-col lg="8">
                 <h1>Here's some of <span class="first-header">my Work</span></h1>
-                <p>{{ about.description }}</p>
+                <p class="text-left">{{ about.description }}</p>
 
-                <v-divider/>
+                <v-divider class="my-10" />
 
                 <div class="filter-toggle mt-4" @click="filterToggle = !filterToggle">
                     <p class="filter-button" v-if="!filterToggle"><strong>Show Filters</strong></p>
@@ -55,9 +55,7 @@
                         elevation="24"
                         tile
                         class="mb-2"
-                        :to="{ name: 'PortfolioView', params: {
-                            project_slug: project.slug,
-                            project_id: project.id }}"
+                        :to="{ name: 'PortfolioView', params: { project_slug: project.slug }}"
                 >
 
                     <v-img
@@ -94,7 +92,7 @@
         methods: {
             updateTagFilter(tag) {
                 this.tagFilter = tag
-            },
+            }
         },
         computed: {
             filterProjects() {

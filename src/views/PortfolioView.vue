@@ -49,7 +49,7 @@
             </v-expansion-panels>
         </div>
 
-        <v-divider class="my-10" />
+        <v-divider class="my-10"/>
 
         <div class="resourceList">
             <p v-if="project.liveUrl" class="my-1">

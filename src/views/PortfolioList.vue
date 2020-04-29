@@ -92,7 +92,7 @@
         methods: {
             updateTagFilter(tag) {
                 this.tagFilter = tag
-            },
+            }
         },
         computed: {
             filterProjects() {

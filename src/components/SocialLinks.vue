@@ -23,7 +23,7 @@
             return {
                 socialButtons: [
                     {icon: 'mdi-instagram', link: 'https://www.instagram.com/zackcpetersen', text: 'Instagram'},
-                    {icon: 'mdi-github-circle', link: 'https://github.com/zackcpetersen', text: 'GitHub'},
+                    {icon: 'mdi-github', link: 'https://github.com/zackcpetersen', text: 'GitHub'},
                     {icon: 'mdi-linkedin', link: 'https://www.linkedin.com/in/zackcpetersen/', text: 'LinkedIn'}
                 ]
             }

@@ -10,6 +10,7 @@
 
 <script>
     import db from '@/firebase/init'
+    import 'firebase/firestore'
     import SocialLinks from "../components/SocialLinks";
 
     export default {

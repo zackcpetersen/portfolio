@@ -9,6 +9,9 @@
                     <v-btn v-if="project.liveUrl" :href="project.liveUrl" color="primary" class="ma-3">
                         Visit Website
                     </v-btn>
+                    <v-btn v-if="project.githubUrl" :href="project.githubUrl" color="warning" class="my-3 black--text">
+                        See Source
+                    </v-btn>
                 </v-row>
                 <v-card elevation="8">
                     <v-carousel
@@ -29,7 +32,11 @@
 
         <div class="about mt-10">
             <h2 class="text-left pl-4">About This Project</h2>
-            <p>{{ project.description }}</p>
+            <p v-for="description in project.description" class="ma-0 pt-0">{{ description }}</p>
+            <h2 class="text-left pl-4">Challenges</h2>
+            <p v-for="challenge in project.challenges" class="ma-0 pt-0">{{ challenge }}</p>
+            <h2 class="text-left pl-4">Solutions</h2>
+            <p v-for="solution in project.solutions" class="ma-0 pt-0">{{ solution }}</p>
             <v-divider class="my-10"/>
         </div>
 

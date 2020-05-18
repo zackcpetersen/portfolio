@@ -1,10 +1,23 @@
 <template>
     <v-container class="about">
-        <h1><span class="first-header">Hello, </span>My name is Zack Petersen</h1>
-                <img :src="photo" class="my-10">
-                <p>{{ aboutMe }}</p>
-        <v-divider class="my-10" />
-                <SocialLinks/>
+        <v-row justify="center" align="center" class="mb-5">
+            <h1 class="text-center"><span class="first-header">Hello,</span> my name is Zack Petersen</h1>
+        </v-row>
+        <v-row justify="center">
+            <SocialLinks class="mb-5"/>
+            <v-btn :to="{ name: 'PortfolioList' }" color="primary"
+                   class="my-5"
+                   min-width="50%"
+                   large>
+                View My Work
+            </v-btn>
+
+        </v-row>
+        <p>{{ aboutMe }}</p>
+        <v-divider class="my-10"/>
+        <h3>Wanna Talk?</h3>
+        <ContactForm />
+        <v-divider class="my-10"/>
     </v-container>
 </template>
 
@@ -12,10 +25,11 @@
     import db from '@/firebase/init'
     import 'firebase/firestore'
     import SocialLinks from "../components/SocialLinks";
+    import ContactForm from "../components/ContactForm";
 
     export default {
         name: "About",
-        components: {SocialLinks},
+        components: {SocialLinks, ContactForm},
         data() {
             return {
                 aboutMe: null,
@@ -33,17 +47,3 @@
         }
     }
 </script>
-
-<style>
-    .about img {
-        max-width: 60%;
-        border-radius: 50%;
-        margin: 1em;
-    }
-
-    .about p {
-        text-align: left;
-        padding: 1em;
-    }
-
-</style>

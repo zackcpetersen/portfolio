@@ -1,19 +1,14 @@
 <template>
     <v-container class="about">
-        <v-row justify="center" align="center" class="mb-5">
-            <h1 class="text-center"><span class="first-header">Hello,</span> my name is Zack Petersen</h1>
-        </v-row>
+        <h1 class="text-center"><span class="first-header">Hello,</span> my name is Zack Petersen</h1>
         <v-row justify="center">
-            <SocialLinks class="mb-5"/>
+            <SocialLinks class="my-5" />
             <v-btn :to="{ name: 'PortfolioList' }" color="primary"
                    class="my-5"
                    min-width="50%"
-                   large>
-                View My Work
-            </v-btn>
-
+                   large>View My Work</v-btn>
         </v-row>
-        <p>{{ aboutMe }}</p>
+        <p class="my-5">{{ aboutMe }}</p>
         <v-divider class="my-10"/>
         <h3>Wanna Talk?</h3>
         <ContactForm />

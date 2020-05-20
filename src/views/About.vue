@@ -8,7 +8,7 @@
                    min-width="50%"
                    large>View My Work</v-btn>
         </v-row>
-        <p class="my-5">{{ aboutMe }}</p>
+        <p class="my-5 text-left">{{ aboutMe }}</p>
         <v-divider class="my-10"/>
         <h3>Wanna Talk?</h3>
         <ContactForm />

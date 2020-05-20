@@ -32,11 +32,11 @@
 
         <div class="about mt-10">
             <h2 class="text-left pl-4">About This Project</h2>
-            <p v-for="description in project.description" class="ma-0 pt-0">{{ description }}</p>
+            <p v-for="description in project.description" class="ml-4 pt-0 text-left">{{ description }}</p>
             <h2 class="text-left pl-4">Challenges</h2>
-            <p v-for="challenge in project.challenges" class="ma-0 pt-0">{{ challenge }}</p>
+            <p v-for="challenge in project.challenges" class="ml-4 pt-0 text-left">{{ challenge }}</p>
             <h2 class="text-left pl-4">Solutions</h2>
-            <p v-for="solution in project.solutions" class="ma-0 pt-0">{{ solution }}</p>
+            <p v-for="solution in project.solutions" class="ml-4 pt-0 text-left">{{ solution }}</p>
             <v-divider class="my-10"/>
         </div>
 

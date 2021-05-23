@@ -3,7 +3,7 @@
         <v-row justify="center">
             <v-col lg="8">
                 <h1>Here's some of <span class="first-header">my Work</span></h1>
-                <p class="text-left">{{ about.description }}</p>
+                <p>{{ about.description }}</p>
 
                 <v-divider class="my-10" />
 

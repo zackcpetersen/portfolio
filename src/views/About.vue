@@ -17,14 +17,14 @@
 </template>
 
 <script>
-    import db from '@/firebase/init'
-    import 'firebase/firestore'
+    // import db from '@/firebase/init'
+    // import 'firebase/firestore'
     import SocialLinks from "../components/SocialLinks";
     import ContactForm from "../components/ContactForm";
 
     export default {
         name: "About",
-        components: {SocialLinks, ContactForm},
+        components: { SocialLinks, ContactForm },
         data() {
             return {
                 aboutMe: null,
@@ -32,13 +32,13 @@
                 photo: null,
             }
         },
-        created() {
-            db.collection('about').doc('u9EsLfOYROiDn7Vk46qV').get()
-                .then(doc => {
-                    let about = doc.data()
-                    this.photo = about.aboutPhoto
-                    this.aboutMe = about.bio
-                })
-        }
+        // created() {
+        //     db.collection('about').doc('u9EsLfOYROiDn7Vk46qV').get()
+        //         .then(doc => {
+        //             let about = doc.data()
+        //             this.photo = about.aboutPhoto
+        //             this.aboutMe = about.bio
+        //         })
+        // }
     }
 </script>

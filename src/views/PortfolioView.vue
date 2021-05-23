@@ -6,10 +6,10 @@
                     <h1 class="font-italic font-weight-bold display-1">{{ project.name }}</h1>
                 </v-row>
                 <v-row justify="start">
-                    <v-btn v-if="project.liveUrl" :href="project.liveUrl" color="primary" class="ma-3">
+                    <v-btn v-if="project.live_url" :href="project.live_url" color="primary" class="ma-3">
                         Visit Website
                     </v-btn>
-                    <v-btn v-if="project.githubUrl" :href="project.githubUrl" color="warning" class="my-3 black--text">
+                    <v-btn v-if="project.source" :href="project.source" color="warning" class="my-3 black--text">
                         See Source
                     </v-btn>
                 </v-row>
@@ -22,7 +22,7 @@
                         <v-carousel-item
                                 v-for="(img, i) in project.images"
                                 :key="i"
-                                :src="img"
+                                :src="img.image"
                         >
                         </v-carousel-item>
                     </v-carousel>
@@ -30,27 +30,23 @@
             </v-col>
         </v-row>
 
-        <div class="about mt-10">
-            <h2 class="text-left pl-4">About This Project</h2>
-            <p v-for="description in project.description" class="ml-4 pt-0 text-left">{{ description }}</p>
-            <h2 class="text-left pl-4">Challenges</h2>
-            <p v-for="challenge in project.challenges" class="ml-4 pt-0 text-left">{{ challenge }}</p>
-            <h2 class="text-left pl-4">Solutions</h2>
-            <p v-for="solution in project.solutions" class="ml-4 pt-0 text-left">{{ solution }}</p>
-            <v-divider class="my-10"/>
+        <div class="about mt-10" v-for="description in project.descriptions">
+            <h2 class="text-left pl-4">{{ description.title }}</h2>
+            <p class="ml-4 pt-0 text-left">{{ description.info }}</p>
         </div>
+        <v-divider class="my-10"/>
 
         <div class="techSheet">
             <h2 class="text-left pl-4">Technical Sheet</h2>
             <p class="text-left pl-4">Technology I used to create this project</p>
             <v-expansion-panels popout flat class="mt-5">
                 <v-expansion-panel
-                        v-for="(tech, index) in project.technology"
-                        :key="index"
+                        v-for="tag in project.tags"
+                        :key="tag.id"
                 >
-                    <v-expansion-panel-header>{{ tech }}</v-expansion-panel-header>
+                    <v-expansion-panel-header>{{ tag.name }}</v-expansion-panel-header>
                     <v-expansion-panel-content class="text-left">
-                        {{ project[tech] }}
+                        {{ tag.description }}
                     </v-expansion-panel-content>
                 </v-expansion-panel>
             </v-expansion-panels>
@@ -59,37 +55,47 @@
         <v-divider class="my-10"/>
 
         <div class="resourceList">
-            <p v-if="project.liveUrl" class="my-1">
-                See this project live at <a :href="project.liveUrl">{{ project.liveUrl.split("www.")[1] }}</a>
+            <p v-if="project.live_url" class="my-1">
+                See this project live at <a :href="project.live_url">{{ project.live_url.split("www.")[1] }}</a>
             </p>
-            <p v-if="project.githubUrl">
-                See project source at <a :href="project.githubUrl">Github</a>
+            <p v-if="project.source">
+                See project source at <a :href="project.source">Github</a>
             </p>
         </div>
     </v-container>
 </template>
 
 <script>
-    import db from '@/firebase/init'
+    // import db from '@/firebase/init'
 
     export default {
         name: "PortfolioView",
         data() {
             return {
-                project: null,
+                // project: null,
                 feedback: null,
             }
         },
-        created() {
-            let ref = db.collection('projects').where(
-                'slug',
-                '==',
-                this.$route.params.project_slug)
-            ref.get().then(snapshot => {
-                snapshot.forEach(doc => {
-                    this.project = doc.data()
-                })
-            })
+        // created() {
+        //     let ref = db.collection('projects').where(
+        //         'slug',
+        //         '==',
+        //         this.$route.params.project_slug)
+        //     ref.get().then(snapshot => {
+        //         snapshot.forEach(doc => {
+        //             this.project = doc.data()
+        //         })
+        //     })
+        // }
+        props: {
+            project: {
+                type: Object
+            }
+        },
+        watch: {
+            project () {
+                console.log(this.project)
+            }
         }
     }
 </script>

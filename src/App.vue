@@ -4,15 +4,15 @@
                 v-model="drawer"
                 app
                 temporary
-        >
-            <NavDrawer />
+        ><NavDrawer />
+
         </v-navigation-drawer>
         <v-app-bar
                 app
                 dark
                 fixed
-        >
-            <v-app-bar-nav-icon x-large @click.stop="drawer = !drawer"/>
+        ><v-app-bar-nav-icon x-large @click.stop="drawer = !drawer"/>
+
         </v-app-bar>
         <v-content>
             <v-container>

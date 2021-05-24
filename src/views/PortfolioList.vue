@@ -55,9 +55,7 @@
                         elevation="24"
                         tile
                         class="mb-2"
-                        :to="{ name: 'PortfolioView',
-                        params: { project_slug: 'query_builder' }
-                        }"
+                        :to="{ name: 'PortfolioView', params: { project: project.id }}"
                 >
                     <v-card-text>yo yo suhhh dude</v-card-text>
 <!--                    <v-img-->

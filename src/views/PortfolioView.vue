@@ -66,31 +66,20 @@
 </template>
 
 <script>
-    // import db from '@/firebase/init'
+    import axios from '@/axios'
 
     export default {
         name: "PortfolioView",
         data() {
             return {
-                // project: null,
+                project: null,
                 feedback: null,
             }
         },
-        // created() {
-        //     let ref = db.collection('projects').where(
-        //         'slug',
-        //         '==',
-        //         this.$route.params.project_slug)
-        //     ref.get().then(snapshot => {
-        //         snapshot.forEach(doc => {
-        //             this.project = doc.data()
-        //         })
-        //     })
-        // }
-        props: {
-            project: {
-                type: Object
-            }
+        created () {
+            axios.get(`/projects/${this.$route.params.project}/`).then(resp => {
+                this.project = resp.data
+            }).catch(err => alert(err))
         },
         watch: {
             project () {

@@ -10,23 +10,35 @@
             <v-btn class="mx-4" :to="{ name: 'About' }" icon ripple exact>
                 <v-icon>mdi-home</v-icon>
             </v-btn>
-
-            <v-btn v-for="link in links" :key="link.name" :href="link.link" class="mx-4" icon ripple exact>
-                <v-icon>{{ link.icon }}</v-icon>
+            <v-btn :href="`mailto:${this.email}`" class="mx-4" icon ripple exact>
+                <v-icon>{{ emailIcon }}</v-icon>
             </v-btn>
+            <v-btn :href="`sms:${this.phone}`" class="mx-4" icon ripple exact>
+                <v-icon>{{ phoneIcon }}</v-icon>
+            </v-btn>
+
         </v-container>
 </template>
 
 <script>
+    import axios from '@/axios'
+
     export default {
         name: "Footer",
         data() {
             return {
-                links: [
-                    { link: 'mailto:zackcpetersen@gmail.com', icon: 'mdi-email', name: 'Email' },
-                    { link: 'sms:3854045953', icon: 'mdi-message-text' }
-                ]
+                email: null,
+                emailIcon: 'mdi-email',
+                phone: null,
+                phoneIcon: 'mdi-message-text'
             }
+        },
+        created () {
+            axios.get('/users/').then(resp => {
+                const user = resp.data[0]
+                this.email = user.email
+                this.phone = user.phone
+            }).catch(err => alert(err))
         }
     }
 </script>

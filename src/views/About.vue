@@ -2,6 +2,9 @@
     <v-container class="about">
         <h1 class="text-center"><span class="first-header">Hello,</span> my name is Zack Petersen</h1>
         <v-row justify="center">
+            <v-avatar class="mr-md-5 mr-3 my-5 rounded-circle" size="400" rounded v-if="user.image">
+                <v-img :src="user.image" aspect-ratio="1"></v-img>
+            </v-avatar>
             <SocialLinks class="my-5" />
             <v-btn :to="{ name: 'PortfolioList' }" color="primary"
                    class="my-5"

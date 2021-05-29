@@ -2,46 +2,34 @@
     <v-container>
         <v-row justify="center">
             <v-card
-                    v-for="button in socialButtons" :key="button.text"
+                    v-for="button in socialLinks" :key="button.text"
                     :href="button.link"
-                    class="social-links mx-2"
+                    class="mx-3 rounded-lg"
                     :id="button.text"
                     ripple
                     hover
                     target="_blank"
             >
-                <v-icon large class="pa-1">{{ button.icon }}</v-icon>
+                <v-icon x-large class="pa-1" color="primary">{{ button.icon }}</v-icon>
             </v-card>
         </v-row>
     </v-container>
 </template>
 
 <script>
+    import axios from '@/axios'
+
     export default {
         name: "SocialLinks",
         data() {
             return {
-                socialButtons: [
-                    {icon: 'mdi-instagram', link: 'https://www.instagram.com/zackcpetersen', text: 'Instagram'},
-                    {icon: 'mdi-github', link: 'https://github.com/zackcpetersen', text: 'GitHub'},
-                    {icon: 'mdi-linkedin', link: 'https://www.linkedin.com/in/zackcpetersen/', text: 'LinkedIn'}
-                ]
+                socialLinks: []
             }
+        },
+        created () {
+            axios.get('/users/').then(resp => {
+                this.socialLinks = resp.data[0].social_links
+            }).catch(err => alert(err))
         }
     }
 </script>
-
-<style>
-    #Instagram {
-        background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
-        border: none;
-    }
-
-    #LinkedIn {
-        background: #0e76a8;
-    }
-
-    .social-links {
-        border-radius: 25% !important;
-    }
-</style>

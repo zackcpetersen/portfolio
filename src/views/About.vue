@@ -32,8 +32,8 @@
             }
         },
         created () {
-            axios.get('/users/1/').then(resp => {
-                this.user = resp.data
+            axios.get('/users/').then(resp => {
+                this.user = resp.data[0]
             }).catch(err => alert(err))
         }
     }

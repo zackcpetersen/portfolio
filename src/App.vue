@@ -14,7 +14,7 @@
         ><v-app-bar-nav-icon x-large @click.stop="drawer = !drawer"/>
 
         </v-app-bar>
-        <v-content>
+        <v-main>
             <v-container>
                 <v-row justify="center">
                     <v-col>
@@ -22,7 +22,7 @@
                     </v-col>
                 </v-row>
             </v-container>
-        </v-content>
+        </v-main>
         <v-footer :padless="true" absolute app>
             <Footer/>
         </v-footer>

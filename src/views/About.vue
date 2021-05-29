@@ -8,7 +8,7 @@
                    min-width="50%"
                    large>View My Work</v-btn>
         </v-row>
-        <p v-for="about in aboutMe" class="my-5 text-left">{{ about }}</p>
+        <p class="my-5 text-left">{{ user.bio }}</p>
         <v-divider class="my-10"/>
         <h3>Wanna Talk?</h3>
         <ContactForm />
@@ -17,8 +17,8 @@
 </template>
 
 <script>
-    // import db from '@/firebase/init'
-    // import 'firebase/firestore'
+    import axios from '@/axios'
+
     import SocialLinks from "../components/SocialLinks";
     import ContactForm from "../components/ContactForm";
 
@@ -27,18 +27,14 @@
         components: { SocialLinks, ContactForm },
         data() {
             return {
-                aboutMe: null,
+                user: null,
                 myName: 'Hello, my name is Zack Petersen',
-                photo: null,
             }
         },
-        // created() {
-        //     db.collection('about').doc('u9EsLfOYROiDn7Vk46qV').get()
-        //         .then(doc => {
-        //             let about = doc.data()
-        //             this.photo = about.aboutPhoto
-        //             this.aboutMe = about.bio
-        //         })
-        // }
+        created () {
+            axios.get('/users/').then(resp => {
+                this.user = resp.data[0]
+            }).catch(err => alert(err))
+        }
     }
 </script>

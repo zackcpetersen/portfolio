@@ -55,19 +55,16 @@
                         elevation="24"
                         tile
                         class="mb-2"
-                        :to="{ name: 'PortfolioView',
-                        params: { project_slug: 'query_builder' }
-                        }"
+                        :to="{ name: 'PortfolioView', params: { project: project.id }}"
                 >
-                    <v-card-text>yo yo suhhh dude</v-card-text>
-<!--                    <v-img-->
-<!--                            :src="project.images[0].image"-->
-<!--                            class="white&#45;&#45;text align-end"-->
-<!--                            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.3)"-->
-<!--                            max-height="600"-->
-<!--                    >-->
+                    <v-img
+                            :src="project.images[0].image"
+                            class="white--text align-end"
+                            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.3)"
+                            max-height="600"
+                    >
                         <v-card-title v-text="project.name"/>
-<!--                    </v-img>-->
+                    </v-img>
                 </v-card>
             </v-col>
         </v-row>
@@ -75,7 +72,6 @@
 </template>
 
 <script>
-    // import db from '@/firebase/init'
     import axios from '@/axios'
 
     export default {
@@ -113,20 +109,6 @@
             axios.get('/projects/').then(resp => {
                 this.projects = resp.data
             }).catch(err => alert(err))
-        //     db.collection('projects-overview').doc('AkkQ9ueU8NnhKRWyLH7F').get()
-        //         .then(doc => {
-        //             let overview = doc.data()
-        //             this.about.description = overview.description
-        //             this.about.tags = overview.tags
-        //         })
-        //     db.collection('projects').get()
-        //         .then(snapshot => {
-        //             snapshot.forEach(doc => {
-        //                 let project = doc.data()
-        //                 project.id = doc.id
-        //                 this.projects.push(project)
-        //             })
-        //         })
         }
     }
 </script>

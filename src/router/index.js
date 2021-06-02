@@ -19,7 +19,7 @@ const routes = [
         component: Contact
     },
     {
-        path: '/portfolio/:project_slug',
+        path: '/portfolio/:project',
         name: 'PortfolioView',
         component: PortfolioView
     },

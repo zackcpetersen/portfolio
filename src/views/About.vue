@@ -9,7 +9,8 @@
             <v-btn :to="{ name: 'PortfolioList' }" color="primary"
                    class="my-5"
                    min-width="50%"
-                   large>View My Work</v-btn>
+                   large
+            >View My Work</v-btn>
         </v-row>
         <p class="my-5 text-left">{{ user.bio }}</p>
         <v-divider class="my-10"/>

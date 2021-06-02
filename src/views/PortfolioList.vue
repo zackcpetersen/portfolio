@@ -3,7 +3,7 @@
         <v-row justify="center">
             <v-col lg="8">
                 <h1>Here's some of <span class="first-header">my Work</span></h1>
-                <p>{{ about.description }}</p>
+                <p>{{ description }}</p>
 
                 <v-divider class="my-10" />
 
@@ -13,16 +13,12 @@
                     <p class="filter-button" v-if="filterToggle"><strong>Hide Filters</strong></p>
                     <v-icon v-if="filterToggle">mdi-chevron-up</v-icon>
                 </div>
-                <v-card
-                        raised
-                        v-if="filterToggle"
-                >
+                <v-card raised v-if="filterToggle">
                     <v-card-title>
                         <v-chip-group
                                 active-class="primary--text"
-                                column
-                        >
-                            <v-row justify="center">
+                                column>
+                            <v-row justify="center" class="px-3">
                                 <v-chip
                                         @click="updateTagFilter('ALL')"
                                         value="ALL"
@@ -30,11 +26,11 @@
                                     ALL
                                 </v-chip>
                                 <v-chip
-                                        v-for="tag in about.tags" :key="tag"
-                                        @click="updateTagFilter(tag)"
+                                        v-for="tag in tags" :key="tag.id"
+                                        @click="updateTagFilter(tag.name)"
                                         v-ripple
                                 >
-                                    {{ tag }}
+                                    {{ tag.name }}
                                 </v-chip>
                             </v-row>
                         </v-chip-group>
@@ -68,47 +64,61 @@
                 </v-card>
             </v-col>
         </v-row>
+        <snackbar :snackbar="snackbar"></snackbar>
     </v-container>
 </template>
 
 <script>
     import axios from '@/axios'
+    import snackbar from '@/components/snackbar'
 
     export default {
         name: "PortfolioList",
-        components: {},
+        components: {
+            'snackbar': snackbar
+        },
         data() {
             return {
-                about: {
-                    description: null,
-                    tags: []
-                },
+                // TODO add project overview description
+                description: null,
                 projects: [],
+                tags: [],
                 tagFilter: 'ALL',
                 filterToggle: false,
+                snackbar: {
+                    color: 'red',
+                    icon: 'mdi-thumb-down',
+                    show: false
+                }
             }
         },
         methods: {
             updateTagFilter(tag) {
                 this.tagFilter = tag
+            },
+            showFailedSnackbar(err) {
+                this.snackbar['content'] = err
+                this.snackbar['show'] = true
             }
         },
         computed: {
             filterProjects() {
-                return this.projects
-                // if (this.tagFilter === 'ALL') {
-                //     return this.projects
-                // } else {
-                //     return this.projects.filter(project => {
-                //         return project.tags.includes(this.tagFilter)
-                //     })
-                // }
+                if (this.tagFilter === 'ALL') {
+                    return this.projects
+                } else {
+                    return this.projects.filter(project => {
+                        return project.all_tags.includes(this.tagFilter)
+                    })
+                }
             }
         },
         created() {
             axios.get('/projects/').then(resp => {
                 this.projects = resp.data
-            }).catch(err => alert(err))
+            }).catch(err => this.showFailedSnackbar(err))
+            axios.get('/tags/').then(resp => {
+                this.tags = resp.data
+            }).catch(err => this.showFailedSnackbar(err))
         }
     }
 </script>

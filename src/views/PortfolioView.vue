@@ -62,11 +62,13 @@
                 See project source at <a :href="project.source">Github</a>
             </p>
         </div>
+        <snackbar :snackbar="snackbar"></snackbar>
     </v-container>
 </template>
 
 <script>
     import axios from '@/axios'
+    import snackbar from '@/components/snackbar'
 
     export default {
         name: "PortfolioView",
@@ -74,18 +76,27 @@
             return {
                 project: null,
                 feedback: null,
+                snackbar: {
+                    color: 'red',
+                    icon: 'mdi-thumb-down',
+                    show: false
+                }
+            }
+        },
+        methods: {
+            showFailedSnackbar(err) {
+                this.snackbar['content'] = err
+                this.snackbar['show'] = true
             }
         },
         created () {
             axios.get(`/projects/${this.$route.params.project}/`).then(resp => {
                 this.project = resp.data
-            }).catch(err => alert(err))
+            }).catch(err => this.showFailedSnackbar(err))
         },
-        watch: {
-            project () {
-                console.log(this.project)
-            }
-        }
+        components: {
+            'snackbar': snackbar
+        },
     }
 </script>
 

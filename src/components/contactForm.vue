@@ -82,7 +82,7 @@
 
 <script>
     export default {
-        name: "ContactForm",
+        name: "contactForm",
         data() {
             return {
                 valid: true,

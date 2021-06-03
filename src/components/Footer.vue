@@ -16,12 +16,13 @@
             <v-btn :href="`sms:${this.phone}`" class="mx-4" icon ripple exact>
                 <v-icon>{{ phoneIcon }}</v-icon>
             </v-btn>
-
+            <snackbar :snackbar="snackbar"></snackbar>
         </v-container>
 </template>
 
 <script>
     import axios from '@/axios'
+    import snackbar from '@/components/snackbar'
 
     export default {
         name: "Footer",
@@ -30,7 +31,18 @@
                 email: null,
                 emailIcon: 'mdi-email',
                 phone: null,
-                phoneIcon: 'mdi-message-text'
+                phoneIcon: 'mdi-message-text',
+                snackbar: {
+                    color: 'red',
+                    icon: 'mdi-thumb-down',
+                    show: false
+                }
+            }
+        },
+        methods: {
+            showFailedSnackbar(err) {
+                this.snackbar['content'] = err
+                this.snackbar['show'] = true
             }
         },
         created () {
@@ -38,8 +50,11 @@
                 const user = resp.data[0]
                 this.email = user.email
                 this.phone = user.phone
-            }).catch(err => alert(err))
-        }
+            }).catch(err => this.showFailedSnackbar(err))
+        },
+        components: {
+            'snackbar': snackbar
+        },
     }
 </script>
 

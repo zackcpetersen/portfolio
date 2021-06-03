@@ -59,30 +59,24 @@
                         color="success"
                         class="mr-4"
                         @click="validate"
+                        :loading="loading"
                 >
                     Send Message
                 </v-btn>
             </div>
         </v-expand-transition>
-        <v-snackbar
-                v-model="snackbar"
-                multi-line='multi-line'
-                :timeout="4000"
-                color="primary"
-                class="text-center"
-        >
-            <v-row justify="center">
-                I'll be in touch soon!
-            </v-row>
-
-        </v-snackbar>
+        <snackbar :snackbar="snackbar"></snackbar>
     </v-form>
 
 </template>
 
 <script>
+    import axios from '@/axios'
+
+    import snackbar from '@/components/snackbar'
+
     export default {
-        name: "ContactForm",
+        name: "contactForm",
         data() {
             return {
                 valid: true,
@@ -155,33 +149,47 @@
                     top: false,
                     value: 0,
                 },
+                loading: false,
                 lazy: false,
                 step: 1,
-                snackbar: false,
+                snackbar: {
+                    color: 'green',
+                    icon: 'mdi-thumb-up',
+                    show: false
+                },
                 mode: '',
             }
         },
         methods: {
-            // validate() {
-            //     if (this.$refs.form.validate()) {
-            //         db.collection('contact').add({
-            //             to: ['zackcpetersen@gmail.com'],
-            //             message: {
-            //                 subject: 'New Contact Form Submission From: ' + this.fields.name + '!',
-            //                 text: 'Name: ' + this.fields.name +
-            //                     '\n\nPhone: ' + this.fields.phone +
-            //                     '\n\nEmail: ' + this.fields.email +
-            //                     '\n\nMessage Below: \n\n' + this.fields.message
-            //             }
-            //         }).catch(err => {
-            //             console.log(err)
-            //         })
-            //         this.snackbar = true
-            //         this.$refs.form.reset()
-            //         this.step = 1
-            //         this.progress.value = 0
-            //     }
-            // }
+            validate() {
+                if (this.$refs.form.validate()) {
+                    this.loading = true
+                    axios.post('/contact/', this.fields).then(() => {
+                        this.snackbar = {
+                            color: 'green',
+                            icon: 'mdi-thumb-up',
+                            heading: 'Success',
+                            content: 'I\'ll be in touch!',
+                            show: true
+                        }
+                        this.$refs.form.reset()
+                        this.loading = false
+                        this.step = 1
+                        this.progress.value = 0
+                    }).catch(err => {
+                        this.snackbar = {
+                            color: 'red',
+                            icon: 'mdi-thumb-down',
+                            content: err,
+                            show: true
+                        }
+                        this.loading = false
+                    })
+                }
+            }
+        },
+        components: {
+            snackbar
         }
     }
 </script>

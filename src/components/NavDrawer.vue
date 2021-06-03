@@ -12,12 +12,12 @@
             </v-list-item>
         </v-list>
     <v-divider />
-    <SocialLinks class="mt-5"/>
+    <socialLinks class="mt-5"/>
 </v-container>
 </template>
 
 <script>
-    import SocialLinks from "./SocialLinks";
+    import socialLinks from '@/components/socialLinks'
 
     export default {
         name: "NavDrawer",
@@ -32,7 +32,7 @@
             }
         },
         components: {
-            SocialLinks,
+            socialLinks,
         }
     }
 </script>

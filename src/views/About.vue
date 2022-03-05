@@ -2,21 +2,23 @@
     <v-container class="about">
         <h1 class="text-center"><span class="first-header">Hello,</span> my name is {{ fullName }}</h1>
         <v-row justify="center">
-            <v-avatar class="mr-md-5 mr-3 my-5 rounded-circle" size="400" rounded v-if="userImage">
-                <v-img :src="user.image" aspect-ratio="1"></v-img>
-            </v-avatar>
-            <socialLinks class="my-5" />
-            <v-btn :to="{ name: 'PortfolioList' }" color="primary"
-                   class="my-5"
-                   min-width="30%"
-                   large
-            >View My Work</v-btn>
+            <v-col sm="10" md="8" lg="6" align="center">
+                <!-- TODO if image stays blurry remove mx-5 -->
+                <v-img v-if="userImage" :src="user.image" contain class="rounded-circle mt-5 mx-5" max-width="500"></v-img>
+                <socialLinks class="my-2" />
+                <v-btn :to="{ name: 'PortfolioList' }" color="primary"
+                       class="my-5"
+                       min-width="30%"
+                       large
+                >View My Work
+                </v-btn>
+                <p class="ma-5 text-left"><span v-html="userBio"></span></p>
+                <v-divider class="my-10"/>
+                <h3>Enter your name to send a message!</h3>
+                <contactForm />
+                <v-divider class="my-10"/>
+            </v-col>
         </v-row>
-        <p class="my-5 text-left">{{ userBio }}</p>
-        <v-divider class="my-10"/>
-        <h3>Wanna Talk?</h3>
-        <contactForm />
-        <v-divider class="my-10"/>
         <snackbar :snackbar="snackbar"></snackbar>
     </v-container>
 </template>

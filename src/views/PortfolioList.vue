@@ -3,61 +3,55 @@
         <v-row justify="center">
             <v-col lg="8">
                 <h1>Here's some of <span class="first-header">my Work</span></h1>
-                <p>{{ description }}</p>
+                <p><span v-html="description"></span></p>
 
-                <v-divider class="my-10" />
+                <v-divider class="my-10"/>
 
-                <div class="filter-toggle mt-4" @click="filterToggle = !filterToggle">
-                    <p class="filter-button" v-if="!filterToggle"><strong>Show Filters</strong></p>
-                    <v-icon v-if="!filterToggle">mdi-chevron-down</v-icon>
-                    <p class="filter-button" v-if="filterToggle"><strong>Hide Filters</strong></p>
-                    <v-icon v-if="filterToggle">mdi-chevron-up</v-icon>
-                </div>
-                <v-card raised v-if="filterToggle">
-                    <v-card-title>
-                        <v-chip-group
-                                active-class="primary--text"
-                                column>
-                            <v-row justify="center" class="px-3">
-                                <v-chip
-                                        @click="updateTagFilter('ALL')"
-                                        value="ALL"
-                                >
-                                    ALL
-                                </v-chip>
-                                <v-chip
-                                        v-for="tag in tags" :key="tag.id"
-                                        @click="updateTagFilter(tag.name)"
-                                        v-ripple
-                                >
-                                    {{ tag.name }}
-                                </v-chip>
-                            </v-row>
-                        </v-chip-group>
-                    </v-card-title>
-                    <v-card-text class="subtitle-1">
-                        <p>Use tags to filter by project type or technology</p>
-                        <p>Sorting by < {{ tagFilter }} ></p>
-                    </v-card-text>
-                </v-card>
+<!--                    TODO can keep this if I want to hide/show filters -->
+<!--                    TODO add v-if="filterToggle" in v-card-text below if keeping the toggle-->
+<!--                <div class="filter-toggle mt-4" @click="filterToggle = !filterToggle">-->
+<!--                    <p class="filter-button" v-if="!filterToggle"><strong>-->
+<!--                        Show Filters-->
+<!--                        <v-icon v-if="!filterToggle">mdi-chevron-down</v-icon>-->
+<!--                    </strong></p>-->
+<!--                    <p class="filter-button" v-if="filterToggle"><strong>-->
+<!--                        Hide Filters-->
+<!--                        <v-icon v-if="filterToggle">mdi-chevron-up</v-icon>-->
+<!--                    </strong></p>-->
+<!--                </div>-->
+
+                <v-card-text>
+                    <p>Use tags to filter by project type or technology</p>
+                    <v-chip-group column>
+                        <v-row justify="center" class="px-3">
+                            <v-chip
+                                v-for="tag in tags" :key="tag.id"
+                                :color="tagFilter.includes(tag.name) ? 'primary' : 'null'"
+                                @click="updateTagFilter(tag.name)"
+                                v-ripple>
+                                {{ tag.name }}
+                            </v-chip>
+                        </v-row>
+                    </v-chip-group>
+                </v-card-text>
             </v-col>
             <v-col
-                    lg="8"
-                    v-for="project in filterProjects"
-                    :key="project.id"
-                    :cols=12
+                lg="8"
+                v-for="project in filterProjects"
+                :key="project.id"
+                :cols=12
             >
                 <v-card
-                        elevation="24"
-                        tile
-                        class="mb-2"
-                        :to="{ name: 'PortfolioView', params: { project: project.id }}"
+                    elevation="24"
+                    tile
+                    class="mb-2"
+                    :to="{ name: 'PortfolioView', params: { project: project.id }}"
                 >
                     <v-img
-                            :src="project.images[0].image"
-                            class="white--text align-end"
-                            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.3)"
-                            max-height="600"
+                        :src="project.images[0].image"
+                        class="white--text align-end"
+                        gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.3)"
+                        max-height="600"
                     >
                         <v-card-title v-text="project.name"/>
                     </v-img>
@@ -79,11 +73,10 @@
         },
         data() {
             return {
-                // TODO add project overview description
                 description: null,
                 projects: [],
                 tags: [],
-                tagFilter: 'ALL',
+                tagFilter: [],
                 filterToggle: false,
                 snackbar: {
                     color: 'red',
@@ -94,7 +87,13 @@
         },
         methods: {
             updateTagFilter(tag) {
-                this.tagFilter = tag
+                const exists = this.tagFilter.includes(tag)
+                if (exists) {
+                    const index = this.tagFilter.indexOf(tag)
+                    this.tagFilter.splice(index, 1)
+                } else {
+                    this.tagFilter.push(tag)
+                }
             },
             showFailedSnackbar(err) {
                 this.snackbar['content'] = err
@@ -103,12 +102,16 @@
         },
         computed: {
             filterProjects() {
-                if (this.tagFilter === 'ALL') {
+                if (!this.tagFilter.length) {
                     return this.projects
                 } else {
-                    return this.projects.filter(project => {
-                        return project.all_tags.includes(this.tagFilter)
-                    })
+                    const filtered = []
+                    this.projects.forEach(project => project.all_tags.forEach(tag => {
+                        if (this.tagFilter.includes(tag) && !filtered.includes(project)) {
+                            filtered.push(project)
+                        }
+                    }))
+                    return filtered
                 }
             }
         },

@@ -1,10 +1,10 @@
 import Axios from 'axios'
 
 const development = process.env.NODE_ENV !== 'production'
+const baseUrl = development ? 'http://0.0.0.0/api/' : 'http://api.zackcpetersen.com/api/'
 
 const axios = Axios.create({
-    baseURL: 'http://127.0.0.1:8000/api/'
-    // baseURL: development ? 'http:127.0.0.1:8000/api/'
+    baseURL: baseUrl
 })
 
 export default axios

@@ -14,17 +14,17 @@ const routes = [
         component: About
     },
     {
-        path: '/contact',
+        path: '/contact/',
         name: 'Contact',
         component: Contact
     },
     {
-        path: '/portfolio/:project',
+        path: '/portfolio/:project/',
         name: 'PortfolioView',
         component: PortfolioView
     },
     {
-        path: '/portfolio',
+        path: '/portfolio/',
         name: 'PortfolioList',
         component: PortfolioList
     },

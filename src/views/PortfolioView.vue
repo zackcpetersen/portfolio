@@ -6,10 +6,10 @@
                     <h1 class="font-italic font-weight-bold display-1">{{ project.name }}</h1>
                 </v-row>
                 <v-row justify="start">
-                    <v-btn v-if="project.live_url" :href="project.live_url" color="primary" class="ma-3">
+                    <v-btn v-if="project.live_url" :href="project.live_url" target="_blank" color="primary" class="ma-3">
                         Visit Website
                     </v-btn>
-                    <v-btn v-if="project.source" :href="project.source" color="warning" class="my-3 black--text">
+                    <v-btn v-if="project.source" :href="project.source" target="_blank" color="warning" class="my-3 black--text">
                         See Source
                     </v-btn>
                 </v-row>
@@ -56,10 +56,10 @@
 
         <div class="resourceList">
             <p v-if="project.live_url" class="my-1">
-                See this project live at <a :href="project.live_url">{{ project.live_url.split("www.")[1] }}</a>
+                See this project live at <a :href="project.live_url" target="_blank">{{ project.live_url }}</a>
             </p>
             <p v-if="project.source">
-                See project source at <a :href="project.source">Github</a>
+                See project source at <a :href="project.source" target="_blank">Github</a>
             </p>
         </div>
         <snackbar :snackbar="snackbar"></snackbar>

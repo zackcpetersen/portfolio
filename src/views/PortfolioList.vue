@@ -1,27 +1,14 @@
 <template>
     <v-container class="portfolio-list">
         <v-row justify="center">
-            <v-col lg="8">
+            <v-col :cols="12">
                 <h1>Here's some of <span class="first-header">my Work</span></h1>
-                <p><span v-html="description"></span></p>
+<!--                <p><span v-html="description"></span></p>-->
 
                 <v-divider class="my-10"/>
-
-<!--                    TODO can keep this if I want to hide/show filters -->
-<!--                    TODO add v-if="filterToggle" in v-card-text below if keeping the toggle-->
-<!--                <div class="filter-toggle mt-4" @click="filterToggle = !filterToggle">-->
-<!--                    <p class="filter-button" v-if="!filterToggle"><strong>-->
-<!--                        Show Filters-->
-<!--                        <v-icon v-if="!filterToggle">mdi-chevron-down</v-icon>-->
-<!--                    </strong></p>-->
-<!--                    <p class="filter-button" v-if="filterToggle"><strong>-->
-<!--                        Hide Filters-->
-<!--                        <v-icon v-if="filterToggle">mdi-chevron-up</v-icon>-->
-<!--                    </strong></p>-->
-<!--                </div>-->
-
                 <v-card-text>
-                    <p>Use tags to filter by project type or technology</p>
+                    <p>Select tags below to filter by technology</p>
+                    <p>Filtering by: {{ tagFilter }}</p>
                     <v-chip-group column>
                         <v-row justify="center" class="px-3">
                             <v-chip
@@ -36,10 +23,9 @@
                 </v-card-text>
             </v-col>
             <v-col
-                lg="8"
                 v-for="project in filterProjects"
                 :key="project.id"
-                :cols=12
+                :cols="$vuetify.breakpoint.mobile ? 12 : 6"
             >
                 <v-card
                     elevation="24"
@@ -51,7 +37,8 @@
                         :src="project.images[0].image"
                         class="white--text align-end"
                         gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.3)"
-                        max-height="600"
+                        max-height="500"
+                        :aspect-ratio="4/3"
                     >
                         <v-card-title v-text="project.name"/>
                     </v-img>

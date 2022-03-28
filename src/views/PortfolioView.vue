@@ -23,6 +23,8 @@
                                 v-for="(img, i) in project.images"
                                 :key="i"
                                 :src="img.image"
+                                aspect-ratio="1"
+                                contain
                         >
                         </v-carousel-item>
                     </v-carousel>
@@ -46,7 +48,7 @@
                 >
                     <v-expansion-panel-header>{{ tag.name }}</v-expansion-panel-header>
                     <v-expansion-panel-content class="text-left">
-                        {{ tag.description }}
+                        <span v-html="tag.description"></span>
                     </v-expansion-panel-content>
                 </v-expansion-panel>
             </v-expansion-panels>

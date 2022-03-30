@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import About from "../views/About";
-import Contact from "../views/Contact";
-import ProjectList from "../views/ProjectList";
-import ProjectView from "../views/ProjectView";
+import About from "@/views/About"
+import Contact from "@/views/Contact"
+import ProjectList from "@/views/ProjectList"
+import ProjectView from "@/views/ProjectView"
+import ArticleList from "@/views/ArticleList"
+import ArticleView from "@/views/ArticleView";
 
 Vue.use(VueRouter)
 
@@ -28,6 +30,16 @@ const routes = [
         name: 'ProjectList',
         component: ProjectList
     },
+    {
+        path: '/articles/',
+        name: 'ArticleList',
+        component: ArticleList
+    },
+    {
+        path: '/articles/:slug/',
+        name: 'ArticleView',
+        component: ArticleView
+    }
 ]
 
 const router = new VueRouter({

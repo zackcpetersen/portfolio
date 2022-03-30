@@ -41,7 +41,6 @@ export default {
     props: {
         iterable: Array,
         viewPage: String,
-        viewType: String,
     }
 }
 </script>

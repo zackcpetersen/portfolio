@@ -6,7 +6,7 @@
                 <!-- TODO if image stays blurry remove mx-5 -->
                 <v-img v-if="userImage" :src="user.image" contain class="rounded-circle mt-5 mx-5" max-width="500"></v-img>
                 <socialLinks class="my-2" />
-                <v-btn :to="{ name: 'PortfolioList' }" color="primary"
+                <v-btn :to="{ name: 'ProjectList' }" color="primary"
                        class="my-5"
                        min-width="30%"
                        large

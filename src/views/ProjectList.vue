@@ -3,7 +3,7 @@
         <v-row justify="center">
             <v-col :cols="12">
                 <h1>Here's some of <span class="first-header">my Work</span></h1>
-<!--                <p><span v-html="description"></span></p>-->
+                <p><span v-html="description"></span></p>
 
                 <v-divider class="my-10"/>
                 <v-card-text>
@@ -22,28 +22,7 @@
                     </v-chip-group>
                 </v-card-text>
             </v-col>
-            <v-col
-                v-for="project in filterProjects"
-                :key="project.id"
-                :cols="$vuetify.breakpoint.mobile ? 12 : 6"
-            >
-                <v-card
-                    elevation="24"
-                    tile
-                    class="mb-2"
-                    :to="{ name: 'PortfolioView', params: { project: project.id }}"
-                >
-                    <v-img
-                        :src="project.images[0].image"
-                        class="white--text align-end"
-                        gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.3)"
-                        max-height="500"
-                        :aspect-ratio="4/3"
-                    >
-                        <v-card-title v-text="project.name"/>
-                    </v-img>
-                </v-card>
-            </v-col>
+            <list-content :iterable=filterProjects viewPage="ProjectView" viewType="project"></list-content>
         </v-row>
         <snackbar :snackbar="snackbar"></snackbar>
     </v-container>
@@ -52,10 +31,12 @@
 <script>
     import axios from '@/axios'
     import snackbar from '@/components/snackbar'
+    import listContent from '@/components/listContent'
 
     export default {
-        name: "PortfolioList",
+        name: "ProjectList",
         components: {
+            'list-content': listContent,
             'snackbar': snackbar
         },
         data() {
@@ -112,9 +93,3 @@
         }
     }
 </script>
-
-<style>
-    .filter-toggle {
-        cursor: pointer;
-    }
-</style>

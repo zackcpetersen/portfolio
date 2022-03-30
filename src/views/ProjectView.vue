@@ -32,9 +32,8 @@
             </v-col>
         </v-row>
 
-        <div class="about mt-10" v-for="description in project.descriptions">
-            <h2 class="text-left pl-4">{{ description.title }}</h2>
-            <p class="ml-4 pt-0 text-left"><span v-html="description.info"></span></p>
+        <div class="about mt-10 text-left pl-5">
+            <span v-html="project.description"></span>
         </div>
         <v-divider class="my-10"/>
 

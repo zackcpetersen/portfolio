@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
 import About from "@/views/About"
+import ArticleList from "@/views/ArticleList"
+import ArticleView from "@/views/ArticleView";
 import Contact from "@/views/Contact"
 import ProjectList from "@/views/ProjectList"
 import ProjectView from "@/views/ProjectView"
-import ArticleList from "@/views/ArticleList"
-import ArticleView from "@/views/ArticleView";
 
 Vue.use(VueRouter)
 

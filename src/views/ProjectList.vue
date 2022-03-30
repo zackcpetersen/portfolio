@@ -22,74 +22,74 @@
                     </v-chip-group>
                 </v-card-text>
             </v-col>
-            <list-content :iterable=filterProjects viewPage="ProjectView" viewType="project"></list-content>
+            <list-content :iterable=filterProjects viewPage="ProjectView"></list-content>
         </v-row>
         <snackbar :snackbar="snackbar"></snackbar>
     </v-container>
 </template>
 
 <script>
-    import axios from '@/axios'
-    import snackbar from '@/components/snackbar'
-    import listContent from '@/components/listContent'
+import axios from '@/axios'
+import snackbar from '@/components/snackbar'
+import listContent from '@/components/listContent'
 
-    export default {
-        name: "ProjectList",
-        components: {
-            'list-content': listContent,
-            'snackbar': snackbar
-        },
-        data() {
-            return {
-                description: null,
-                projects: [],
-                tags: [],
-                tagFilter: [],
-                filterToggle: false,
-                snackbar: {
-                    color: 'red',
-                    icon: 'mdi-thumb-down',
-                    show: false
-                }
+export default {
+    name: "ProjectList",
+    components: {
+        'list-content': listContent,
+        'snackbar': snackbar
+    },
+    data() {
+        return {
+            description: null,
+            projects: [],
+            tags: [],
+            tagFilter: [],
+            filterToggle: false,
+            snackbar: {
+                color: 'red',
+                icon: 'mdi-thumb-down',
+                show: false
             }
-        },
-        methods: {
-            updateTagFilter(tag) {
-                const exists = this.tagFilter.includes(tag)
-                if (exists) {
-                    const index = this.tagFilter.indexOf(tag)
-                    this.tagFilter.splice(index, 1)
-                } else {
-                    this.tagFilter.push(tag)
-                }
-            },
-            showFailedSnackbar(err) {
-                this.snackbar['content'] = err
-                this.snackbar['show'] = true
-            }
-        },
-        computed: {
-            filterProjects() {
-                if (!this.tagFilter.length) {
-                    return this.projects
-                } else {
-                    const filtered = []
-                    this.projects.forEach(project => project.all_tags.forEach(tag => {
-                        if (this.tagFilter.includes(tag) && !filtered.includes(project)) {
-                            filtered.push(project)
-                        }
-                    }))
-                    return filtered
-                }
-            }
-        },
-        created() {
-            axios.get('/projects/').then(resp => {
-                this.projects = resp.data
-            }).catch(err => this.showFailedSnackbar(err))
-            axios.get('/tags/').then(resp => {
-                this.tags = resp.data
-            }).catch(err => this.showFailedSnackbar(err))
         }
+    },
+    methods: {
+        updateTagFilter(tag) {
+            const exists = this.tagFilter.includes(tag)
+            if (exists) {
+                const index = this.tagFilter.indexOf(tag)
+                this.tagFilter.splice(index, 1)
+            } else {
+                this.tagFilter.push(tag)
+            }
+        },
+        showFailedSnackbar(err) {
+            this.snackbar['content'] = err
+            this.snackbar['show'] = true
+        }
+    },
+    computed: {
+        filterProjects() {
+            if (!this.tagFilter.length) {
+                return this.projects
+            } else {
+                const filtered = []
+                this.projects.forEach(project => project.all_tags.forEach(tag => {
+                    if (this.tagFilter.includes(tag) && !filtered.includes(project)) {
+                        filtered.push(project)
+                    }
+                }))
+                return filtered
+            }
+        }
+    },
+    created() {
+        axios.get('/projects/').then(resp => {
+            this.projects = resp.data
+        }).catch(err => this.showFailedSnackbar(err))
+        axios.get('/tags/').then(resp => {
+            this.tags = resp.data
+        }).catch(err => this.showFailedSnackbar(err))
     }
+}
 </script>

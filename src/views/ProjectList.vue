@@ -4,7 +4,6 @@
             <v-col :cols="12">
                 <h1>Here's some of <span class="first-header">my Work</span></h1>
                 <p><span v-html="description"></span></p>
-
                 <v-divider class="my-10"/>
                 <v-card-text>
                     <p>Select tags below to filter by technology</p>

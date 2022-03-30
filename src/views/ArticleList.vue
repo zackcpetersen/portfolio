@@ -3,7 +3,6 @@
         <v-row justify="center">
             <v-col :cols="12">
                 <h1>Checkout my<span class="first-header"> Writing</span></h1>
-
                 <v-divider class="my-10"/>
             </v-col>
             <list-content :iterable="articles" viewPage="ArticleView"></list-content>
@@ -46,7 +45,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>

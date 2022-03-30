@@ -3,8 +3,10 @@ import VueRouter from 'vue-router'
 
 import About from "@/views/About"
 import ArticleList from "@/views/ArticleList"
-import ArticleView from "@/views/ArticleView";
+import ArticleView from "@/views/ArticleView"
 import Contact from "@/views/Contact"
+import PresentationList from "@/views/PresentationList"
+import PresentationView from "@/views/PresentationView"
 import ProjectList from "@/views/ProjectList"
 import ProjectView from "@/views/ProjectView"
 
@@ -22,12 +24,12 @@ const routes = [
         component: Contact
     },
     {
-        path: '/portfolio/:slug/',
+        path: '/projects/:slug/',
         name: 'ProjectView',
         component: ProjectView
     },
     {
-        path: '/portfolio/',
+        path: '/projects/',
         name: 'ProjectList',
         component: ProjectList
     },
@@ -40,6 +42,16 @@ const routes = [
         path: '/articles/:slug/',
         name: 'ArticleView',
         component: ArticleView
+    },
+    {
+        path: '/presentations/',
+        name: 'PresentationList',
+        component: PresentationList
+    },
+    {
+        path: '/presentations/:slug/',
+        name: 'PresentationView',
+        component: PresentationView
     }
 ]
 

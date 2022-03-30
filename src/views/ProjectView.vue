@@ -1,5 +1,5 @@
 <template>
-    <v-container v-if="project" class="portfolio-view">
+    <v-container v-if="project" class="project-view">
         <v-row justify="center">
             <v-col xl="7" lg="10">
                 <v-row justify="center" class="mb-5">

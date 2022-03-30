@@ -27,8 +27,9 @@
                 links: [
                     { icon: 'mdi-home', text: 'Home', route: 'About' },
                     { icon: 'mdi-account-box', text: 'Contact', route: 'Contact' },
-                    { icon: 'mdi-xml', text: 'Portfolio', route: 'ProjectList' },
+                    { icon: 'mdi-xml', text: 'Projects', route: 'ProjectList' },
                     { icon: 'mdi-post', text: 'Articles', route: 'ArticleList' },
+                    { icon: 'mdi-presentation-play', text: 'Presentations', route: 'PresentationList' },
                 ],
             }
         },

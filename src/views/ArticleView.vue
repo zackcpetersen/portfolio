@@ -42,7 +42,7 @@ import axios from '@/axios'
 import snackbar from '@/components/snackbar'
 
 export default {
-    name: "ProjectView",
+    name: "ArticleView",
     data() {
         return {
             article: null,

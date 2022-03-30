@@ -2,8 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import About from "../views/About";
 import Contact from "../views/Contact";
-import PortfolioList from "../views/PortfolioList";
-import PortfolioView from "../views/PortfolioView";
+import ProjectList from "../views/ProjectList";
+import ProjectView from "../views/ProjectView";
 
 Vue.use(VueRouter)
 
@@ -19,14 +19,14 @@ const routes = [
         component: Contact
     },
     {
-        path: '/portfolio/:project/',
-        name: 'PortfolioView',
-        component: PortfolioView
+        path: '/portfolio/:slug/',
+        name: 'ProjectView',
+        component: ProjectView
     },
     {
         path: '/portfolio/',
-        name: 'PortfolioList',
-        component: PortfolioList
+        name: 'ProjectList',
+        component: ProjectList
     },
 ]
 

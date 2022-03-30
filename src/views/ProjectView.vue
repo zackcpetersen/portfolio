@@ -73,7 +73,7 @@
     import snackbar from '@/components/snackbar'
 
     export default {
-        name: "PortfolioView",
+        name: "ProjectView",
         data() {
             return {
                 project: null,
@@ -92,7 +92,7 @@
             }
         },
         created () {
-            axios.get(`/projects/${this.$route.params.project}/`).then(resp => {
+            axios.get(`/projects/${this.$route.params.slug}/`).then(resp => {
                 this.project = resp.data
             }).catch(err => this.showFailedSnackbar(err))
         },

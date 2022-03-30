@@ -1,5 +1,5 @@
 <template>
-    <v-container class="portfolio-list">
+    <v-container class="project-list">
         <v-row justify="center">
             <v-col :cols="12">
                 <h1>Here's some of <span class="first-header">my Work</span></h1>

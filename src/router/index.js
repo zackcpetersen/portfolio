@@ -22,12 +22,12 @@ const routes = [
         component: Contact
     },
     {
-        path: '/portfolio/:slug/',
+        path: '/projects/:slug/',
         name: 'ProjectView',
         component: ProjectView
     },
     {
-        path: '/portfolio/',
+        path: '/projects/',
         name: 'ProjectList',
         component: ProjectList
     },

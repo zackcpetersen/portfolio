@@ -27,11 +27,12 @@
                     </v-carousel>
                 </v-card>
             </v-col>
+            <v-col cols="12">
+                <div class="about mt-10 text-left">
+                    <span v-html="article.description"></span>
+                </div>
+            </v-col>
         </v-row>
-
-        <div class="about mt-10 text-left pl-5">
-            <span v-html="article.description"></span>
-        </div>
         <v-divider class="my-10"/>
         <snackbar :snackbar="snackbar"></snackbar>
     </v-container>

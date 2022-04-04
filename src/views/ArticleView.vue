@@ -27,9 +27,11 @@
                     </v-carousel>
                 </v-card>
             </v-col>
-            <v-col cols="12">
-                <div class="about mt-10 text-left">
-                    <span v-html="article.description"></span>
+            <v-col cols="11">
+                <div class="mt-10 text-left">
+                    <!-- New article formatting may not work out of the box from medium -
+                    copy and paste the style tag from an existing article to make it pretty -->
+                    <span v-html="article.description" class></span>
                 </div>
             </v-col>
         </v-row>

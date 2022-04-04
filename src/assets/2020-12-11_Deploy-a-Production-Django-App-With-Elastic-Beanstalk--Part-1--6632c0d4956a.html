@@ -1,0 +1,571 @@
+<head>
+    <title>Deploy a Production Django App With Elastic Beanstalk (Part 1)</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            margin-bottom: 17px;
+
+        }
+
+        h2 {
+            margin: 30px 0 0 0;
+            margin-bottom: 18px;
+            margin-top: 33px;
+        }
+
+        h3 {
+            margin: 10px 0 20px 0;
+            text-align: center;
+        }
+
+        section p {
+            margin-bottom: 27px;
+            line-height: 1.6;
+        }
+
+        section img {
+            max-width: 100%;
+        }
+
+        pre {
+            overflow-x: scroll;
+        }
+
+        img {
+            display: block;
+            margin: 20px auto;
+        }
+
+        footer {
+            padding: 0 20px;
+            margin: 50px 0;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        header,
+        section[data-field=subtitle],
+        section[data-field=description] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<article class="h-entry">
+    <header>
+        <h1 class="p-name">Deploy a Production Django App With Elastic Beanstalk (Part 1)</h1>
+    </header>
+    <section data-field="subtitle" class="p-summary">
+        Using Django 3.1.3, Python 3.7.9, and Amazon Linux 2
+    </section>
+    <section data-field="body" class="e-content">
+        <section name="7cb1" class="section section--body section--first">
+            <div class="section-divider">
+                <hr class="section-divider">
+            </div>
+            <div class="section-content">
+                <div class="section-inner sectionLayout--insetColumn"><h3 name="a2dd" id="a2dd"
+                                                                          class="graf graf--h3 graf--leading graf--title">
+                    Deploy a Production Django App With Elastic Beanstalk (Part 1)</h3><h4 name="3cea" id="3cea"
+                                                                                           class="graf graf--h4 graf-after--h3 graf--subtitle">
+                    Using Django 3.1.3, Python 3.7.9, and Amazon Linux 2</h4>
+                    <p name="dc00" id="dc00" class="graf graf--p graf-after--figure">In this tutorial, we’ll be creating
+                        a simple Django Rest Framework (DRF) app and deploying it with Beanstalk to make our endpoints
+                        available on the web. We’ll do everything, from creating our virtual environment and getting the
+                        Django app running locally, to deploying the code on Beanstalk and hooking it into a Postgresql
+                        RDS database. Let’s get going!</p>
+                    <p name="7fb3" id="7fb3" class="graf graf--p graf-after--p graf--trailing"><em
+                        class="markup--em markup--p-em">If you’re already familiar with everything covered here, or
+                        you’re looking for help with handling production static and media files, database settings, or
+                        environment variables — check out </em><a
+                        href="https://medium.com/@zackcpetersen/production-django-elastic-beanstalk-part2-4501caf7d8fb"
+                        data-href="https://medium.com/@zackcpetersen/production-django-elastic-beanstalk-part2-4501caf7d8fb"
+                        class="markup--anchor markup--p-anchor" target="_blank"><strong
+                        class="markup--strong markup--p-strong"><em class="markup--em markup--p-em">part 2</em></strong></a><em
+                        class="markup--em markup--p-em"> instead!</em></p></div>
+            </div>
+        </section>
+        <section name="790b" class="section section--body">
+            <div class="section-divider">
+                <hr class="section-divider">
+            </div>
+            <div class="section-content">
+                <div class="section-inner sectionLayout--insetColumn"><h3 name="7137" id="7137"
+                                                                          class="graf graf--h3 graf--leading">Table
+                    of Contents</h3>
+                    <ol class="postList">
+                        <li name="eaf2" id="eaf2" class="graf graf--li graf-after--h3"><a href="#d874" data-href="#d874"
+                                                                                          class="markup--anchor markup--li-anchor"><strong
+                            class="markup--strong markup--li-strong">Why Use Elastic Beanstalk</strong></a></li>
+                        <li name="5cb1" id="5cb1" class="graf graf--li graf-after--li"><a href="#a8cf" data-href="#a8cf"
+                                                                                          class="markup--anchor markup--li-anchor"><strong
+                            class="markup--strong markup--li-strong">Installing Pyenv and Pipenv</strong></a></li>
+                        <li name="ed7f" id="ed7f" class="graf graf--li graf-after--li"><a href="#a53e" data-href="#a53e"
+                                                                                          class="markup--anchor markup--li-anchor"><strong
+                            class="markup--strong markup--li-strong">Clone The Repo</strong></a></li>
+                        <li name="dd0b" id="dd0b" class="graf graf--li graf-after--li"><a href="#504c" data-href="#504c"
+                                                                                          class="markup--anchor markup--li-anchor"><strong
+                            class="markup--strong markup--li-strong">Preparing Beanstalk</strong></a><strong
+                            class="markup--strong markup--li-strong"><br> — </strong><a href="#9261" data-href="#9261"
+                                                                                        class="markup--anchor markup--li-anchor">Downloading
+                            the EB CLI</a><br> — <a href="#82d7" data-href="#82d7"
+                                                    class="markup--anchor markup--li-anchor">Initializing elastic
+                            Beanstalk</a><br> — <a href="#9cbc" data-href="#9cbc"
+                                                   class="markup--anchor markup--li-anchor">Creating the Beanstalk
+                            environment</a><br> — <a href="#1fe6" data-href="#1fe6"
+                                                     class="markup--anchor markup--li-anchor">Adding .ebextensions</a>
+                        </li>
+                        <li name="8e4f" id="8e4f" class="graf graf--li graf-after--li"><a href="#c66f" data-href="#c66f"
+                                                                                          class="markup--anchor markup--li-anchor"><strong
+                            class="markup--strong markup--li-strong">SSH Into the Server</strong></a><strong
+                            class="markup--strong markup--li-strong"> (Debugging)<br></strong> — <a href="#f439"
+                                                                                                    data-href="#f439"
+                                                                                                    class="markup--anchor markup--li-anchor">Grab
+                            your EC2 instance public IP</a><br> —<a href="#3ff5" data-href="#3ff5"
+                                                                    class="markup--anchor markup--li-anchor">Checking
+                            the log files</a></li>
+                        <li name="19bc" id="19bc" class="graf graf--li graf-after--li graf--trailing"><a href="#16a4"
+                                                                                                         data-href="#16a4"
+                                                                                                         class="markup--anchor markup--li-anchor"><strong
+                            class="markup--strong markup--li-strong">Add Your .ebextensions directory and
+                            deploy</strong></a></li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+        <section name="ed8f" class="section section--body">
+            <div class="section-divider">
+                <hr class="section-divider">
+            </div>
+            <div class="section-content">
+                <div class="section-inner sectionLayout--insetColumn"><h3 name="d874" id="d874"
+                                                                          class="graf graf--h3 graf--leading">Why Use
+                    Elastic Beanstalk?</h3>
+                    <p name="b7db" id="b7db" class="graf graf--p graf-after--h3">EBS (Elastic Beanstalk) is a
+                        platform-as-a-service used to deploy web apps without the pain of creating your own EC2
+                        instances, load balancers, auto-scaling, health monitoring, and more. It’s a quick and
+                        relatively easy way to get your app on the web. Despite everything being managed by AWS, it
+                        still leaves a decent amount of control and visibility to the developer.</p>
+                    <p name="032c" id="032c" class="graf graf--p graf-after--p graf--trailing">To get started, we’ll be
+                        using Pipenv and Pyenv to help manage our dependencies and Python version.</p></div>
+            </div>
+        </section>
+        <section name="a455" class="section section--body">
+            <div class="section-divider">
+                <hr class="section-divider">
+            </div>
+            <div class="section-content">
+                <div class="section-inner sectionLayout--insetColumn"><h3 name="a8cf" id="a8cf"
+                                                                          class="graf graf--h3 graf--leading">Installing
+                    Pyenv and Pipenv</h3>
+                    <p name="b7be" id="b7be" class="graf graf--p graf-after--h3">If you’re using a Mac, you can brew
+                        install both requirements (shown below). If you’re not on a mac, follow <a
+                            href="https://pipenv-fork.readthedocs.io/en/latest/install.html#pragmatic-installation-of-pipenv"
+                            data-href="https://pipenv-fork.readthedocs.io/en/latest/install.html#pragmatic-installation-of-pipenv"
+                            class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">these instructions to
+                            install Pipenv</a>, and <a href="https://github.com/pyenv/pyenv#installation"
+                                                       data-href="https://github.com/pyenv/pyenv#installation"
+                                                       class="markup--anchor markup--p-anchor" rel="noopener"
+                                                       target="_blank">these for Pyenv</a>.</p>
+                    <pre name="ffa0" id="ffa0" class="graf graf--pre graf-after--p">brew install pipenv<br>brew install pyenv</pre>
+                    <p name="06aa" id="06aa" class="graf graf--p graf-after--pre">For use with Pyenv, you’ll also want
+                        to add this to your <code class="markup--code markup--p-code">~/.zprofile</code> | <code
+                            class="markup--code markup--p-code">~/.zshrc</code> if using zsh— or <code
+                            class="markup--code markup--p-code">~/.bashrc</code> | <code
+                            class="markup--code markup--p-code">~/.bash_profile</code> if using bash.</p>
+                    <pre name="5f04" id="5f04" class="graf graf--pre graf-after--p">export PYENV_ROOT=&quot;$HOME/.pyenv&quot;<br>export PATH=&quot;$PYENV_ROOT/bin:$PATH&quot;<br>if command -v pyenv 1&gt;/dev/null 2&gt;&amp;1; then<br>  eval &quot;$(pyenv init -)&quot;<br>fi</pre>
+                    <p name="2230" id="2230" class="graf graf--p graf-after--pre">After making changes to your <code
+                        class="markup--code markup--p-code">~/.zshrc</code> or <code
+                        class="markup--code markup--p-code">~/.zprofile</code>, be sure to restart your shell:</p>
+                    <pre name="5c7b" id="5c7b" class="graf graf--pre graf-after--p">exec &quot;$SHELL&quot;</pre>
+                    <p name="0b51" id="0b51" class="graf graf--p graf-after--pre">Now we have both installed, let’s
+                        download Python 3.7.9:</p>
+                    <pre name="d911" id="d911" class="graf graf--pre graf-after--p">pyenv install 3.7.9</pre>
+                    <p name="bbb7" id="bbb7" class="graf graf--p graf-after--pre graf--trailing">This will take a
+                        minute, but once it’s finished you’ll have python 3.7.9 available on your <code
+                            class="markup--code markup--p-code">pyenv</code> path.</p></div>
+            </div>
+        </section>
+        <section name="a649" class="section section--body">
+            <div class="section-divider">
+                <hr class="section-divider">
+            </div>
+            <div class="section-content">
+                <div class="section-inner sectionLayout--insetColumn"><h3 name="a53e" id="a53e"
+                                                                          class="graf graf--h3 graf--leading">Clone
+                    the Repo</h3>
+                    <p name="7c37" id="7c37" class="graf graf--p graf-after--h3">Now, let’s create the project and the
+                        virtual environment with pipenv. Clone my lightweight <a
+                            href="https://github.com/zackcpetersen/iotd"
+                            data-href="https://github.com/zackcpetersen/iotd" class="markup--anchor markup--p-anchor"
+                            rel="noopener" target="_blank">Image Of The Day repo</a> (built with DRF) to follow along
+                        with the tutorial:</p>
+                    <pre name="9d58" id="9d58" class="graf graf--pre graf-after--p">git clone git@github.com:zackcpetersen/iotd.git<br>cd iotd<br>pipenv install --python ~/.pyenv/versions/3.7.9/bin/python</pre>
+                    <p name="1942" id="1942" class="graf graf--p graf-after--pre"><em class="markup--em markup--p-em">Note:
+                        if you don’t have the correct python version on that path try this:</em></p>
+                    <pre name="73b2" id="73b2" class="graf graf--pre graf-after--p"><code
+                        class="markup--code markup--pre-code">~/.pyenv/shims/versions/3.7.9/bin/python</code></pre>
+                    <p name="0998" id="0998" class="graf graf--p graf-after--pre">This will set the Python version in
+                        the virtual environment to 3.7.9 and install all requirements from the <code
+                            class="markup--code markup--p-code">Pipfile</code>.</p>
+                    <p name="278b" id="278b" class="graf graf--p graf-after--p"><em class="markup--em markup--p-em">Pro
+                        tip: If you have a requirements.txt file already, use </em><code
+                        class="markup--code markup--p-code"><em class="markup--em markup--p-em">pipenv install -r
+                        requirements.txt</em></code><em class="markup--em markup--p-em"> to install everything from
+                        there.</em></p>
+                    <p name="60e7" id="60e7" class="graf graf--p graf-after--p">The project directory should look
+                        something like this:</p>
+                    <pre name="2f1d" id="2f1d" class="graf graf--pre graf-after--p">├── Pipfile<br>├── Pipfile.lock<br>├── db.sqlite3<br>├── images<br>│   ├── __init__.py<br>│   ├── admin.py<br>│   ├── api<br>│   ├── apps.py<br>│   ├── management<br>│   ├── migrations<br>│   ├── models.py<br>│   ├── tests.py<br>│   └── views.py<br>├── iotd<br>│   ├── __init__.py<br>│   ├── asgi.py<br>│   ├── settings.py<br>│   ├── urls.py<br>│   └── wsgi.py<br>├── manage.py<br>├── media<br>└── static<br>    ├── admin<br>    └── rest_framework</pre>
+                    <p name="a42b" id="a42b" class="graf graf--p graf-after--pre">In a terminal, run <code
+                        class="markup--code markup--p-code">pipenv shell</code>, if you haven’t already, and we’ll make
+                        <code class="markup--code markup--p-code">migrations</code>, <code
+                            class="markup--code markup--p-code">migrate</code>, and <code
+                            class="markup--code markup--p-code">createsuperuser</code>. At this point, our local server
+                        should be ready to go!</p>
+                    <p name="753a" id="753a" class="graf graf--p graf-after--p"><em
+                        class="markup--em markup--p-em">The </em><code class="markup--code markup--p-code"><em
+                        class="markup--em markup--p-em">createsu</em></code><em class="markup--em markup--p-em"> command
+                        is a </em><a href="https://docs.djangoproject.com/en/3.1/howto/custom-management-commands/"
+                                     data-href="https://docs.djangoproject.com/en/3.1/howto/custom-management-commands/"
+                                     class="markup--anchor markup--p-anchor" rel="noopener" target="_blank"><em
+                        class="markup--em markup--p-em">django-admin custom command</em></a><em
+                        class="markup--em markup--p-em"> you can find in </em><code class="markup--code markup--p-code"><em
+                        class="markup--em markup--p-em">images/management/commands/createsu.py</em></code>:</p>
+                    <pre name="1a9a" id="1a9a" class="graf graf--pre graf-after--p">python manage.py makemigrations<br>python manage.py migrate<br>python manage.py createsu<br>python manage.py runserver</pre>
+                    <p name="365a" id="365a" class="graf graf--p graf-after--pre">Navigate to <a
+                        href="http://127.0.0.1:8000/api/" data-href="http://127.0.0.1:8000/api/"
+                        class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">127.0.0.1:8000/api/</a>
+                        and you’ll see a page that looks like this:</p>
+                    <figure name="e73b" id="e73b" class="graf graf--figure graf-after--p"><img class="graf-image"
+                                                                                               data-image-id="1*JsOePAnNBPwfnvsRcUmXxA.png"
+                                                                                               data-width="1182"
+                                                                                               data-height="442"
+                                                                                               src="https://cdn-images-1.medium.com/max/1400/1*JsOePAnNBPwfnvsRcUmXxA.png">
+                    </figure>
+                    <p name="3069" id="3069" class="graf graf--p graf-after--figure">Click on <a
+                        href="http://127.0.0.1:8000/api/images/" data-href="http://127.0.0.1:8000/api/images/"
+                        class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">http://127.0.0.1:8000/api/images/</a>
+                        to go to the image page of DRF. From here, add an image and give it a name. When it finishes
+                        uploading, click on the image link and your image will load from your local filesystem with the
+                        URL: <code
+                            class="markup--code markup--p-code">http://127.0.0.1:8000/media/&lt;img_name&gt;</code> .
+                    </p>
+                    <p name="90b8" id="90b8" class="graf graf--p graf-after--p graf--trailing">Congratulations! You’ve
+                        successfully set up your local environment and are ready to deploy to Beanstalk.</p></div>
+            </div>
+        </section>
+        <section name="9e92" class="section section--body">
+            <div class="section-divider">
+                <hr class="section-divider">
+            </div>
+            <div class="section-content">
+                <div class="section-inner sectionLayout--insetColumn"><h3 name="504c" id="504c"
+                                                                          class="graf graf--h3 graf--leading">Preparing
+                    Beanstalk</h3>
+                    <p name="bd11" id="bd11" class="graf graf--p graf-after--h3">Before you can use Beanstalk, you’ll
+                        need an AWS account. If you don’t have an account already, <a
+                            href="https://portal.aws.amazon.com/billing/signup#/start"
+                            data-href="https://portal.aws.amazon.com/billing/signup#/start"
+                            class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">create one here</a>.
+                    </p><h4 name="9261" id="9261" class="graf graf--h4 graf-after--p">Downloading the EB CLI</h4>
+                    <p name="fac9" id="fac9" class="graf graf--p graf-after--h4">Let’s go back to the terminal window
+                        and install the Beanstalk CLI (<code class="markup--code markup--p-code">pipenv install
+                            --dev</code> if you cloned the repo). Be sure to run the <code
+                            class="markup--code markup--p-code">pipenv</code> shell first:</p>
+                    <pre name="ae19" id="ae19" class="graf graf--pre graf-after--p">pipenv install awsebcli --dev</pre>
+                    <p name="cd1c" id="cd1c" class="graf graf--p graf-after--pre">I’m installing to <code
+                        class="markup--code markup--p-code">dev</code> here because we most likely won’t need the CLI on
+                        the production server, so it’s best to leave it for development only.</p>
+                    <p name="809e" id="809e" class="graf graf--p graf-after--p">Confirm you have it installed with <code
+                        class="markup--code markup--p-code">eb --version</code>.</p>
+                    <pre name="37ef" id="37ef" class="graf graf--pre graf-after--p">❯ eb --version<br>EB CLI 3.19.2 (Python 3.7.9)</pre>
+                    <h4 name="82d7" id="82d7" class="graf graf--h4 graf-after--pre">Initializing elastic Beanstalk</h4>
+                    <p name="b6fb" id="b6fb" class="graf graf--p graf-after--h4">Since we’re all set up with AWS and
+                        Beanstalk CLI, let’s get started!</p>
+                    <pre name="bfa5" id="bfa5" class="graf graf--pre graf-after--p">eb init</pre>
+                    <p name="753e" id="753e" class="graf graf--p graf-after--pre">This will prompt you to get set up
+                        with Beanstalk and configure the default application options.</p>
+                    <ul class="postList">
+                        <li name="2851" id="2851" class="graf graf--li graf-after--p"><strong
+                            class="markup--strong markup--li-strong">Default Region</strong>: The default AWS region for
+                            beanstalk
+                        </li>
+                        <li name="960e" id="960e" class="graf graf--li graf-after--li"><strong
+                            class="markup--strong markup--li-strong">Credentials</strong>: Your AWS IAM user creds.
+                            Follow <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html"
+                                      data-href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html"
+                                      class="markup--anchor markup--li-anchor" rel="noopener" target="_blank">this
+                                guide</a> to create one if you don’t have them already
+                        </li>
+                        <li name="2b2d" id="2b2d" class="graf graf--li graf-after--li"><strong
+                            class="markup--strong markup--li-strong">App name</strong>: What your application will be
+                            named
+                        </li>
+                        <li name="631a" id="631a" class="graf graf--li graf-after--li"><strong
+                            class="markup--strong markup--li-strong">Python version</strong>: At the time of this
+                            writing, you can choose from Python 3.6 and Python 3.7. They are fundamentally different and
+                            this tutorial covers 3.7 with Gunicorn.
+                        </li>
+                        <li name="1c76" id="1c76" class="graf graf--li graf-after--li"><strong
+                            class="markup--strong markup--li-strong">CodeCommit</strong>: Out of the scope of this
+                            tutorial — select no.
+                        </li>
+                        <li name="c454" id="c454" class="graf graf--li graf-after--li"><strong
+                            class="markup--strong markup--li-strong">SSH</strong>: Select <code
+                            class="markup--code markup--li-code">create_new_keypair</code>. Follow the prompts to create
+                            it and remember the name (default is <code
+                                class="markup--code markup--li-code">aws-eb</code>). In my opinion, tailing the server
+                            logs is the easiest way to figure out deployment problems.
+                        </li>
+                        <li name="c6bb" id="c6bb" class="graf graf--li graf-after--li"><strong
+                            class="markup--strong markup--li-strong">Keypair</strong>: You’ll probably want to generate
+                            a new keypair, this will be passed as part of your SSH command to log in to the server.
+                        </li>
+                    </ul>
+                    <p name="1324" id="1324" class="graf graf--p graf-after--li">Once you’re done setting this up,
+                        you’ll notice a new hidden directory in your project called <code
+                            class="markup--code markup--p-code">.elasticbeanstalk</code>.</p>
+                    <p name="2cee" id="2cee" class="graf graf--p graf-after--p">There is a <code
+                        class="markup--code markup--p-code">config.yml</code> file in there and it’s everything you set
+                        up saved to your local directory for future use.</p>
+                    <p name="c1b1" id="c1b1" class="graf graf--p graf-after--p"><em class="markup--em markup--p-em">Pro
+                        tip: If you need to start over with Beanstalk on this project for whatever reason, delete this
+                        directory and run </em><code class="markup--code markup--p-code"><em
+                        class="markup--em markup--p-em">eb init</em></code><em class="markup--em markup--p-em"> again to
+                        change any defaults.</em></p><h4 name="9cbc" id="9cbc" class="graf graf--h4 graf-after--p">
+                        Creating the Beanstalk environment</h4>
+                    <p name="fb91" id="fb91" class="graf graf--p graf-after--h4">Now that we have an application created
+                        on Beanstalk, let’s create our environment:</p>
+                    <pre name="7d5a" id="7d5a" class="graf graf--pre graf-after--p">eb create</pre>
+                    <p name="7a60" id="7a60" class="graf graf--p graf-after--pre">Again, you’ll be prompted with
+                        questions about what you would like to create.</p>
+                    <ul class="postList">
+                        <li name="1902" id="1902" class="graf graf--li graf-after--p"><strong
+                            class="markup--strong markup--li-strong">Env Name</strong>: What your environment will be
+                            named.
+                        </li>
+                        <li name="9eb4" id="9eb4" class="graf graf--li graf-after--li"><strong
+                            class="markup--strong markup--li-strong">DNS CNAME prefix</strong>: Leave as the default.
+                        </li>
+                        <li name="30a4" id="30a4" class="graf graf--li graf-after--li"><strong
+                            class="markup--strong markup--li-strong">Load Balancer Type</strong>: Choose Application.
+                        </li>
+                        <li name="2f88" id="2f88" class="graf graf--li graf-after--li"><strong
+                            class="markup--strong markup--li-strong">Spot Fleet Requests</strong>: Out of scope, select
+                            no.
+                        </li>
+                    </ul>
+                    <p name="9132" id="9132" class="graf graf--p graf-after--li">After you finish with the setup, it
+                        will begin to create the environment for you and try to deploy it to Beanstalk. This takes a few
+                        minutes, but feel free to watch events and see what’s happening under the hood.</p>
+                    <figure name="70f1" id="70f1" class="graf graf--figure graf-after--p"><img class="graf-image"
+                                                                                               data-image-id="1*mkqrRpd0h4SCyqBkgl92oA.png"
+                                                                                               data-width="1079"
+                                                                                               data-height="615"
+                                                                                               src="https://cdn-images-1.medium.com/max/1400/1*mkqrRpd0h4SCyqBkgl92oA.png">
+                    </figure>
+                    <h4 name="1fe6" id="1fe6" class="graf graf--h4 graf-after--figure">Adding .ebextensions</h4>
+                    <p name="8bf4" id="8bf4" class="graf graf--p graf-after--h4">Once the deployment is finished, it
+                        should say it was successful. However, if you run <code class="markup--code markup--p-code">eb
+                            open</code> , you’ll get a 502 error when the webpage opens. This can difficult to debug
+                        because without a decent amount of digging, there’s no way to see why. <em
+                            class="markup--em markup--p-em">Hint: it’s your WSGI path.</em></p>
+                    <figure name="88af" id="88af" class="graf graf--figure graf-after--p"><img class="graf-image"
+                                                                                               data-image-id="1*BEis8r5pzIewv0amh_28cA.png"
+                                                                                               data-width="268"
+                                                                                               data-height="99"
+                                                                                               src="https://cdn-images-1.medium.com/max/1400/1*BEis8r5pzIewv0amh_28cA.png">
+                    </figure>
+                    <p name="deb9" id="deb9" class="graf graf--p graf-after--figure">To fix this, we’ll create a new
+                        directory called <code class="markup--code markup--p-code">.ebextensions</code>. Inside, we
+                        create a file called <code class="markup--code markup--p-code">django.config</code>. Make sure
+                        you’re in at the project root for these commands.</p>
+                    <p name="10d1" id="10d1" class="graf graf--p graf-after--p"><em class="markup--em markup--p-em">Note:
+                        If you cloned the repo, this file already exists and you just need to uncomment the config
+                        settings.</em></p>
+                    <pre name="e8e5" id="e8e5" class="graf graf--pre graf-after--p">mkdir .ebextensions<br>touch .ebextensions/django.config</pre>
+                    <p name="2443" id="2443" class="graf graf--p graf-after--pre">Here’s how our project should look
+                        after creating the directory and file:</p>
+                    <pre name="39dc" id="39dc" class="graf graf--pre graf-after--p">├── Pipfile<br>├── Pipfile.lock<br>├── db.sqlite3<br><strong
+                        class="markup--strong markup--pre-strong">├── .ebextensions<br>│   ├── django.config</strong><br>├── images<br>│   ├── __init__.py<br>│   ├── admin.py<br>│   ├── api<br>│   ├── apps.py<br>│   ├── management<br>│   ├── migrations<br>│   ├── models.py<br>│   ├── tests.py<br>│   └── views.py<br>├── iotd<br>│   ├── __init__.py<br>│   ├── asgi.py<br>│   ├── settings.py<br>│   ├── urls.py<br>│   └── wsgi.py<br>├── manage.py<br>├── media<br>└── static<br>    ├── admin<br>    └── rest_framework</pre>
+                    <p name="d4ba" id="d4ba" class="graf graf--p graf-after--pre">Inside the django.config file, add the
+                        following:</p>
+                    <pre name="6d47" id="6d47" class="graf graf--pre graf-after--p">option_settings:<br>  aws:elasticbeanstalk:application:environment:<br>    DJANGO_SETTINGS_MODULE: &quot;iotd.settings&quot;<br>    PYTHONPATH: &quot;/var/app/current:$PYTHONPATH&quot;<br>  aws:elasticbeanstalk:container:python:<br>    WSGIPath: &quot;iotd.wsgi:application&quot;<br>  aws:elasticbeanstalk:environment:process:default:<br>    HealthCheckPath: &quot;/api&quot;<br>    MatcherHTTPCode: &quot;200-499&quot;<br><br>container_commands:<br>  01_makemigrations:<br>    command: &quot;source /var/app/venv/*/bin/activate &amp;&amp; python3 manage.py makemigrations --noinput&quot;<br>    leader_only: true<br>  02_migrate:<br>    command: &quot;source /var/app/venv/*/bin/activate &amp;&amp; python3 manage.py migrate --noinput&quot;<br>    leader_only: true<br>  03_createsu:<br>    command: &quot;source /var/app/venv/*/bin/activate &amp;&amp; python3 manage.py createsu&quot;<br>  04_collectstatic:<br>    command: &quot;source /var/app/venv/*/bin/activate &amp;&amp; python3 manage.py collectstatic --noinput&quot;<br>    leader_only: true</pre>
+                    <p name="cd1a" id="cd1a" class="graf graf--p graf-after--pre">There’s a lot going on here, but this
+                        config file has all the commands to get set up on the server and have your Django app running
+                        properly, including setting up your WSGI path.</p>
+                    <p name="1b5a" id="1b5a" class="graf graf--p graf-after--p">My first time deploying to Elastic
+                        Beanstalk with Amazon Linux 2 was challenging because of these config settings. At the time of
+                        writing, it’s not documented that you need to run the migration commands <em
+                            class="markup--em markup--p-em">after</em> manually activating the virtual environment (<a
+                            href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-django.html#python-django-migrate-site"
+                            data-href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-django.html#python-django-migrate-site"
+                            class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">see docs here</a>).
+                        They tell you to run <code class="markup--code markup--p-code">django-admin.py migrate</code>,
+                        which was throwing all sorts of errors for me and it was difficult to figure out what was wrong.
+                    </p>
+                    <p name="a520" id="a520" class="graf graf--p graf-after--p">After some trial and error, I discovered
+                        the virtual environment on the application server is located at <code
+                            class="markup--code markup--p-code">/var/app/venv/</code>. So in the config commands, I
+                        first <code class="markup--code markup--p-code">source</code> (activate) the <code
+                            class="markup--code markup--p-code">virtualenv</code> and then run my migration commands as
+                        normal.</p>
+                    <pre name="758e" id="758e" class="graf graf--pre graf-after--p">### To run a command during deployment<br><strong
+                        class="markup--strong markup--pre-strong">source /var/app/venv/*/bin/activate</strong> &amp;&amp; python manage.py migrate</pre>
+                    <p name="e126" id="e126" class="graf graf--p graf-after--pre graf--trailing">Another “gotcha” I
+                        discovered when making my first Beanstalk environment is you need to have all the files you want
+                        to be deployed to the app server committed to git. For example, if you don’t commit the <code
+                            class="markup--code markup--p-code">.ebextensions</code> directory, it doesn’t get added as
+                        a file in deployment and none of the commands inside will run. The same is true for your Pipfile
+                        and anything else Beanstalk needs to set up your app.</p></div>
+            </div>
+        </section>
+        <section name="96e7" class="section section--body">
+            <div class="section-divider">
+                <hr class="section-divider">
+            </div>
+            <div class="section-content">
+                <div class="section-inner sectionLayout--insetColumn"><h3 name="c66f" id="c66f"
+                                                                          class="graf graf--h3 graf--leading">SSH Into
+                    the Server</h3>
+                    <p name="cb9e" id="cb9e" class="graf graf--p graf-after--h3">Let’s SSH into the server and watch our
+                        custom commands output as the app deploys. (This is optional but helpful for debugging if your
+                        deployment is having issues).</p><h4 name="f439" id="f439" class="graf graf--h4 graf-after--p">
+                        Grab your EC2 instance public IP</h4>
+                    <p name="a5a8" id="a5a8" class="graf graf--p graf-after--h4">The new keypair you created with <code
+                        class="markup--code markup--p-code">eb init</code> earlier should be stored in your <code
+                        class="markup--code markup--p-code">~/.ssh</code> directory. With that in mind, navigate to your
+                        <a href="http://console.aws.amazon.com/ec2/v2/home#Instances:"
+                           data-href="http://console.aws.amazon.com/ec2/v2/home#Instances:"
+                           class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">AWS EC2 instances</a>
+                        and find the Public IPv4 address with the instance that was created. If you don’t see your
+                        instance, check your region!</p>
+                    <p name="1030" id="1030" class="graf graf--p graf-after--p">If you aren’t sure which instance it is,
+                        check the tags on your instances to find the one that corresponds with your Beanstalk name.</p>
+                    <figure name="61d0" id="61d0" class="graf graf--figure graf-after--p"><img class="graf-image"
+                                                                                               data-image-id="1*Bi-9NySLb20crvtBRwak3Q.png"
+                                                                                               data-width="267"
+                                                                                               data-height="66"
+                                                                                               src="https://cdn-images-1.medium.com/max/1400/1*Bi-9NySLb20crvtBRwak3Q.png">
+                    </figure>
+                    <p name="ef74" id="ef74" class="graf graf--p graf-after--figure">Copy the address and run:</p>
+                    <pre name="7ecb" id="7ecb" class="graf graf--pre graf-after--p">ssh -i ~/.ssh/&lt;keypair_name&gt; ec2-user@&lt;public_ipv4_address&gt;<br>## Example<br>ssh -i ~/.ssh/aws-eb ec2-user@34.216.119.130</pre>
+                    <p name="3064" id="3064" class="graf graf--p graf-after--pre">Type <code
+                        class="markup--code markup--p-code">yes</code> to add the host to your known hosts. We’re in!
+                    </p>
+                    <p name="dc4c" id="dc4c" class="graf graf--p graf-after--p">Now to check the log files. You can
+                        accomplish something similar by downloading the logs from the Beanstalk console, but it was
+                        annoying to me and took too many extra steps. Here, we’re going to tail the log files as they
+                        populate and see if we run into issues in real-time.</p><h4 name="3ff5" id="3ff5"
+                                                                                    class="graf graf--h4 graf-after--p">
+                        Checking the log files</h4>
+                    <p name="5752" id="5752" class="graf graf--p graf-after--h4">Navigate to the log directory with
+                        <code class="markup--code markup--p-code">cd /var/log/</code>:</p>
+                    <pre name="5fb3" id="5fb3" class="graf graf--pre graf-after--p">[ec2-user@ip-172-31-21-105 ~]$ cd /var/log/</pre>
+                    <p name="5764" id="5764" class="graf graf--p graf-after--pre">In this directory, if you <code
+                        class="markup--code markup--p-code">ls</code> you’ll see a whole bunch of log files to check
+                        out. In my experience with Beanstalk, there are three that are the most informative about
+                        deployment issues:</p>
+                    <pre name="7211" id="7211" class="graf graf--pre graf-after--p">eb-engine.log<br>cfn-init.log<br>cfn-init-cmd.log</pre>
+                    <p name="e290" id="e290" class="graf graf--p graf-after--pre">When I have an issue on deployment, I
+                        check the logs in this order and have been able to pinpoint the problem exactly. For this
+                        example, let’s tail the most granular log and see the output as it deploys:</p>
+                    <pre name="81d0" id="81d0"
+                         class="graf graf--pre graf-after--p">tail -n 100 -f cfn-init-cmd.log</pre>
+                    <p name="1df1" id="1df1" class="graf graf--p graf-after--pre graf--trailing">The <code
+                        class="markup--code markup--p-code">-f</code> in this command means follow, so you will be able
+                        to see the logs as they are updated. Leave this here for now, we’ll come back to it.</p></div>
+            </div>
+        </section>
+        <section name="7661" class="section section--body">
+            <div class="section-divider">
+                <hr class="section-divider">
+            </div>
+            <div class="section-content">
+                <div class="section-inner sectionLayout--insetColumn"><h3 name="16a4" id="16a4"
+                                                                          class="graf graf--h3 graf--leading">Add
+                    Your .ebextensions Directory and Deploy</h3>
+                    <p name="46d3" id="46d3" class="graf graf--p graf-after--h3">In a separate terminal window, navigate
+                        back to the <code class="markup--code markup--p-code">iotd</code> project root and add
+                        everything to git (including <code class="markup--code markup--p-code">db.sqlite3</code>). <em
+                            class="markup--em markup--p-em">Note: you don’t have to push anything up, you only need to
+                            commit the files that you want deployed.</em></p>
+                    <pre name="0608" id="0608" class="graf graf--pre graf-after--p">git add .<br>git commit -m &quot;adding .ebextension config file&quot;</pre>
+                    <p name="3065" id="3065" class="graf graf--p graf-after--pre">Once your changes are committed, it’s
+                        time to deploy again — this time, we’ll watch the logs to see what happens. Make sure to run
+                        <code class="markup--code markup--p-code">pipenv shell</code> before running any commands.</p>
+                    <p name="5af8" id="5af8" class="graf graf--p graf-after--p"><em class="markup--em markup--p-em">Pro
+                        Tip: If you’re serious you can open three terminal windows and watch all three log files at
+                        once.</em></p>
+                    <pre name="4359" id="4359" class="graf graf--pre graf-after--p">eb deploy</pre>
+                    <p name="57ba" id="57ba" class="graf graf--p graf-after--pre">If all goes well, as the deployment
+                        runs you should see outputs that look something like this:</p>
+                    <pre name="a5af" id="a5af" class="graf graf--pre graf-after--p"> Command 01_makemigrations<br> -----------------------Command Output-----------------------<br>  Migrations for &#39;images&#39;:<br>    images/migrations/0002_auto_20201125_0049.py<br>      - Alter field image on image<br> ------------------------------------------------------------<br> Completed successfully.</pre>
+                    <p name="2b86" id="2b86" class="graf graf--p graf-after--pre">Now if you go back to your project
+                        root folder and run <code class="markup--code markup--p-code">eb open</code> again, you should
+                        land on a page that looks like this:</p>
+                    <figure name="e75e" id="e75e" class="graf graf--figure graf-after--p"><img class="graf-image"
+                                                                                               data-image-id="1*sategCAUXeOLeLi459b-MQ.png"
+                                                                                               data-width="1701"
+                                                                                               data-height="359"
+                                                                                               src="https://cdn-images-1.medium.com/max/1400/1*sategCAUXeOLeLi459b-MQ.png">
+                    </figure>
+                    <p name="c430" id="c430" class="graf graf--p graf-after--figure">Progress! This is much better than
+                        the 502 error we had before. To fix this, go to the iotd/settings.py file and add your beanstalk
+                        URL to the <code class="markup--code markup--p-code">ALLOWED_HOSTS</code> setting. Commit your
+                        changes to git and run <code class="markup--code markup--p-code">eb deploy</code> again.</p>
+                    <p name="5746" id="5746" class="graf graf--p graf-after--p"><em class="markup--em markup--p-em">Hint:
+                        Find your beanstalk URL with </em><code class="markup--code markup--p-code"><em
+                        class="markup--em markup--p-em">eb status</em></code><em class="markup--em markup--p-em">, look
+                        for CNAME.</em></p>
+                    <p name="8cf1" id="8cf1" class="graf graf--p graf-after--p">Run <code
+                        class="markup--code markup--p-code">eb open</code> and add “/api/” to the end of your URL. This
+                        time, success! Except…</p>
+                    <figure name="28a8" id="28a8" class="graf graf--figure graf-after--p"><img class="graf-image"
+                                                                                               data-image-id="1*liw4d6N8TpFRstLaVSL0Zg.png"
+                                                                                               data-width="746"
+                                                                                               data-height="515"
+                                                                                               src="https://cdn-images-1.medium.com/max/1400/1*liw4d6N8TpFRstLaVSL0Zg.png">
+                    </figure>
+                    <p name="5966" id="5966" class="graf graf--p graf-after--figure graf--trailing">There’s no styling!
+                        This is because, even though we ran <code
+                            class="markup--code markup--p-code">collectstatic</code> in the deploy, we haven’t
+                        configured production static and media settings, so Django doesn’t know where to find the static
+                        files.</p></div>
+            </div>
+        </section>
+        <section name="1921" class="section section--body section--last">
+            <div class="section-divider">
+                <hr class="section-divider">
+            </div>
+            <div class="section-content">
+                <div class="section-inner sectionLayout--insetColumn"><h3 name="9a82" id="9a82"
+                                                                          class="graf graf--h3 graf--leading">
+                    Conclusion</h3>
+                    <p name="d57c" id="d57c" class="graf graf--p graf-after--h3">We’ve covered a good amount here, and
+                        you should be more familiar with the deployment process and debugging in Elastic Beanstalk.</p>
+                    <p name="1b93" id="1b93" class="graf graf--p graf-after--p graf--trailing">We will continue from
+                        here in <a
+                            href="https://medium.com/@zackcpetersen/production-django-elastic-beanstalk-part2-4501caf7d8fb"
+                            data-href="https://medium.com/@zackcpetersen/production-django-elastic-beanstalk-part2-4501caf7d8fb"
+                            class="markup--anchor markup--p-anchor" target="_blank">part 2</a> and go over production
+                        static and media storage with S3!</p></div>
+            </div>
+        </section>
+    </section>
+    <footer>
+        <p>By <a href="https://medium.com/@zackcpetersen" class="p-author h-card">Zack Petersen</a> on <a
+            href="https://medium.com/p/6632c0d4956a">
+            <time class="dt-published" datetime="2020-12-11T22:04:06.783Z">December 11, 2020</time>
+        </a>.
+        </p>
+        <p><a href="https://medium.com/@zackcpetersen/production-django-elastic-beanstalk-part1-6632c0d4956a"
+              class="p-canonical">Canonical link</a></p>
+        <p>Exported from <a href="https://medium.com">Medium</a> on March 30, 2022.</p>
+    </footer>
+</article>
+</body>

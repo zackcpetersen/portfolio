@@ -1,0 +1,536 @@
+<head>
+    <title>Your Guide to Regular Expressions in Python and Terminal</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            margin-bottom: 17px;
+        }
+
+        h2 {
+            margin: 30px 0 0 0;
+            margin-bottom: 18px;
+            margin-top: 33px;
+        }
+
+        h3 {
+            margin: 10px 0 20px 0;
+            text-align: center;
+        }
+
+        section p {
+            margin-bottom: 27px;
+            line-height: 1.6;
+        }
+
+        section img {
+            max-width: 100%;
+        }
+
+        pre {
+            overflow-x: scroll;
+        }
+
+        img {
+            display: block;
+            margin: 20px auto;
+        }
+
+        footer {
+            padding: 0 20px;
+            margin: 50px 0;
+            text-align: center;
+        }
+
+        header,
+        section[data-field=subtitle],
+        section[data-field=description] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<article class="h-entry">
+    <header>
+        <h1 class="p-name">Your Guide to Regular Expressions in Python and Terminal</h1>
+    </header>
+    <section data-field="subtitle" class="p-summary">
+        Step up your regex know-how
+    </section>
+    <section data-field="body" class="e-content">
+        <section name="5977" class="section section--body section--first">
+            <div class="section-divider">
+                <hr class="section-divider">
+            </div>
+            <div class="section-content">
+                <div class="section-inner sectionLayout--insetColumn"><h3 name="165a" id="165a"
+                                                                          class="graf graf--h3 graf--leading graf--title">
+                    Your Guide to Regular Expressions in Python and Terminal</h3><h4 name="ae98" id="ae98"
+                                                                                     class="graf graf--h4 graf-after--h3 graf--subtitle">
+                    Step up your regex know-how</h4>
+                    <p name="6c63" id="6c63" class="graf graf--p graf-after--h4 graf--trailing">Regular expressions. If
+                        you know how to use them, they are awesome and powerful. If not, they look like an alien
+                        language that needs to be decoded. Either way, this guide will cover the basics of regexes and
+                        how they are used to make the life of a programmer easier. We will then go over the basic &amp;
+                        extended set and how they can be used in Python and terminal. By the end, you’ll have enough
+                        regex know-how to step up your everyday coding.</p></div>
+            </div>
+        </section>
+        <section name="7dc4" class="section section--body">
+            <div class="section-divider">
+                <hr class="section-divider">
+            </div>
+            <div class="section-content">
+                <div class="section-inner sectionLayout--insetColumn"><h3 name="a9fc" id="a9fc"
+                                                                          class="graf graf--h3 graf--leading"><strong
+                    class="markup--strong markup--h3-strong">The Basics</strong></h3>
+                    <p name="202a" id="202a" class="graf graf--p graf-after--h3">Regular expressions are a way to search
+                        for patterns in data sets. It is not a programming language on its own, but all major languages
+                        have a regex engine built-in for you to utilize.</p>
+                    <p name="c849" id="c849" class="graf graf--p graf-after--p">What is a regular expression anyway?</p>
+                    <blockquote name="51bb" id="51bb"
+                                class="graf graf--pullquote graf--startsWithDoubleQuote graf-after--p">“A regular
+                        expression is a sequence of characters that define a search pattern.” — <a
+                            href="https://en.wikipedia.org/wiki/Regular_expression"
+                            data-href="https://en.wikipedia.org/wiki/Regular_expression"
+                            class="markup--anchor markup--pullquote-anchor" rel="noopener" target="_blank">Wikipedia</a>
+                    </blockquote>
+                    <p name="85ce" id="85ce" class="graf graf--p graf-after--pullquote">The “sequence of characters” are
+                        regex syntax, and if you’ve ever seen it you know how foreign it is to read, let alone
+                        understand, especially at first. For example:</p>
+                    <p name="5201" id="5201" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code"><em class="markup--em markup--p-em">^\(?[0-9]{3}\)?[\-\s]?[0-9]{3}[\-\s]?[0-9]{4}$</em></code>
+                    </p>
+                    <p name="7d37" id="7d37" class="graf graf--p graf-after--p">At first glance, this can be pretty
+                        overwhelming. Most of us don’t want to even try and figure it out. But, it’s just an expression
+                        to match a phone number. We’ll break this down in-depth later in the article, so don’t worry if
+                        you don’t understand it right now.</p><h4 name="8281" id="8281"
+                                                                  class="graf graf--h4 graf-after--p"><strong
+                        class="markup--strong markup--h4-strong">When to, and when not to, use regexes</strong></h4>
+                    <p name="260f" id="260f" class="graf graf--p graf-after--h4">Regexes are useful to
+                        programmatically:</p>
+                    <ul class="postList">
+                        <li name="8962" id="8962" class="graf graf--li graf-after--p">Find patterns and matches in data
+                            sets: Whether it’s a .csv or .txt, they’ve got you covered
+                        </li>
+                        <li name="27a5" id="27a5" class="graf graf--li graf-after--li">Validate forms and inputs: Do
+                            this on the frontend before you submit a form to make sure there are no issues behind the
+                            scenes once it’s been sent.
+                        </li>
+                        <li name="0897" id="0897" class="graf graf--li graf-after--li">Scrape information from the web:
+                            Looking to scrape every link (<code
+                                class="markup--code markup--li-code">&lt;a&gt;&lt;/a&gt;</code>) off of a webpage?
+                            There’s an expression for that.
+                        </li>
+                    </ul>
+                    <h4 name="6330" id="6330" class="graf graf--h4 graf-after--li"><strong
+                        class="markup--strong markup--h4-strong">What are the limitations of regular
+                        expressions?</strong></h4>
+                    <ul class="postList">
+                        <li name="4cb2" id="4cb2" class="graf graf--li graf-after--h4">Regular expressions are not a
+                            programming language. They are tools and all major languages utilize them.
+                        </li>
+                        <li name="34e1" id="34e1" class="graf graf--li graf-after--li">Difficult to read. Especially if
+                            you’re not familiar with them, it’s pretty intimidating and most people, myself included,
+                            tend to stay away from them for as long as possible.
+                        </li>
+                        <li name="333a" id="333a" class="graf graf--li graf-after--li graf--trailing">Can be difficult
+                            to write correctly, even if you know what you’re doing. Sometimes getting it to work exactly
+                            how you want takes more than a few tries.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section name="0d53" class="section section--body">
+            <div class="section-divider">
+                <hr class="section-divider">
+            </div>
+            <div class="section-content">
+                <div class="section-inner sectionLayout--insetColumn"><h3 name="75cc" id="75cc"
+                                                                          class="graf graf--h3 graf--leading"><strong
+                    class="markup--strong markup--h3-strong">Different Types of Regular Expressions</strong></h3>
+                    <p name="df7a" id="df7a" class="graf graf--p graf-after--h3">At this point, we have a basic
+                        understanding of what regular expressions are and how they can be used. However, being able to
+                        write them on your own is a valuable tool to have. Let’s dive in.</p><h4 name="45d3" id="45d3"
+                                                                                                 class="graf graf--h4 graf-after--p">
+                        <strong class="markup--strong markup--h4-strong">Basic &amp; extended set</strong></h4>
+                    <p name="e08b" id="e08b" class="graf graf--p graf-after--h4">Regexes have a basic set and an
+                        extended set. For this guide, we will cover the basic set and only parts of the extended set, to
+                        see an exhaustive list of what’s available, check out the <a
+                            href="https://docs.python.org/3/library/re.html"
+                            data-href="https://docs.python.org/3/library/re.html"
+                            class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">regular expression
+                            operation docs</a> for Python.</p>
+                    <p name="76b2" id="76b2" class="graf graf--p graf-after--p"><strong
+                        class="markup--strong markup--p-strong">Basic Set Symbols</strong></p>
+                    <p name="3ef6" id="3ef6" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code">.</code> — period (wildcard): replaces any character</p>
+                    <p name="9754" id="9754" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code">^ </code>— caret: matches the start of a string</p>
+                    <p name="8d66" id="8d66" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code">$</code> — dollar sign: matches the end of a string</p>
+                    <p name="3a4e" id="3a4e" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code">*</code> — asterisk: matches the preceding expression
+                        <strong class="markup--strong markup--p-strong">zero or more</strong> times</p>
+                    <p name="0526" id="0526" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code">\</code> — forward slash: represents special characters and
+                        escapes characters</p>
+                    <p name="d521" id="d521" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code">()</code> — parenthesis: groups expressions together</p>
+                    <p name="5b7d" id="5b7d" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code">?</code> — question mark: matches <strong
+                        class="markup--strong markup--p-strong">zero or one</strong> of the preceding expression</p>
+                    <p name="1974" id="1974" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code">\s</code> — escaped ‘s’: represents whitespace</p>
+                    <p name="978d" id="978d" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code">[wxyz]</code> — square brackets, literal: represents <strong
+                        class="markup--strong markup--p-strong">one </strong>of the characters inside (either w, x, y,
+                        or z)</p>
+                    <p name="f6d4" id="f6d4" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code">[w-z]</code>— square bracket, range: represents <strong
+                        class="markup--strong markup--p-strong">one </strong>of the characters inside the range (either
+                        w, x, y, or z ), can also be used with numbers [10–100].</p>
+                    <p name="ffa6" id="ffa6" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code">[^wxyz]</code> — square brackets, negated: represents any
+                        character <strong class="markup--strong markup--p-strong">not </strong>in the set (anything
+                        except w, x, y, or z). Note the caret <strong
+                            class="markup--strong markup--p-strong">inside </strong>the square brackets, has a different
+                        meaning than caret from above.</p>
+                    <p name="7532" id="7532" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code">\w</code> — word: matches any ASCII letter, digit, or
+                        underscore</p>
+                    <p name="36cd" id="36cd" class="graf graf--p graf-after--p"><strong
+                        class="markup--strong markup--p-strong">Extended Set Symbols</strong></p>
+                    <p name="e021" id="e021" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code">+</code> — plus sign: matches the preceding expression
+                        <strong class="markup--strong markup--p-strong">one or more</strong> times</p>
+                    <p name="2285" id="2285" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code">|</code> — pipe: used as an <strong
+                        class="markup--strong markup--p-strong">“or” comparison operator</strong>. Will match either
+                        expression1 OR expression2: expression1|expression2</p>
+                    <p name="4043" id="4043" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code">{n}</code>— will match <strong
+                        class="markup--strong markup--p-strong">“n” occurrences of the preceding expression</strong>,
+                        similar to <code class="markup--code markup--p-code">*</code>, <code
+                            class="markup--code markup--p-code">+</code>, and <code class="markup--code markup--p-code">?</code>,
+                        except if you define the max number of occurrences with <code
+                            class="markup--code markup--p-code">n</code>.</p>
+                    <p name="7d69" id="7d69" class="graf graf--p graf-after--p">The main difference to keep in mind when
+                        using the basic set vs. the extended set will be in the terminal. <code
+                            class="markup--code markup--p-code">grep</code>, for example, will need to be followed by
+                        <code class="markup--code markup--p-code">-E</code> when using symbols from the extended set.
+                    </p>
+                    <p name="1f91" id="1f91" class="graf graf--p graf-after--p graf--trailing"><code
+                        class="markup--code markup--p-code">grep -E ‘your-extended-regex’</code></p></div>
+            </div>
+        </section>
+        <section name="1539" class="section section--body">
+            <div class="section-divider">
+                <hr class="section-divider">
+            </div>
+            <div class="section-content">
+                <div class="section-inner sectionLayout--insetColumn"><h3 name="7e8c" id="7e8c"
+                                                                          class="graf graf--h3 graf--leading">Breaking
+                    Down the Expression</h3>
+                    <p name="2f38" id="2f38" class="graf graf--p graf-after--h3">Let’s revisit that expression from the
+                        beginning:</p>
+                    <p name="7641" id="7641" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code">^\(?[0-9]{3}\)?[\-\s]?[0-9]{3}[\-\s]?[0-9]{4}$</code></p>
+                    <p name="9c66" id="9c66" class="graf graf--p graf-after--p">To make this easier to read, let’s break
+                        it into smaller chunks and reverse-engineer it to show how it actually matches a phone number.
+                        Use the symbols labeled above as a guide. You can also check out <a href="https://regexr.com/"
+                                                                                            data-href="https://regexr.com/"
+                                                                                            class="markup--anchor markup--p-anchor"
+                                                                                            rel="noopener"
+                                                                                            target="_blank">RegExr</a>
+                        and follow along to see matches as they are created.</p>
+                    <p name="c80c" id="c80c" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code">^</code> — the caret: This is to signify the start of our
+                        string. Easy peasy.</p>
+                    <p name="e21c" id="e21c" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code">\(?</code> — optional open parenthesis: We are first
+                        escaping <code class="markup--code markup--p-code">\</code> it so it will read as a literal
+                        character <code class="markup--code markup--p-code">(</code> . Then we’ll add a <code
+                            class="markup--code markup--p-code">?</code> to look for it either zero or one time, making
+                        it optional.</p>
+                    <p name="6096" id="6096" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code">[0–9]{3}</code> — looks for any three consecutive numbers,
+                        aka an area code (305, 801, 702).</p>
+                    <p name="604c" id="604c" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code">\)?</code> — optional closing parenthesis</p>
+                    <p name="3801" id="3801" class="graf graf--p graf-after--p">At this point, the expression will match
+                        either 123 or (123).</p>
+                    <p name="2650" id="2650" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code">[\-\s]?</code> — optional whitespace <strong
+                        class="markup--strong markup--p-strong">or </strong>dash: <code
+                        class="markup--code markup--p-code">\s</code> is the expression for space or whitespace, inside
+                        the brackets with a <code class="markup--code markup--p-code">\-</code> (escaped dash), followed
+                        by a <code class="markup--code markup--p-code">?</code>, so it will look for it zero or one
+                        time.</p>
+                    <p name="fb55" id="fb55" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code">[0-9]{3}</code> — looks for any three consecutive numbers
+                    </p>
+                    <p name="7e11" id="7e11" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code">[\-\s]?</code> — optional dash or whitespace.</p>
+                    <p name="3675" id="3675" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code">[0-9]{4} </code>— final expression before the ending tag,
+                        looks for any four consecutive numbers.</p>
+                    <p name="5ffd" id="5ffd" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code">$</code> — end of the string.</p>
+                    <p name="773a" id="773a" class="graf graf--p graf-after--p">In this case, both the <code
+                        class="markup--code markup--p-code">^</code> and the <code
+                        class="markup--code markup--p-code">$</code> could be omitted and are not required for this
+                        specific expression. I left them in because they are useful to know and work either way for this
+                        scenario. If the phone number was in the middle of other text, you would want to leave them both
+                        out.</p>
+                    <p name="8032" id="8032" class="graf graf--p graf-after--p">It’s not so bad when it’s broken down,
+                        right? This expression will match any of the following phone number formats:</p>
+                    <ul class="postList">
+                        <li name="a4a1" id="a4a1" class="graf graf--li graf-after--p">1234567891</li>
+                        <li name="383e" id="383e" class="graf graf--li graf-after--li">123 456 7891</li>
+                        <li name="5606" id="5606" class="graf graf--li graf-after--li">123 456–7891</li>
+                        <li name="f52f" id="f52f" class="graf graf--li graf-after--li">123–456–7891</li>
+                        <li name="0ba2" id="0ba2" class="graf graf--li graf-after--li">(123) 456 7891</li>
+                        <li name="9b4c" id="9b4c" class="graf graf--li graf-after--li">(123) 456–7891</li>
+                    </ul>
+                    <p name="4209" id="4209" class="graf graf--p graf-after--li">We can simplify if we wish to ignore
+                        certain parts of the original expression:</p>
+                    <p name="a7d3" id="a7d3" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code"><em class="markup--em markup--p-em">[0-9]{10}</em></code><em
+                        class="markup--em markup--p-em"> — </em>probably the simplest way to check, will not match if
+                        any dashes, spaces, or parenthesis are included. Only looks for consecutive ten-digit number.
+                    </p>
+                    <p name="e99f" id="e99f" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code">[0-9]{3}[0-9]{3}[0-9]{4}</code> — a different way to write a
+                        consecutive ten-digit number expression (this is essentially identical to the expression above),
+                        makes it easier to add in dashes or spaces.</p>
+                    <p name="11ad" id="11ad" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code">[0-9]{3}[\-\s]?[0-9]{3}[\-\s]?[0-9]{4}</code> — same as
+                        previous, with checks for dashes and spaces</p>
+                    <p name="a7e9" id="a7e9" class="graf graf--p graf-after--p graf--trailing">Now, let’s look at one
+                        way to identify patterns and build our own regexes.</p></div>
+            </div>
+        </section>
+        <section name="e6b9" class="section section--body">
+            <div class="section-divider">
+                <hr class="section-divider">
+            </div>
+            <div class="section-content">
+                <div class="section-inner sectionLayout--insetColumn"><h3 name="fb3c" id="fb3c"
+                                                                          class="graf graf--h3 graf--leading">Regular
+                    Expression to Match an Email Address</h3>
+                    <p name="3514" id="3514" class="graf graf--p graf-after--h3">At this point, we’ve got a basic
+                        understanding of some of the symbols and tools available for use in building these expressions.
+                        Let’s take a look at another common pattern we’re all familiar with, email addresses.</p>
+                    <p name="68e6" id="68e6" class="graf graf--p graf-after--p">Before we start actually making the
+                        regex, let&#39;s look at a three-step process to help us identify the pattern we’d like to match
+                        with.</p>
+                    <ol class="postList">
+                        <li name="6cd1" id="6cd1" class="graf graf--li graf-after--p">What needs to be included or
+                            excluded?
+                        </li>
+                        <li name="cc75" id="cc75" class="graf graf--li graf-after--li">Find patterns in the
+                            inclusions/exclusions.
+                        </li>
+                        <li name="0a74" id="0a74" class="graf graf--li graf-after--li">Write those patterns in a
+                            RegEx.
+                        </li>
+                    </ol>
+                    <p name="62e5" id="62e5" class="graf graf--p graf-after--li">Looking at these emails as an
+                        example:</p>
+                    <ul class="postList">
+                        <li name="71c4" id="71c4" class="graf graf--li graf-after--p">
+                            regular-expression-master101@gmail.com
+                        </li>
+                        <li name="3fb5" id="3fb5" class="graf graf--li graf-after--li">joe_smith@aol.com</li>
+                        <li name="a836" id="a836" class="graf graf--li graf-after--li">business-man99@bigbusiness.net
+                        </li>
+                    </ul>
+                    <p name="e19f" id="e19f" class="graf graf--p graf-after--li">Let’s apply the three-step process
+                        above to our email</p>
+                    <ol class="postList">
+                        <li name="5d9a" id="5d9a" class="graf graf--li graf-after--p"><strong
+                            class="markup--strong markup--li-strong">What needs to be included or excluded?</strong><br>-
+                            We’ll break up the emails into parts.<br><code class="markup--code markup--li-code">&lt;username&gt;@&lt;second-level-domain&gt;.&lt;top-level-domain&gt;</code><br>-
+                            The top-level domain could end in .com, .net, .org, etc. For the sake of this example, we
+                            are going to say that the max length will be four, (something like .info).
+                        </li>
+                        <li name="e147" id="e147" class="graf graf--li graf-after--li"><strong
+                            class="markup--strong markup--li-strong">Find patterns in the inclusions/exclusions</strong><br>-
+                            Username will need to be pretty open, but we won’t be allowing for special characters
+                            outside of underscores, dashes, and periods.<br>- We’ll have a fixed <code
+                                class="markup--code markup--li-code">@</code> symbol<br>- The second-level domain will
+                            exclude special characters except for underscores, dashes, and periods.<br>- The top-level
+                            domain must only be letters and have a max length of four and a min length of two.
+                        </li>
+                        <li name="2430" id="2430" class="graf graf--li graf-after--li"><strong
+                            class="markup--strong markup--li-strong">Write those patterns in a RegEx</strong><br>-
+                            Username, <code class="markup--code markup--li-code">[\w\-\.]+</code>, <code
+                                class="markup--code markup--li-code">\w</code> matches with any ASCII letter, digit,
+                            underscore. <code class="markup--code markup--li-code">\-</code> is a literal dash. <code
+                                class="markup--code markup--li-code">\.</code> is a period. Wrap those in square
+                            brackets to match any one of them, and add <code
+                                class="markup--code markup--li-code">+</code> after to include it one or more times.<br>-
+                            Fixed <code class="markup--code markup--li-code">@</code> symbol matches with the <code
+                                class="markup--code markup--li-code">@</code> symbol and nothing else. This is required.<br>-
+                            Second-level domain, <code class="markup--code markup--li-code">([\w\-]+\.)+</code> ,
+                            similar to username expression, except this allows for multiple expressions to be strung
+                            together and is grouped with parenthesis <code
+                                class="markup--code markup--li-code">()</code> (<code
+                                class="markup--code markup--li-code u-paddingRight0 u-marginRight0">example@<strong
+                                class="markup--strong markup--li-strong">myurl.co</strong>.uk</code>)<br>- Top-level
+                            domain, <code class="markup--code markup--li-code">[a-zA-Z]{2,4}</code>, allows for “A”
+                            through “Z,” both lower and uppercase, from two to four characters in length.
+                        </li>
+                    </ol>
+                    <p name="11b8" id="11b8" class="graf graf--p graf-after--li">Put all of this together, with a caret
+                        at the beginning and a dollar sign at the end, and let&#39;s see what it looks like.</p>
+                    <p name="d5b1" id="d5b1" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code">^[\w\-\.]+@([\w\-]+\.)+[a-zA-Z]{2,4}$</code></p>
+                    <p name="03d4" id="03d4" class="graf graf--p graf-after--p">Beautiful. Throw that into RegExr and
+                        test it against each email individually, or remove the caret and dollar sign and test them all
+                        together. I also encourage you to add and remove parts of the regex to see if you can make it
+                        more or less flexible.</p>
+                    <p name="570e" id="570e" class="graf graf--p graf-after--p"><strong
+                        class="markup--strong markup--p-strong">Challenge</strong>: Write the above regex without using
+                        the <code class="markup--code markup--p-code">\w</code> anywhere in the expression.</p>
+                    <p name="78fc" id="78fc" class="graf graf--p graf-after--p graf--trailing">Learning regexes is great
+                        and all, but how do we actually apply it to our daily programming? Let’s look at how we can use
+                        regexes in terminal and Python.</p></div>
+            </div>
+        </section>
+        <section name="6fbc" class="section section--body">
+            <div class="section-divider">
+                <hr class="section-divider">
+            </div>
+            <div class="section-content">
+                <div class="section-inner sectionLayout--insetColumn"><p name="23e8" id="23e8"
+                                                                         class="graf graf--p graf--leading"><em
+                    class="markup--em markup--p-em">Note:<br>Different regex engines handle expressions in their own
+                    ways. Sometimes, what works on </em><a href="http://regexr.com" data-href="http://regexr.com"
+                                                           class="markup--anchor markup--p-anchor" rel="noopener"
+                                                           target="_blank"><em class="markup--em markup--p-em">regexr.com</em></a><em
+                    class="markup--em markup--p-em"> or in grep might not work in Python &amp; vice-versa. You may have
+                    to experiment and try making your Regular Expressions in a few ways before it works as expected</em>
+                </p>
+                    <h3 name="0943" id="0943" class="graf graf--h3 graf-after--p">Regular Expressions In Terminal</h3>
+                    <p name="a1f8" id="a1f8" class="graf graf--p graf-after--h3">For this example, we’ll be using <code
+                        class="markup--code markup--p-code">grep</code>. Grep is a command-line utility used for
+                        searching plain-text data sets and it has its own regex engine built in! Let’s grab the phone
+                        numbers and emails we’ve used up to this point and throw them in a .txt file that we can search
+                        with. Copy the text below and paste it into a terminal window.</p>
+                    <pre name="8187" id="8187" class="graf graf--pre graf-after--p">cat &lt;&lt; EOF &gt;&gt; regex-test.txt<br>1234567891<br>123 456 7891<br>123 456-7891<br>123-456-7891<br>(123) 456 7891<br>(123) 456-7891<br>regular-expression-master101@gmail.com<br>joe_smith@aol.com<br>business-man99@bigbusiness.net<em
+                        class="markup--em markup--pre-em"><br>EOF</em></pre>
+                    <p name="b0c6" id="b0c6" class="graf graf--p graf-after--pre">This will create a new file called
+                        <code class="markup--code markup--p-code">regex-test.txt</code> and the phone numbers and emails
+                        will be inside. From here, we can use <code class="markup--code markup--p-code">grep</code> to
+                        search for matches.</p>
+                    <p name="3a43" id="3a43" class="graf graf--p graf-after--p">For my version of grep (2.5.1), the
+                        <code class="markup--code markup--p-code">\s</code> doesn’t always work to identify whitespace.
+                        Because of this, you may or may not need to replace the instances of <code
+                            class="markup--code markup--p-code">\s</code> with <code
+                            class="markup--code markup--p-code">[:space:]</code> or just an actual space. With this in
+                        mind, here is an updated regular expression to use with <code
+                            class="markup--code markup--p-code">grep</code> to search phone numbers. Notice that I have
+                        changed <code class="markup--code markup--p-code">\s</code> to <code
+                            class="markup--code markup--p-code">[:space:]</code> and removed the <code
+                            class="markup--code markup--p-code">^</code> and <code
+                            class="markup--code markup--p-code">$</code>.</p>
+                    <p name="a95e" id="a95e" class="graf graf--p graf-after--p">Phone number regex: for use with <code
+                        class="markup--code markup--p-code">grep<br>\(?[0-9]{3}\)?[-[:space:]]?[0-9]{3}[-[:space:]]?[0-9]{4}</code>
+                    </p>
+                    <p name="e2b1" id="e2b1" class="graf graf--p graf-after--p">Putting it all together, run this
+                        command in the same directory as the <code
+                            class="markup--code markup--p-code">regex-test.txt</code> file you just created. If it
+                        doesn’t work, try replacing the space with either <code
+                            class="markup--code markup--p-code">\s</code> or just actual whitespace.</p>
+                    <p name="2aca" id="2aca" class="graf graf--p graf-after--p"><code
+                        class="markup--code markup--p-code u-paddingRight0 u-marginRight0">grep -E &#39;<em
+                        class="markup--em markup--p-em">\(?[0-9]{3}\)?[-[:space:]]?[0-9]{3}[-[:space:]]?[0-9]{4}</em>&#39;
+                        regex-test.txt</code></p>
+                    <figure name="acd2" id="acd2" class="graf graf--figure graf-after--p"><img class="graf-image"
+                                                                                               data-image-id="1*19o5XFdhtGROnPnYeXXEOQ.jpeg"
+                                                                                               data-width="2261"
+                                                                                               data-height="1000"
+                                                                                               data-is-featured="true"
+                                                                                               src="https://cdn-images-1.medium.com/max/800/1*19o5XFdhtGROnPnYeXXEOQ.jpeg">
+                        <figcaption class="imageCaption">Screencap provided by author</figcaption>
+                    </figure>
+                    <p name="3598" id="3598" class="graf graf--p graf-after--figure graf--trailing"><strong
+                        class="markup--strong markup--p-strong">Challenge</strong>: Experiment with the email regex we
+                        wrote above and see if you can make it work with grep to find the email matches in this file.
+                    </p></div>
+            </div>
+        </section>
+        <section name="3601" class="section section--body">
+            <div class="section-divider">
+                <hr class="section-divider">
+            </div>
+            <div class="section-content">
+                <div class="section-inner sectionLayout--insetColumn"><h3 name="d3ba" id="d3ba"
+                                                                          class="graf graf--h3 graf--leading">Regular
+                    Expressions in Python</h3>
+                    <p name="f3ea" id="f3ea" class="graf graf--p graf-after--h3">A key difference that I’ve found when
+                        running regexes in Python (vs. <code class="markup--code markup--p-code">grep</code>) is instead
+                        of checking an entire file, it often works better to check one entry at a time instead.</p>
+                    <p name="037d" id="037d" class="graf graf--p graf-after--p">For this example, I’ve added the emails
+                        into a list and we’ll loop through it to check each one individually. If the email matches, it
+                        will print the match.group() — what it matched with — and if it doesn’t match, it will print
+                        “Invalid Email.”</p>
+                    <p name="c661" id="c661" class="graf graf--p graf-after--p">The email regex is exactly the same as
+                        above for this example.</p>
+                    <figure name="9e6c" id="9e6c" class="graf graf--figure graf--iframe graf-after--p graf--trailing">
+                        <script
+                            src="https://gist.github.com/BetterProgramming/ddc50bd3d10a1aa04d5859839676ac42.js"></script>
+                    </figure>
+                </div>
+            </div>
+        </section>
+        <section name="85d4" class="section section--body">
+            <div class="section-divider">
+                <hr class="section-divider">
+            </div>
+            <div class="section-content">
+                <div class="section-inner sectionLayout--insetColumn"><h3 name="a7b9" id="a7b9"
+                                                                          class="graf graf--h3 graf--leading">
+                    Conclusion</h3>
+                    <p name="43eb" id="43eb" class="graf graf--p graf-after--h3 graf--trailing">There you have it. We’ve
+                        covered a basic overview of regular expressions and learned how to apply them in both terminal
+                        and Python. With this knowledge, you can utilize the power of regexes and become a much more
+                        efficient programmer.</p></div>
+            </div>
+        </section>
+        <section name="9d6f" class="section section--body section--last">
+            <div class="section-divider">
+                <hr class="section-divider">
+            </div>
+            <div class="section-content">
+                <div class="section-inner sectionLayout--insetColumn"><p name="d653" id="d653"
+                                                                         class="graf graf--p graf--leading graf--trailing">
+                    Helpful Links<br>- <a href="https://blog.robertelder.org/regular-expression-visualizer/"
+                                          data-href="https://blog.robertelder.org/regular-expression-visualizer/"
+                                          class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Regular
+                    Expression Visualizer</a><br>- <a href="https://regexr.com/" data-href="https://regexr.com/"
+                                                      class="markup--anchor markup--p-anchor" rel="noopener"
+                                                      target="_blank">Regexr</a><br>- <a
+                    href="https://docs.python.org/3/howto/regex.html"
+                    data-href="https://docs.python.org/3/howto/regex.html" class="markup--anchor markup--p-anchor"
+                    rel="noopener" target="_blank">Python Regular Expression HOWTO</a></p></div>
+            </div>
+        </section>
+    </section>
+    <footer>
+        <p>By <a href="https://medium.com/@zackcpetersen" class="p-author h-card">Zack Petersen</a> on <a
+            href="https://medium.com/p/b54d25cbe185">
+            <time class="dt-published" datetime="2020-08-03T18:00:39.196Z">August 3, 2020</time>
+        </a>.
+        </p>
+        <p><a href="https://medium.com/@zackcpetersen/your-guide-to-regular-expressions-in-python-terminal-b54d25cbe185"
+              class="p-canonical">Canonical link</a></p>
+        <p>Exported from <a href="https://medium.com">Medium</a> on March 30, 2022.</p></footer>
+</article>
+</body>

@@ -5,9 +5,13 @@
                 <v-row justify="center" class="mb-5">
                     <h1 class="font-italic font-weight-bold display-1">{{ presentation.name }}</h1>
                 </v-row>
+                <div>
+                    <!-- Below script is for VISME presentations only - this doesn't work
+                    if I put it in the `project.description` - it has to be in the template-->
+                    <script type="application/javascript" src="//my.visme.co/visme-embed.js"></script>
+                    <span v-html="presentation.description"></span>
+                </div>
             </v-col>
-            <!-- TODO how to make this embed work? -->
-            <span v-html="presentation.description"></span>
         </v-row>
         <v-divider class="my-10"/>
         <snackbar :snackbar="snackbar"></snackbar>

@@ -14,6 +14,7 @@
                                 v-for="tag in tags" :key="tag.id"
                                 :color="tagFilter.includes(tag.name) ? 'primary' : 'null'"
                                 @click="updateTagFilter(tag.name)"
+                                class="my-2"
                                 v-ripple>
                                 {{ tag.name }}
                             </v-chip>

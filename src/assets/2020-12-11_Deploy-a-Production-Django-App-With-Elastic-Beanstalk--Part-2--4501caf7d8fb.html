@@ -1,420 +1,364 @@
-<head>
-    <title>Deploy a Production Django App With Elastic Beanstalk (Part 2)</title>
-      <style>
-            html, body {
-                  margin: 0;
-                  padding: 0;
-            }
-
-            h1 {
-                  margin-bottom: 17px;
-
-            }
-
-            h2 {
-                  margin: 30px 0 0 0;
-                  margin-bottom: 18px;
-                  margin-top: 33px;
-            }
-
-            h3 {
-                  margin: 10px 0 20px 0;
-                  text-align: center;
-            }
-
-            section p {
-                  margin-bottom: 27px;
-                  line-height: 1.6;
-            }
-
-            section img {
-                  max-width: 100%;
-            }
-
-            pre {
-                  overflow-x: scroll;
-            }
-
-            img {
-                  display: block;
-                  margin: 20px auto;
-            }
-
-            footer {
-                  padding: 0 20px;
-                  margin: 50px 0;
-                  text-align: center;
-                  font-size: 12px;
-            }
-
-            header,
-            section[data-field=subtitle],
-            section[data-field=description] {
-                  display: none;
-            }
-      </style>
-</head>
-<body>
-<article class="h-entry">
-    <header>
-        <h1 class="p-name">Deploy a Production Django App With Elastic Beanstalk (Part 2)</h1>
-    </header>
-    <section data-field="subtitle" class="p-summary">
-        Production static and media settings, environment variables, and database setup
-    </section>
-    <section data-field="body" class="e-content">
-        <section name="685d" class="section section--body section--first">
-            <div class="section-divider">
-                <hr class="section-divider">
-            </div>
-            <div class="section-content">
-                <div class="section-inner sectionLayout--insetColumn"><h3 name="2f24" id="2f24"
-                                                                          class="graf graf--h3 graf--leading graf--title">
-                    Deploy a Production Django App With Elastic Beanstalk (Part 2)</h3><h4 name="2a7d" id="2a7d"
-                                                                                           class="graf graf--h4 graf-after--h3 graf--subtitle">
-                    Production static and media settings, environment variables, and database setup</h4>
-                    <figure name="51b0" id="51b0" class="graf graf--figure graf-after--h4"><img class="graf-image"
-                                                                                                data-image-id="0*0tlzcn_qfCsDzwsm"
-                                                                                                data-width="3264"
-                                                                                                data-height="2000"
-                                                                                                data-unsplash-photo-id="0TS7-H6W9do"
-                                                                                                src="https://cdn-images-1.medium.com/max/1400/0*0tlzcn_qfCsDzwsm">
-                        <figcaption class="imageCaption">Photo by <a
-                            href="https://unsplash.com/@affiliatejoe?utm_source=medium&amp;utm_medium=referral"
-                            data-href="https://unsplash.com/@affiliatejoe?utm_source=medium&amp;utm_medium=referral"
-                            class="markup--anchor markup--figure-anchor" rel="photo-creator noopener" target="_blank">Joe</a>
-                            on <a href="https://unsplash.com?utm_source=medium&amp;utm_medium=referral"
-                                  data-href="https://unsplash.com?utm_source=medium&amp;utm_medium=referral"
-                                  class="markup--anchor markup--figure-anchor" rel="photo-source noopener"
-                                  target="_blank">Unsplash</a></figcaption>
-                    </figure>
-                    <p name="cd2b" id="cd2b" class="graf graf--p graf-after--figure"><em
-                        class="markup--em markup--p-em">If you’re landing here before you’ve read</em><strong
-                        class="markup--strong markup--p-strong"><em class="markup--em markup--p-em"> </em></strong><a
-                        href="https://medium.com/@zackcpetersen/production-django-elastic-beanstalk-part1-6632c0d4956a"
-                        data-href="https://medium.com/@zackcpetersen/production-django-elastic-beanstalk-part1-6632c0d4956a"
-                        class="markup--anchor markup--p-anchor" target="_blank"><em class="markup--em markup--p-em">part
-                        1</em></a><strong class="markup--strong markup--p-strong"><em
-                        class="markup--em markup--p-em">,</em></strong><em class="markup--em markup--p-em"> you may want
-                        to go back and read that first! Some parts of this article won’t work or won’t make sense
-                        without the foundation given in the previous article.</em></p>
-                    <figure name="0c91" id="0c91" class="graf graf--figure graf-after--p graf--trailing"><img
-                        class="graf-image" data-image-id="1*xGS8Fn--gOAhdMisWGiJHw.png" data-width="1171"
-                        data-height="417" data-is-featured="true"
-                        src="https://cdn-images-1.medium.com/max/1400/1*xGS8Fn--gOAhdMisWGiJHw.png"></figure>
+<div>
+    <article class="h-entry">
+        <header>
+            <h1 class="p-name medium">Deploy a Production Django App With Elastic Beanstalk (Part 2)</h1>
+        </header>
+        <section data-field="subtitle" class="p-summary">
+            Production static and media settings, environment variables, and database setup
+        </section>
+        <section data-field="body" class="e-content">
+            <section name="685d" class="section section--body section--first">
+                <div class="section-divider">
+                    <hr class="section-divider">
                 </div>
-            </div>
-        </section>
-        <section name="b518" class="section section--body">
-            <div class="section-divider">
-                <hr class="section-divider">
-            </div>
-            <div class="section-content">
-                <div class="section-inner sectionLayout--insetColumn"><h3 name="9725" id="9725"
-                                                                          class="graf graf--h3 graf--leading">Table
-                    of Contents</h3>
-                    <ol class="postList">
-                        <li name="e721" id="e721" class="graf graf--li graf-after--h3"><a href="#8f6c" data-href="#8f6c"
-                                                                                          class="markup--anchor markup--li-anchor"><strong
-                            class="markup--strong markup--li-strong">Setting up S3 — Static and Media
-                            Storage</strong></a><strong class="markup--strong markup--li-strong"><br></strong> — <a
-                            href="#7b79" data-href="#7b79" class="markup--anchor markup--li-anchor">Create a group and
-                            user</a><br> — <a href="#1c5a" data-href="#1c5a" class="markup--anchor markup--li-anchor">Create
-                            a bucket</a></li>
-                        <li name="abca" id="abca" class="graf graf--li graf-after--li"><a href="#fa4f" data-href="#fa4f"
-                                                                                          class="markup--anchor markup--li-anchor"><strong
-                            class="markup--strong markup--li-strong">django-storages and boto3</strong></a></li>
-                        <li name="9dca" id="9dca" class="graf graf--li graf-after--li"><a href="#2db7" data-href="#2db7"
-                                                                                          class="markup--anchor markup--li-anchor"><strong
-                            class="markup--strong markup--li-strong">Environment Variables — Console vs CLI</strong></a>
-                        </li>
-                        <li name="a5bb" id="a5bb" class="graf graf--li graf-after--li"><a href="#8ff7" data-href="#8ff7"
-                                                                                          class="markup--anchor markup--li-anchor"><strong
-                            class="markup--strong markup--li-strong">Configure your database to use Postgres with
-                            Beanstalk</strong></a><br> —<a href="#ad42" data-href="#ad42"
-                                                           class="markup--anchor markup--li-anchor"> Create a Beanstalk
-                            database</a><br> — <a href="#4ac6" data-href="#4ac6"
-                                                  class="markup--anchor markup--li-anchor">Update database
-                            settings</a><br> — <a href="#1606" data-href="#1606"
-                                                  class="markup--anchor markup--li-anchor">Local PostgreS</a>QL
-                        </li>
-                        <li name="1c1d" id="1c1d" class="graf graf--li graf-after--li"><a href="#1504" data-href="#1504"
-                                                                                          class="markup--anchor markup--li-anchor"><strong
-                            class="markup--strong markup--li-strong">Cleanup</strong></a></li>
-                        <li name="01f8" id="01f8" class="graf graf--li graf-after--li graf--trailing"><a href="#955d"
-                                                                                                         data-href="#955d"
-                                                                                                         class="markup--anchor markup--li-anchor"><strong
-                            class="markup--strong markup--li-strong">Conclusion</strong></a></li>
-                    </ol>
+                <div class="section-content">
+                    <div class="section-inner sectionLayout--insetColumn"><h3 name="2f24" id="2f24"
+                                                                              class="medium graf graf--h3 graf--leading graf--title">
+                        Deploy a Production Django App With Elastic Beanstalk (Part 2)</h3><h4 name="2a7d" id="2a7d"
+                                                                                               class="graf graf--h4 graf-after--h3 graf--subtitle">
+                        Production static and media settings, environment variables, and database setup</h4>
+                        <figure name="51b0" id="51b0" class="graf graf--figure graf-after--h4"><img class="medium graf-image"
+                                                                                                    data-image-id="0*0tlzcn_qfCsDzwsm"
+                                                                                                    data-width="3264"
+                                                                                                    data-height="2000"
+                                                                                                    data-unsplash-photo-id="0TS7-H6W9do"
+                                                                                                    src="https://cdn-images-1.medium.com/max/1400/0*0tlzcn_qfCsDzwsm">
+                            <figcaption class="imageCaption">Photo by <a
+                                href="https://unsplash.com/@affiliatejoe?utm_source=medium&amp;utm_medium=referral"
+                                data-href="https://unsplash.com/@affiliatejoe?utm_source=medium&amp;utm_medium=referral"
+                                class="markup--anchor markup--figure-anchor" rel="photo-creator noopener" target="_blank">Joe</a>
+                                on <a href="https://unsplash.com?utm_source=medium&amp;utm_medium=referral"
+                                      data-href="https://unsplash.com?utm_source=medium&amp;utm_medium=referral"
+                                      class="markup--anchor markup--figure-anchor" rel="photo-source noopener"
+                                      target="_blank">Unsplash</a></figcaption>
+                        </figure>
+                        <p name="cd2b" id="cd2b" class="graf graf--p graf-after--figure"><em
+                            class="markup--em markup--p-em">If you’re landing here before you’ve read</em><strong
+                            class="markup--strong markup--p-strong"><em class="markup--em markup--p-em"> </em></strong><a
+                            href="https://medium.com/@zackcpetersen/production-django-elastic-beanstalk-part1-6632c0d4956a"
+                            data-href="https://medium.com/@zackcpetersen/production-django-elastic-beanstalk-part1-6632c0d4956a"
+                            class="markup--anchor markup--p-anchor" target="_blank"><em class="markup--em markup--p-em">part
+                            1</em></a><strong class="markup--strong markup--p-strong"><em
+                            class="markup--em markup--p-em">,</em></strong><em class="markup--em markup--p-em"> you may want
+                            to go back and read that first! Some parts of this article won’t work or won’t make sense
+                            without the foundation given in the previous article.</em></p>
+                        <figure name="0c91" id="0c91" class="graf graf--figure graf-after--p graf--trailing"><img
+                            class="medium graf-image" data-image-id="1*xGS8Fn--gOAhdMisWGiJHw.png" data-width="1171"
+                            data-height="417" data-is-featured="true"
+                            src="https://cdn-images-1.medium.com/max/1400/1*xGS8Fn--gOAhdMisWGiJHw.png"></figure>
+                    </div>
                 </div>
-            </div>
-        </section>
-        <section name="7044" class="section section--body">
-            <div class="section-divider">
-                <hr class="section-divider">
-            </div>
-            <div class="section-content">
-                <div class="section-inner sectionLayout--insetColumn"><h3 name="8f6c" id="8f6c"
-                                                                          class="graf graf--h3 graf--leading">Setting up
-                    S3 — Static and Media Storage</h3>
-                    <p name="35af" id="35af" class="graf graf--p graf-after--h3">Up to this point, we have a working
-                        Django app deployed on Elastic Beanstalk Amazon Linux 2. Congratulations! However, we still need
-                        to set up S3 so the site shows styles and we can upload images — which would be nice,
-                        considering it’s an image of the day app!</p><h4 name="7b79" id="7b79"
-                                                                         class="graf graf--h4 graf-after--p">Create a
-                        group and user</h4>
-                    <p name="ef9c" id="ef9c" class="graf graf--p graf-after--h4">First things first: We need to create
-                        an IAM user with programmatic access so our application can access the S3 bucket we’re creating
-                        next. Best practice here is to create a group with the appropriate policies attached and add a
-                        new user to the group. <em class="markup--em markup--p-em">Note: I highly recommend creating a
-                            new user for the application’s S3 access. Using an admin user opens all kinds of security
-                            risks.</em></p>
-                    <p name="7764" id="7764" class="graf graf--p graf-after--p">In the AWS services search bar, look for
-                        IAM. Navigate to IAM → Groups → Create New Group. Set the group name to something like “<em
-                            class="markup--em markup--p-em">S3FullAccess</em>” and go to the next step. Here, search for
-                        “S3” and select <code class="markup--code markup--p-code">AmazonS3FullAccess</code>. Click on
-                        the next step and create the group.</p>
-                    <p name="55a2" id="55a2" class="graf graf--p graf-after--p">Now, we’ll navigate to “Users” and add a
-                        new user. Name the user whatever you want, I’ll go with “<em class="markup--em markup--p-em">iotd-s3-access</em>”
-                        and select “<em class="markup--em markup--p-em">Programmatic Access</em>.”</p>
-                    <figure name="5e14" id="5e14" class="graf graf--figure graf-after--p"><img class="graf-image"
-                                                                                               data-image-id="1*Jxkq1cJGRP1Ejg1MNsIF_w.png"
-                                                                                               data-width="989"
-                                                                                               data-height="456"
-                                                                                               src="https://cdn-images-1.medium.com/max/1400/1*Jxkq1cJGRP1Ejg1MNsIF_w.png">
-                    </figure>
-                    <p name="0654" id="0654" class="graf graf--p graf-after--figure">Click to permissions and add this
-                        user to the group we created. Click through and create the user.</p>
-                    <p name="fa87" id="fa87" class="graf graf--p graf-after--p">After the user is created, you will get
-                        a success notification and be able to save the Access key ID and Secret access key. <em
-                            class="markup--em markup--p-em">Important: if you don’t save these credentials here, you
-                            will not be able to see them again. You will have to delete this user and create a new one
-                            to get credentials again.</em></p>
-                    <p name="b9b4" id="b9b4" class="graf graf--p graf-after--p">Download the .csv file with the
-                        credentials in it and head back over to the iotd project settings file. Add two new settings at
-                        the end of iotd/settings.py — we’re not going to add the keys, but instead references to
-                        them:</p>
-                    <pre name="1f27" id="1f27" class="graf graf--pre graf-after--p">if &#39;AWS_ACCESS_KEY_ID&#39; in os.environ:<br>    AWS_ACCESS_KEY_ID = os.environ[&#39;AWS_ACCESS_KEY_ID&#39;]<br>    AWS_SECRET_ACCESS_KEY = os.environ[&#39;AWS_SECRET_ACCESS_KEY&#39;]</pre>
-                    <p name="b4da" id="b4da" class="graf graf--p graf-after--pre">Committing the actual keys in your
-                        settings file is a dangerous idea. It poses a security vulnerability if anyone were to gain
-                        access to your project’s code (GitHub or otherwise). Instead of keeping them in the settings
-                        file, we’re going to add them as environment variables and pull them into the settings file
-                        securely. <a
-                            href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-container.html#create-deploy-python-custom-container-envprop"
-                            data-href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-container.html#create-deploy-python-custom-container-envprop"
-                            class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Docs here</a>.</p><h4
-                        name="1c5a" id="1c5a" class="graf graf--h4 graf-after--p">Create a bucket</h4>
-                    <p name="05c6" id="05c6" class="graf graf--p graf-after--h4">Before we get into environment
-                        variables, navigate to S3, and create a new bucket. Make sure to turn <em
-                            class="markup--em markup--p-em">off</em> the block public access. We’ll need the images
-                        stored here to be public to show them in the API and have access to them later on. Name your
-                        bucket whatever you want. I usually recommend enabling versioning, but this is optional. Click
-                        “Create Bucket” and we’re all set.</p>
-                    <figure name="c2a9" id="c2a9" class="graf graf--figure graf-after--p graf--trailing"><img
-                        class="graf-image" data-image-id="1*UOE2yvEeLQXcSyUF4y8SLw.png" data-width="820"
-                        data-height="1186" src="https://cdn-images-1.medium.com/max/1400/1*UOE2yvEeLQXcSyUF4y8SLw.png">
-                    </figure>
+            </section>
+            <section name="b518" class="section section--body">
+                <div class="section-divider">
+                    <hr class="section-divider">
                 </div>
-            </div>
-        </section>
-        <section name="d96f" class="section section--body">
-            <div class="section-divider">
-                <hr class="section-divider">
-            </div>
-            <div class="section-content">
-                <div class="section-inner sectionLayout--insetColumn"><h3 name="fa4f" id="fa4f"
-                                                                          class="graf graf--h3 graf--leading">
-                    django-storages and boto3</h3>
-                    <p name="f42b" id="f42b" class="graf graf--p graf-after--h3">Now for the storage settings in Django.
-                        At the root of your project directory run the following:</p>
-                    <pre name="7116" id="7116" class="graf graf--pre graf-after--p">pipenv install django-storages<br>pipenv install boto3</pre>
-                    <p name="6725" id="6725" class="graf graf--p graf-after--pre">This installs two libraries to do all
-                        the heavy lifting of dealing with S3. After installing them, be sure to add <code
-                            class="markup--code markup--p-code">&#39;storages&#39;</code> to your <code
-                            class="markup--code markup--p-code">INSTALLED_APPS</code> — found in settings.py.</p>
-                    <pre name="6fab" id="6fab" class="graf graf--pre graf-after--p">INSTALLED_APPS = [<br>    &#39;django.contrib.admin&#39;,<br>    &#39;django.contrib.auth&#39;,<br>    &#39;django.contrib.contenttypes&#39;,<br>    &#39;django.contrib.sessions&#39;,<br>    &#39;django.contrib.messages&#39;,<br>    &#39;django.contrib.staticfiles&#39;,</pre>
-                    <pre name="2e31" id="2e31" class="graf graf--pre graf-after--pre">    &#39;rest_framework&#39;,<br>    <br>    <strong
-                        class="markup--strong markup--pre-strong">&#39;storages&#39;,</strong></pre>
-                    <pre name="d54c" id="d54c" class="graf graf--pre graf-after--pre">    &#39;images&#39;<br>]</pre>
-                    <p name="4a5a" id="4a5a" class="graf graf--p graf-after--pre">Now we have all the pieces we need to
-                        set up our static and media storage on S3. Go to your iotd/settings.py file and we’ll add a few
-                        more settings to complete the setup.</p>
-                    <pre name="2ec8" id="2ec8" class="graf graf--pre graf-after--p">STATIC_URL = &#39;/static/&#39;<br>STATIC_ROOT = os.path.join(BASE_DIR, &quot;static&quot;)</pre>
-                    <pre name="0e00" id="0e00" class="graf graf--pre graf-after--pre">### Django storages - use this for production<br>STATICFILES_STORAGE = &#39;storages.backends.s3boto3.S3Boto3Storage&#39;</pre>
-                    <pre name="0337" id="0337" class="graf graf--pre graf-after--pre">MEDIA_URL = &#39;/media/&#39;<br>MEDIA_ROOT = os.path.join(BASE_DIR, &#39;media&#39;)</pre>
-                    <pre name="22ea" id="22ea" class="graf graf--pre graf-after--pre">### Django storages - use in production<br>DEFAULT_FILE_STORAGE = &#39;storages.backends.s3boto3.S3Boto3Storage&#39;</pre>
-                    <p name="19d7" id="19d7" class="graf graf--p graf-after--pre graf--trailing">If you’re running
-                        things locally and don’t want to push changes up to S3 every time, comment out <code
-                            class="markup--code markup--p-code">STATICFILES_STORAGE</code> and <code
-                            class="markup--code markup--p-code">DEFAULT_FILE_STORAGE</code> before you run <code
-                            class="markup--code markup--p-code">collectstatic</code> or upload local media files.</p>
+                <div class="section-content">
+                    <div class="section-inner sectionLayout--insetColumn"><h3 name="9725" id="9725"
+                                                                              class="medium graf graf--h3 graf--leading">Table
+                        of Contents</h3>
+                        <ol class="postList">
+                            <li name="e721" id="e721" class="graf graf--li graf-after--h3"><a href="#8f6c" data-href="#8f6c"
+                                                                                              class="markup--anchor markup--li-anchor"><strong
+                                class="markup--strong markup--li-strong">Setting up S3 — Static and Media
+                                Storage</strong></a><strong class="markup--strong markup--li-strong"><br></strong> — <a
+                                href="#7b79" data-href="#7b79" class="markup--anchor markup--li-anchor">Create a group and
+                                user</a><br> — <a href="#1c5a" data-href="#1c5a" class="markup--anchor markup--li-anchor">Create
+                                a bucket</a></li>
+                            <li name="abca" id="abca" class="graf graf--li graf-after--li"><a href="#fa4f" data-href="#fa4f"
+                                                                                              class="markup--anchor markup--li-anchor"><strong
+                                class="markup--strong markup--li-strong">django-storages and boto3</strong></a></li>
+                            <li name="9dca" id="9dca" class="graf graf--li graf-after--li"><a href="#2db7" data-href="#2db7"
+                                                                                              class="markup--anchor markup--li-anchor"><strong
+                                class="markup--strong markup--li-strong">Environment Variables — Console vs CLI</strong></a>
+                            </li>
+                            <li name="a5bb" id="a5bb" class="graf graf--li graf-after--li"><a href="#8ff7" data-href="#8ff7"
+                                                                                              class="markup--anchor markup--li-anchor"><strong
+                                class="markup--strong markup--li-strong">Configure your database to use Postgres with
+                                Beanstalk</strong></a><br> —<a href="#ad42" data-href="#ad42"
+                                                               class="markup--anchor markup--li-anchor"> Create a Beanstalk
+                                database</a><br> — <a href="#4ac6" data-href="#4ac6"
+                                                      class="markup--anchor markup--li-anchor">Update database
+                                settings</a><br> — <a href="#1606" data-href="#1606"
+                                                      class="markup--anchor markup--li-anchor">Local PostgreS</a>QL
+                            </li>
+                            <li name="1c1d" id="1c1d" class="graf graf--li graf-after--li"><a href="#1504" data-href="#1504"
+                                                                                              class="markup--anchor markup--li-anchor"><strong
+                                class="markup--strong markup--li-strong">Cleanup</strong></a></li>
+                            <li name="01f8" id="01f8" class="graf graf--li graf-after--li graf--trailing"><a href="#955d"
+                                                                                                             data-href="#955d"
+                                                                                                             class="markup--anchor markup--li-anchor"><strong
+                                class="markup--strong markup--li-strong">Conclusion</strong></a></li>
+                        </ol>
+                    </div>
                 </div>
-            </div>
+            </section>
+            <section name="7044" class="section section--body">
+                <div class="section-divider">
+                    <hr class="section-divider">
+                </div>
+                <div class="section-content">
+                    <div class="section-inner sectionLayout--insetColumn"><h3 name="8f6c" id="8f6c"
+                                                                              class="medium graf graf--h3 graf--leading">Setting up
+                        S3 — Static and Media Storage</h3>
+                        <p name="35af" id="35af" class="graf graf--p graf-after--h3">Up to this point, we have a working
+                            Django app deployed on Elastic Beanstalk Amazon Linux 2. Congratulations! However, we still need
+                            to set up S3 so the site shows styles and we can upload images — which would be nice,
+                            considering it’s an image of the day app!</p><h4 name="7b79" id="7b79"
+                                                                             class="graf graf--h4 graf-after--p">Create a
+                            group and user</h4>
+                        <p name="ef9c" id="ef9c" class="graf graf--p graf-after--h4">First things first: We need to create
+                            an IAM user with programmatic access so our application can access the S3 bucket we’re creating
+                            next. Best practice here is to create a group with the appropriate policies attached and add a
+                            new user to the group. <em class="markup--em markup--p-em">Note: I highly recommend creating a
+                                new user for the application’s S3 access. Using an admin user opens all kinds of security
+                                risks.</em></p>
+                        <p name="7764" id="7764" class="graf graf--p graf-after--p">In the AWS services search bar, look for
+                            IAM. Navigate to IAM → Groups → Create New Group. Set the group name to something like “<em
+                                class="markup--em markup--p-em">S3FullAccess</em>” and go to the next step. Here, search for
+                            “S3” and select <code class="markup--code markup--p-code">AmazonS3FullAccess</code>. Click on
+                            the next step and create the group.</p>
+                        <p name="55a2" id="55a2" class="graf graf--p graf-after--p">Now, we’ll navigate to “Users” and add a
+                            new user. Name the user whatever you want, I’ll go with “<em class="markup--em markup--p-em">iotd-s3-access</em>”
+                            and select “<em class="markup--em markup--p-em">Programmatic Access</em>.”</p>
+                        <figure name="5e14" id="5e14" class="graf graf--figure graf-after--p"><img class="medium graf-image"
+                                                                                                   data-image-id="1*Jxkq1cJGRP1Ejg1MNsIF_w.png"
+                                                                                                   data-width="989"
+                                                                                                   data-height="456"
+                                                                                                   src="https://cdn-images-1.medium.com/max/1400/1*Jxkq1cJGRP1Ejg1MNsIF_w.png">
+                        </figure>
+                        <p name="0654" id="0654" class="graf graf--p graf-after--figure">Click to permissions and add this
+                            user to the group we created. Click through and create the user.</p>
+                        <p name="fa87" id="fa87" class="graf graf--p graf-after--p">After the user is created, you will get
+                            a success notification and be able to save the Access key ID and Secret access key. <em
+                                class="markup--em markup--p-em">Important: if you don’t save these credentials here, you
+                                will not be able to see them again. You will have to delete this user and create a new one
+                                to get credentials again.</em></p>
+                        <p name="b9b4" id="b9b4" class="graf graf--p graf-after--p">Download the .csv file with the
+                            credentials in it and head back over to the iotd project settings file. Add two new settings at
+                            the end of iotd/settings.py — we’re not going to add the keys, but instead references to
+                            them:</p>
+                        <pre name="1f27" id="1f27" class="medium graf graf--pre graf-after--p">if &#39;AWS_ACCESS_KEY_ID&#39; in os.environ:<br>    AWS_ACCESS_KEY_ID = os.environ[&#39;AWS_ACCESS_KEY_ID&#39;]<br>    AWS_SECRET_ACCESS_KEY = os.environ[&#39;AWS_SECRET_ACCESS_KEY&#39;]</pre>
+                        <p name="b4da" id="b4da" class="graf graf--p graf-after--pre">Committing the actual keys in your
+                            settings file is a dangerous idea. It poses a security vulnerability if anyone were to gain
+                            access to your project’s code (GitHub or otherwise). Instead of keeping them in the settings
+                            file, we’re going to add them as environment variables and pull them into the settings file
+                            securely. <a
+                                href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-container.html#create-deploy-python-custom-container-envprop"
+                                data-href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-container.html#create-deploy-python-custom-container-envprop"
+                                class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Docs here</a>.</p><h4
+                            name="1c5a" id="1c5a" class="graf graf--h4 graf-after--p">Create a bucket</h4>
+                        <p name="05c6" id="05c6" class="graf graf--p graf-after--h4">Before we get into environment
+                            variables, navigate to S3, and create a new bucket. Make sure to turn <em
+                                class="markup--em markup--p-em">off</em> the block public access. We’ll need the images
+                            stored here to be public to show them in the API and have access to them later on. Name your
+                            bucket whatever you want. I usually recommend enabling versioning, but this is optional. Click
+                            “Create Bucket” and we’re all set.</p>
+                        <figure name="c2a9" id="c2a9" class="graf graf--figure graf-after--p graf--trailing"><img
+                            class="medium graf-image" data-image-id="1*UOE2yvEeLQXcSyUF4y8SLw.png" data-width="820"
+                            data-height="1186" src="https://cdn-images-1.medium.com/max/1400/1*UOE2yvEeLQXcSyUF4y8SLw.png">
+                        </figure>
+                    </div>
+                </div>
+            </section>
+            <section name="d96f" class="section section--body">
+                <div class="section-divider">
+                    <hr class="section-divider">
+                </div>
+                <div class="section-content">
+                    <div class="section-inner sectionLayout--insetColumn"><h3 name="fa4f" id="fa4f"
+                                                                              class="medium graf graf--h3 graf--leading">
+                        django-storages and boto3</h3>
+                        <p name="f42b" id="f42b" class="graf graf--p graf-after--h3">Now for the storage settings in Django.
+                            At the root of your project directory run the following:</p>
+                        <pre name="7116" id="7116" class="medium graf graf--pre graf-after--p">pipenv install django-storages<br>pipenv install boto3</pre>
+                        <p name="6725" id="6725" class="graf graf--p graf-after--pre">This installs two libraries to do all
+                            the heavy lifting of dealing with S3. After installing them, be sure to add <code
+                                class="markup--code markup--p-code">&#39;storages&#39;</code> to your <code
+                                class="markup--code markup--p-code">INSTALLED_APPS</code> — found in settings.py.</p>
+                        <pre name="6fab" id="6fab" class="medium graf graf--pre graf-after--p">INSTALLED_APPS = [<br>    &#39;django.contrib.admin&#39;,<br>    &#39;django.contrib.auth&#39;,<br>    &#39;django.contrib.contenttypes&#39;,<br>    &#39;django.contrib.sessions&#39;,<br>    &#39;django.contrib.messages&#39;,<br>    &#39;django.contrib.staticfiles&#39;,</pre>
+                        <pre name="2e31" id="2e31" class="medium graf graf--pre graf-after--pre">    &#39;rest_framework&#39;,<br>    <br>    <strong
+                            class="markup--strong markup--pre-strong">&#39;storages&#39;,</strong></pre>
+                        <pre name="d54c" id="d54c" class="medium graf graf--pre graf-after--pre">    &#39;images&#39;<br>]</pre>
+                        <p name="4a5a" id="4a5a" class="graf graf--p graf-after--pre">Now we have all the pieces we need to
+                            set up our static and media storage on S3. Go to your iotd/settings.py file and we’ll add a few
+                            more settings to complete the setup.</p>
+                        <pre name="2ec8" id="2ec8" class="medium graf graf--pre graf-after--p">STATIC_URL = &#39;/static/&#39;<br>STATIC_ROOT = os.path.join(BASE_DIR, &quot;static&quot;)</pre>
+                        <pre name="0e00" id="0e00" class="medium graf graf--pre graf-after--pre">### Django storages - use this for production<br>STATICFILES_STORAGE = &#39;storages.backends.s3boto3.S3Boto3Storage&#39;</pre>
+                        <pre name="0337" id="0337" class="medium graf graf--pre graf-after--pre">MEDIA_URL = &#39;/media/&#39;<br>MEDIA_ROOT = os.path.join(BASE_DIR, &#39;media&#39;)</pre>
+                        <pre name="22ea" id="22ea" class="medium graf graf--pre graf-after--pre">### Django storages - use in production<br>DEFAULT_FILE_STORAGE = &#39;storages.backends.s3boto3.S3Boto3Storage&#39;</pre>
+                        <p name="19d7" id="19d7" class="graf graf--p graf-after--pre graf--trailing">If you’re running
+                            things locally and don’t want to push changes up to S3 every time, comment out <code
+                                class="markup--code markup--p-code">STATICFILES_STORAGE</code> and <code
+                                class="markup--code markup--p-code">DEFAULT_FILE_STORAGE</code> before you run <code
+                                class="markup--code markup--p-code">collectstatic</code> or upload local media files.</p>
+                    </div>
+                </div>
+            </section>
+            <section name="b45b" class="section section--body">
+                <div class="section-divider">
+                    <hr class="section-divider">
+                </div>
+                <div class="section-content">
+                    <div class="section-inner sectionLayout--insetColumn"><h3 name="2db7" id="2db7"
+                                                                              class="medium graf graf--h3 graf--leading">
+                        Environment Variables — Console vs CLI</h3>
+                        <p name="2c94" id="2c94" class="graf graf--p graf-after--h3">We need to add the environment
+                            variables so <code class="markup--code markup--p-code">os.environ</code> can populate the values
+                            we need. There are a few ways to do this. The most straightforward is to navigate to your
+                            Beanstalk → &lt;your environment&gt; → configuration → software → environment variables. You can
+                            add them all manually here but in my opinion, this takes too much time.</p>
+                        <figure name="69d5" id="69d5" class="graf graf--figure graf-after--p"><img class="medium graf-image"
+                                                                                                   data-image-id="1*DWmlMF5eCnD6KaQFRTnr4w.png"
+                                                                                                   data-width="2159"
+                                                                                                   data-height="344"
+                                                                                                   src="https://cdn-images-1.medium.com/max/1400/1*DWmlMF5eCnD6KaQFRTnr4w.png">
+                        </figure>
+                        <p name="b8ae" id="b8ae" class="graf graf--p graf-after--figure">I prefer to use the <code
+                            class="markup--code markup--p-code">eb setenv</code> command. You can set as many environment
+                            variables as you want in one command. <a
+                                href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb3-setenv.html"
+                                data-href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb3-setenv.html"
+                                class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Docs here</a>.</p>
+                        <pre name="6297" id="6297" class="medium graf graf--pre graf-after--p">eb setenv \<br>AWS_S3_REGION_NAME=&#39;us-west-2&#39; \<br>AWS_STORAGE_BUCKET_NAME=&#39;iotd-static&#39;</pre>
+                        <p name="f379" id="f379" class="graf graf--p graf-after--pre">If you’ve followed everything so far,
+                            you’ll want to add the following environment variables, either through the command line or the
+                            console:</p>
+                        <pre name="5fcf" id="5fcf" class="medium graf graf--pre graf-after--p">AWS_ACCESS_KEY_ID<br>AWS_SECRET_ACCESS_KEY<br>AWS_STORAGE_BUCKET_NAME<br>AWS_S3_REGION_NAME</pre>
+                        <p name="b567" id="b567" class="graf graf--p graf-after--pre">Get your access key and secret access
+                            key from the .csv you downloaded earlier. The bucket name is whatever you named your S3 bucket
+                            and the region name is the region your Beanstalk environment is in — mine is <code
+                                class="markup--code markup--p-code">us-west-2</code>.</p>
+                        <p name="5e01" id="5e01" class="graf graf--p graf-after--p">Once those are added, make sure you’ve
+                            committed your changes to Git and run <code class="markup--code markup--p-code">eb deploy</code> .
+                            If you have any issues, start by checking out the three log files mentioned earlier in the
+                            article to find the error message. Otherwise, try <code class="markup--code markup--p-code">eb
+                                open</code> and navigate to <code class="markup--code markup--p-code">/api/</code>.</p>
+                        <p name="0e79" id="0e79" class="graf graf--p graf-after--p">Since we now have styles, let’s test the
+                            media upload. Upload an image and give it a name, click POST. When the page reloads, click on
+                            the image link and you should see your image. Notice the image URL is from your S3 bucket.</p>
+                        <p name="ab7b" id="ab7b" class="graf graf--p graf-after--p graf--trailing">Congratulations! We have
+                            now deployed our app to Beanstalk and set up production static and media files. There’s only one
+                            thing left to do.</p></div>
+                </div>
+            </section>
+            <section name="e692" class="section section--body">
+                <div class="section-divider">
+                    <hr class="section-divider">
+                </div>
+                <div class="section-content">
+                    <div class="section-inner sectionLayout--insetColumn"><h3 name="8ff7" id="8ff7"
+                                                                              class="medium graf graf--h3 graf--leading">Configure
+                        Your Database to Use Postgres with Beanstalk</h3>
+                        <p name="1605" id="1605" class="graf graf--p graf-after--h3">Up until now, our database has been a
+                            local db.sqlite3 that lives in our project directory along with our other files. This works well
+                            in a development environment but is a bad idea in production. Our final step in this tutorial is
+                            to set up a Postgresql database in beanstalk and configure Django to do everything database
+                            related there.</p><h4 name="ad42" id="ad42" class="graf graf--h4 graf-after--p">Create a
+                            Beanstalk database</h4>
+                        <p name="5930" id="5930" class="graf graf--p graf-after--h4">First, open the console settings with
+                            <code class="markup--code markup--p-code">eb console</code> and navigate to configuration.
+                            Scroll to the bottom until you find “database” and click “edit.” Apply the following settings:
+                        </p>
+                        <ul class="postList">
+                            <li name="5b23" id="5b23" class="graf graf--li graf-after--p"><strong
+                                class="markup--strong markup--li-strong">Engine</strong>: Postgres
+                            </li>
+                            <li name="c174" id="c174" class="graf graf--li graf-after--li"><strong
+                                class="markup--strong markup--li-strong">Engine version</strong>: Go with the default
+                            </li>
+                            <li name="0004" id="0004" class="graf graf--li graf-after--li"><strong
+                                class="markup--strong markup--li-strong">Instance class</strong>: I recommend the free tier
+                                db.t2.micro
+                            </li>
+                            <li name="62d7" id="62d7" class="graf graf--li graf-after--li"><strong
+                                class="markup--strong markup--li-strong">Storage</strong>: I recommend 5 GB, but choose
+                                whatever makes sense
+                            </li>
+                            <li name="ec16" id="ec16" class="graf graf--li graf-after--li"><strong
+                                class="markup--strong markup--li-strong">Username/Password</strong>: set these to whatever
+                                you want
+                            </li>
+                            <li name="0178" id="0178" class="graf graf--li graf-after--li"><strong
+                                class="markup--strong markup--li-strong">Retention</strong>: If you want the database to
+                                create a snapshot on termination of environment, select Create Snapshot. Otherwise, select
+                                Delete.
+                            </li>
+                        </ul>
+                        <figure name="741a" id="741a" class="graf graf--figure graf-after--li"><img class="medium graf-image"
+                                                                                                    data-image-id="1*OHDVRi8fDYHf-EheXtc2vg.png"
+                                                                                                    data-width="1625"
+                                                                                                    data-height="823"
+                                                                                                    src="https://cdn-images-1.medium.com/max/1400/1*OHDVRi8fDYHf-EheXtc2vg.png">
+                        </figure>
+                        <p name="1410" id="1410" class="graf graf--p graf-after--figure">After everything is set, click
+                            Apply and Beanstalk will create the database for you. While this is creating, let’s configure
+                            the settings to look at the new DB.</p><h4 name="4ac6" id="4ac6"
+                                                                       class="graf graf--h4 graf-after--p">Update
+                            database settings</h4>
+                        <p name="cd02" id="cd02" class="graf graf--p graf-after--h4">First, we need to install <code
+                            class="markup--code markup--p-code">psycopg2</code>:</p>
+                        <pre name="fb9d" id="fb9d" class="medium graf graf--pre graf-after--p">pipenv install pyscopg2-binary</pre>
+                        <p name="fc3a" id="fc3a" class="graf graf--p graf-after--pre">Add the following to your settings.py
+                            file and remove the default <code class="markup--code markup--p-code">DATABASE</code> config:
+                        </p>
+                        <pre name="eba6" id="eba6" class="medium graf graf--pre graf-after--p"><em
+                            class="markup--em markup--pre-em">if </em>&#39;RDS_DB_NAME&#39; <em
+                            class="markup--em markup--pre-em">in </em>os.environ:<br>    DATABASES = {<br>        &#39;default&#39;: {<br>            &#39;ENGINE&#39;: &#39;django.db.backends.postgresql_psycopg2&#39;,<br>            &#39;NAME&#39;: os.environ[&#39;RDS_DB_NAME&#39;],<br>            &#39;USER&#39;: os.environ[&#39;RDS_USERNAME&#39;],<br>            &#39;PASSWORD&#39;: os.environ[&#39;RDS_PASSWORD&#39;],<br>            &#39;HOST&#39;: os.environ[&#39;RDS_HOSTNAME&#39;],<br>            &#39;PORT&#39;: os.environ[&#39;RDS_PORT&#39;],<br>        }<br>    }<br><em
+                            class="markup--em markup--pre-em">else</em>:<br>    DATABASES = {<br>        &#39;default&#39;: {<br>            &#39;ENGINE&#39;: &#39;django.db.backends.postgresql_psycopg2&#39;,<br>            &#39;NAME&#39;: &#39;iotd&#39;,<br>            &#39;USER&#39;: &#39;iotd&#39;,<br>            &#39;PASSWORD&#39;: &#39;iotd&#39;,<br>            &#39;HOST&#39;: &#39;localhost&#39;,<br>            &#39;PORT&#39;: &#39;5432&#39;,<br>        }<br>    }</pre>
+                        <p name="b18d" id="b18d" class="graf graf--p graf-after--pre">Commit your changes and run <code
+                            class="markup--code markup--p-code">eb deploy</code> again, this will swap your database from
+                            MySQL to Postgresql! <em class="markup--em markup--p-em">Note: The database changes you made in
+                                the previous step take a minute to complete — you will not be able to deploy until it is
+                                done.</em></p><h4 name="1606" id="1606" class="graf graf--h4 graf-after--p">Local
+                            PostgreSQL</h4>
+                        <p name="2ec6" id="2ec6" class="graf graf--p graf-after--h4">If you’ve cloned from the repo
+                            mentioned at the beginning of the tutorial, there is a <em class="markup--em markup--p-em">docker-compose.yml</em>
+                            included that will serve as a local PostgreSQL database for development. Make sure you have
+                            Docker installed and running, and while in the root directory of the project run the following:
+                        </p>
+                        <pre name="b969" id="b969" class="medium graf graf--pre graf-after--p">docker-compose up -d</pre>
+                        <p name="ba19" id="ba19" class="graf graf--p graf-after--pre graf--trailing">This will spin up a
+                            PostgreSQL container automatically with the database settings in <code
+                                class="markup--code markup--p-code">iotd.settings.base</code> . This will allow you to
+                            easily use PostgreSQL locally as well!</p></div>
+                </div>
+            </section>
+            <section name="2df2" class="section section--body">
+                <div class="section-divider">
+                    <hr class="section-divider">
+                </div>
+                <div class="section-content">
+                    <div class="section-inner sectionLayout--insetColumn"><h3 name="1504" id="1504"
+                                                                              class="medium graf graf--h3 graf--leading">
+                        Cleanup</h3>
+                        <p name="1194" id="1194" class="graf graf--p graf-after--h3 graf--trailing">To remove your beanstalk
+                            environment, all you need to do is run <code class="markup--code markup--p-code">eb
+                                terminate</code> and aws will do the cleanup for you!</p></div>
+                </div>
+            </section>
+            <section name="7cba" class="section section--body section--last">
+                <div class="section-divider">
+                    <hr class="section-divider">
+                </div>
+                <div class="section-content">
+                    <div class="section-inner sectionLayout--insetColumn"><h3 name="955d" id="955d"
+                                                                              class="medium graf graf--h3 graf--leading">
+                        Conclusion</h3>
+                        <p name="1864" id="1864" class="graf graf--p graf-after--h3 graf--trailing">Amazing work! We covered
+                            a lot in this tutorial and got our app on the web with Beanstalk. Coming soon, I’ll be building
+                            a front end with Vue.js and using this API as the back end — keep an eye out!</p></div>
+                </div>
+            </section>
         </section>
-        <section name="b45b" class="section section--body">
-            <div class="section-divider">
-                <hr class="section-divider">
-            </div>
-            <div class="section-content">
-                <div class="section-inner sectionLayout--insetColumn"><h3 name="2db7" id="2db7"
-                                                                          class="graf graf--h3 graf--leading">
-                    Environment Variables — Console vs CLI</h3>
-                    <p name="2c94" id="2c94" class="graf graf--p graf-after--h3">We need to add the environment
-                        variables so <code class="markup--code markup--p-code">os.environ</code> can populate the values
-                        we need. There are a few ways to do this. The most straightforward is to navigate to your
-                        Beanstalk → &lt;your environment&gt; → configuration → software → environment variables. You can
-                        add them all manually here but in my opinion, this takes too much time.</p>
-                    <figure name="69d5" id="69d5" class="graf graf--figure graf-after--p"><img class="graf-image"
-                                                                                               data-image-id="1*DWmlMF5eCnD6KaQFRTnr4w.png"
-                                                                                               data-width="2159"
-                                                                                               data-height="344"
-                                                                                               src="https://cdn-images-1.medium.com/max/1400/1*DWmlMF5eCnD6KaQFRTnr4w.png">
-                    </figure>
-                    <p name="b8ae" id="b8ae" class="graf graf--p graf-after--figure">I prefer to use the <code
-                        class="markup--code markup--p-code">eb setenv</code> command. You can set as many environment
-                        variables as you want in one command. <a
-                            href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb3-setenv.html"
-                            data-href="https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb3-setenv.html"
-                            class="markup--anchor markup--p-anchor" rel="noopener" target="_blank">Docs here</a>.</p>
-                    <pre name="6297" id="6297" class="graf graf--pre graf-after--p">eb setenv \<br>AWS_S3_REGION_NAME=&#39;us-west-2&#39; \<br>AWS_STORAGE_BUCKET_NAME=&#39;iotd-static&#39;</pre>
-                    <p name="f379" id="f379" class="graf graf--p graf-after--pre">If you’ve followed everything so far,
-                        you’ll want to add the following environment variables, either through the command line or the
-                        console:</p>
-                    <pre name="5fcf" id="5fcf" class="graf graf--pre graf-after--p">AWS_ACCESS_KEY_ID<br>AWS_SECRET_ACCESS_KEY<br>AWS_STORAGE_BUCKET_NAME<br>AWS_S3_REGION_NAME</pre>
-                    <p name="b567" id="b567" class="graf graf--p graf-after--pre">Get your access key and secret access
-                        key from the .csv you downloaded earlier. The bucket name is whatever you named your S3 bucket
-                        and the region name is the region your Beanstalk environment is in — mine is <code
-                            class="markup--code markup--p-code">us-west-2</code>.</p>
-                    <p name="5e01" id="5e01" class="graf graf--p graf-after--p">Once those are added, make sure you’ve
-                        committed your changes to Git and run <code class="markup--code markup--p-code">eb deploy</code> .
-                        If you have any issues, start by checking out the three log files mentioned earlier in the
-                        article to find the error message. Otherwise, try <code class="markup--code markup--p-code">eb
-                            open</code> and navigate to <code class="markup--code markup--p-code">/api/</code>.</p>
-                    <p name="0e79" id="0e79" class="graf graf--p graf-after--p">Since we now have styles, let’s test the
-                        media upload. Upload an image and give it a name, click POST. When the page reloads, click on
-                        the image link and you should see your image. Notice the image URL is from your S3 bucket.</p>
-                    <p name="ab7b" id="ab7b" class="graf graf--p graf-after--p graf--trailing">Congratulations! We have
-                        now deployed our app to Beanstalk and set up production static and media files. There’s only one
-                        thing left to do.</p></div>
-            </div>
-        </section>
-        <section name="e692" class="section section--body">
-            <div class="section-divider">
-                <hr class="section-divider">
-            </div>
-            <div class="section-content">
-                <div class="section-inner sectionLayout--insetColumn"><h3 name="8ff7" id="8ff7"
-                                                                          class="graf graf--h3 graf--leading">Configure
-                    Your Database to Use Postgres with Beanstalk</h3>
-                    <p name="1605" id="1605" class="graf graf--p graf-after--h3">Up until now, our database has been a
-                        local db.sqlite3 that lives in our project directory along with our other files. This works well
-                        in a development environment but is a bad idea in production. Our final step in this tutorial is
-                        to set up a Postgresql database in beanstalk and configure Django to do everything database
-                        related there.</p><h4 name="ad42" id="ad42" class="graf graf--h4 graf-after--p">Create a
-                        Beanstalk database</h4>
-                    <p name="5930" id="5930" class="graf graf--p graf-after--h4">First, open the console settings with
-                        <code class="markup--code markup--p-code">eb console</code> and navigate to configuration.
-                        Scroll to the bottom until you find “database” and click “edit.” Apply the following settings:
-                    </p>
-                    <ul class="postList">
-                        <li name="5b23" id="5b23" class="graf graf--li graf-after--p"><strong
-                            class="markup--strong markup--li-strong">Engine</strong>: Postgres
-                        </li>
-                        <li name="c174" id="c174" class="graf graf--li graf-after--li"><strong
-                            class="markup--strong markup--li-strong">Engine version</strong>: Go with the default
-                        </li>
-                        <li name="0004" id="0004" class="graf graf--li graf-after--li"><strong
-                            class="markup--strong markup--li-strong">Instance class</strong>: I recommend the free tier
-                            db.t2.micro
-                        </li>
-                        <li name="62d7" id="62d7" class="graf graf--li graf-after--li"><strong
-                            class="markup--strong markup--li-strong">Storage</strong>: I recommend 5 GB, but choose
-                            whatever makes sense
-                        </li>
-                        <li name="ec16" id="ec16" class="graf graf--li graf-after--li"><strong
-                            class="markup--strong markup--li-strong">Username/Password</strong>: set these to whatever
-                            you want
-                        </li>
-                        <li name="0178" id="0178" class="graf graf--li graf-after--li"><strong
-                            class="markup--strong markup--li-strong">Retention</strong>: If you want the database to
-                            create a snapshot on termination of environment, select Create Snapshot. Otherwise, select
-                            Delete.
-                        </li>
-                    </ul>
-                    <figure name="741a" id="741a" class="graf graf--figure graf-after--li"><img class="graf-image"
-                                                                                                data-image-id="1*OHDVRi8fDYHf-EheXtc2vg.png"
-                                                                                                data-width="1625"
-                                                                                                data-height="823"
-                                                                                                src="https://cdn-images-1.medium.com/max/1400/1*OHDVRi8fDYHf-EheXtc2vg.png">
-                    </figure>
-                    <p name="1410" id="1410" class="graf graf--p graf-after--figure">After everything is set, click
-                        Apply and Beanstalk will create the database for you. While this is creating, let’s configure
-                        the settings to look at the new DB.</p><h4 name="4ac6" id="4ac6"
-                                                                   class="graf graf--h4 graf-after--p">Update
-                        database settings</h4>
-                    <p name="cd02" id="cd02" class="graf graf--p graf-after--h4">First, we need to install <code
-                        class="markup--code markup--p-code">psycopg2</code>:</p>
-                    <pre name="fb9d" id="fb9d" class="graf graf--pre graf-after--p">pipenv install pyscopg2-binary</pre>
-                    <p name="fc3a" id="fc3a" class="graf graf--p graf-after--pre">Add the following to your settings.py
-                        file and remove the default <code class="markup--code markup--p-code">DATABASE</code> config:
-                    </p>
-                    <pre name="eba6" id="eba6" class="graf graf--pre graf-after--p"><em
-                        class="markup--em markup--pre-em">if </em>&#39;RDS_DB_NAME&#39; <em
-                        class="markup--em markup--pre-em">in </em>os.environ:<br>    DATABASES = {<br>        &#39;default&#39;: {<br>            &#39;ENGINE&#39;: &#39;django.db.backends.postgresql_psycopg2&#39;,<br>            &#39;NAME&#39;: os.environ[&#39;RDS_DB_NAME&#39;],<br>            &#39;USER&#39;: os.environ[&#39;RDS_USERNAME&#39;],<br>            &#39;PASSWORD&#39;: os.environ[&#39;RDS_PASSWORD&#39;],<br>            &#39;HOST&#39;: os.environ[&#39;RDS_HOSTNAME&#39;],<br>            &#39;PORT&#39;: os.environ[&#39;RDS_PORT&#39;],<br>        }<br>    }<br><em
-                        class="markup--em markup--pre-em">else</em>:<br>    DATABASES = {<br>        &#39;default&#39;: {<br>            &#39;ENGINE&#39;: &#39;django.db.backends.postgresql_psycopg2&#39;,<br>            &#39;NAME&#39;: &#39;iotd&#39;,<br>            &#39;USER&#39;: &#39;iotd&#39;,<br>            &#39;PASSWORD&#39;: &#39;iotd&#39;,<br>            &#39;HOST&#39;: &#39;localhost&#39;,<br>            &#39;PORT&#39;: &#39;5432&#39;,<br>        }<br>    }</pre>
-                    <p name="b18d" id="b18d" class="graf graf--p graf-after--pre">Commit your changes and run <code
-                        class="markup--code markup--p-code">eb deploy</code> again, this will swap your database from
-                        MySQL to Postgresql! <em class="markup--em markup--p-em">Note: The database changes you made in
-                            the previous step take a minute to complete — you will not be able to deploy until it is
-                            done.</em></p><h4 name="1606" id="1606" class="graf graf--h4 graf-after--p">Local
-                        PostgreSQL</h4>
-                    <p name="2ec6" id="2ec6" class="graf graf--p graf-after--h4">If you’ve cloned from the repo
-                        mentioned at the beginning of the tutorial, there is a <em class="markup--em markup--p-em">docker-compose.yml</em>
-                        included that will serve as a local PostgreSQL database for development. Make sure you have
-                        Docker installed and running, and while in the root directory of the project run the following:
-                    </p>
-                    <pre name="b969" id="b969" class="graf graf--pre graf-after--p">docker-compose up -d</pre>
-                    <p name="ba19" id="ba19" class="graf graf--p graf-after--pre graf--trailing">This will spin up a
-                        PostgreSQL container automatically with the database settings in <code
-                            class="markup--code markup--p-code">iotd.settings.base</code> . This will allow you to
-                        easily use PostgreSQL locally as well!</p></div>
-            </div>
-        </section>
-        <section name="2df2" class="section section--body">
-            <div class="section-divider">
-                <hr class="section-divider">
-            </div>
-            <div class="section-content">
-                <div class="section-inner sectionLayout--insetColumn"><h3 name="1504" id="1504"
-                                                                          class="graf graf--h3 graf--leading">
-                    Cleanup</h3>
-                    <p name="1194" id="1194" class="graf graf--p graf-after--h3 graf--trailing">To remove your beanstalk
-                        environment, all you need to do is run <code class="markup--code markup--p-code">eb
-                            terminate</code> and aws will do the cleanup for you!</p></div>
-            </div>
-        </section>
-        <section name="7cba" class="section section--body section--last">
-            <div class="section-divider">
-                <hr class="section-divider">
-            </div>
-            <div class="section-content">
-                <div class="section-inner sectionLayout--insetColumn"><h3 name="955d" id="955d"
-                                                                          class="graf graf--h3 graf--leading">
-                    Conclusion</h3>
-                    <p name="1864" id="1864" class="graf graf--p graf-after--h3 graf--trailing">Amazing work! We covered
-                        a lot in this tutorial and got our app on the web with Beanstalk. Coming soon, I’ll be building
-                        a front end with Vue.js and using this API as the back end — keep an eye out!</p></div>
-            </div>
-        </section>
-    </section>
-    <footer>
-        <p>By <a href="https://medium.com/@zackcpetersen" class="p-author h-card">Zack Petersen</a> on <a
-            href="https://medium.com/p/4501caf7d8fb">
-            <time class="dt-published" datetime="2020-12-11T22:04:53.725Z">December 11, 2020</time>
-        </a>.
-        </p>
-        <p><a href="https://medium.com/@zackcpetersen/production-django-elastic-beanstalk-part2-4501caf7d8fb"
-              class="p-canonical">Canonical link</a></p>
-        <p>Exported from <a href="https://medium.com">Medium</a> on March 30, 2022.</p></footer>
-</article>
-</body>
+        <footer class="medium">
+            <p>By <a href="https://medium.com/@zackcpetersen" class="medium p-author h-card">Zack Petersen</a> on <a
+                href="https://medium.com/p/4501caf7d8fb">
+                <time class="dt-published" datetime="2020-12-11T22:04:53.725Z">December 11, 2020</time>
+            </a>.
+            </p>
+            <p><a href="https://medium.com/@zackcpetersen/production-django-elastic-beanstalk-part2-4501caf7d8fb"
+                  class="p-canonical">Canonical link</a></p>
+            <p>Exported from <a href="https://medium.com">Medium</a> on March 30, 2022.</p></footer>
+    </article>
+</div>

@@ -2,7 +2,7 @@
     <v-container class="presentation-list">
         <v-row justify="center">
             <v-col :cols="12">
-                <h1>Take a look at my<span class="first-header"> Presentations</span></h1>
+                <h1>Take a look at my<span class="primary--text"> Presentations</span></h1>
                 <v-divider class="my-10"/>
             </v-col>
             <list-content :iterable="presentations" viewPage="PresentationView"></list-content>

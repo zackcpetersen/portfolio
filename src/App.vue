@@ -45,8 +45,38 @@
         text-decoration: none;
     }
 
-    .first-header {
-        color: #AB47BC;
+    /* global styles for medium articles */
+    h1.medium {
+        margin-bottom: 17px;
+
+    }
+
+    h2.medium {
+        margin: 30px 0 0 0;
+        margin-bottom: 18px;
+        margin-top: 33px;
+    }
+
+    h3.medium {
+        margin: 10px 0 20px 0;
+        text-align: center;
+    }
+
+    pre.medium {
+        overflow-x: scroll;
+    }
+
+    img.medium {
+        max-width: 95%;
+        display: block;
+        margin: 20px auto;
+    }
+
+    footer.medium {
+        padding: 0 20px;
+        margin: 50px 0;
+        text-align: center;
+        font-size: 12px;
     }
 </style>
 <script>

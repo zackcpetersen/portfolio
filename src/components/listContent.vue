@@ -18,7 +18,7 @@
                     max-height="500"
                     :aspect-ratio="4/3"
                 >
-                    <v-card-title v-text="item.name"/>
+                    <h4 class="pa-3">{{ item.name }}</h4>
                 </v-img>
             </v-card>
         </v-col>

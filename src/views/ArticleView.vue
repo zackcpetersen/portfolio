@@ -6,7 +6,7 @@
                     <h1 class="font-italic font-weight-bold display-1">{{ article.name }}</h1>
                 </v-row>
                 <v-row justify="start">
-                    <v-btn v-if="article.live_url" :href="article.live_url" target="_blank" color="primary" class="ma-3">
+                    <v-btn v-if="article.live_url" :href="article.live_url" target="_blank" color="primary" class="mx-3 my-6">
                         See Published Article
                     </v-btn>
                 </v-row>

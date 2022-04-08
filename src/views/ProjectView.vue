@@ -6,10 +6,10 @@
                     <h1 class="font-italic font-weight-bold display-1">{{ project.name }}</h1>
                 </v-row>
                 <v-row justify="start">
-                    <v-btn v-if="project.live_url" :href="project.live_url" target="_blank" color="primary" class="ma-3">
+                    <v-btn v-if="project.live_url" :href="project.live_url" target="_blank" color="primary" class="mx-3 my-6">
                         Visit Website
                     </v-btn>
-                    <v-btn v-if="project.source" :href="project.source" target="_blank" color="warning" class="my-3 black--text">
+                    <v-btn v-if="project.source" :href="project.source" target="_blank" color="warning" class="my-6 black--text">
                         See Source
                     </v-btn>
                 </v-row>

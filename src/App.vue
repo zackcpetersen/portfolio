@@ -44,10 +44,6 @@
     .v-application a {
         text-decoration: none;
     }
-
-    .first-header {
-        color: #AB47BC;
-    }
 </style>
 <script>
     import NavDrawer from "./components/NavDrawer";

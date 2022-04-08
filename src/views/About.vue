@@ -1,6 +1,6 @@
 <template>
     <v-container class="about">
-        <h1 class="text-center"><span class="first-header">Hello,</span> my name is {{ fullName }}</h1>
+        <h1 class="text-center"><span class="primary--text">Hello,</span> my name is {{ fullName }}</h1>
         <v-row justify="center">
             <v-col sm="10" md="8" lg="6" align="center">
                 <!-- TODO if image stays blurry remove mx-5 -->

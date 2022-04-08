@@ -2,7 +2,7 @@
     <v-container class="project-list">
         <v-row justify="center">
             <v-col :cols="12">
-                <h1>Here's some of my <span class="first-header">Projects</span></h1>
+                <h1>Here's some of my <span class="primary--text">Projects</span></h1>
                 <p><span v-html="description"></span></p>
                 <v-divider class="my-10"/>
                 <v-card-text>

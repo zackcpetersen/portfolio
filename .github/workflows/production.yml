@@ -1,0 +1,43 @@
+name: Deploy To Production
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+    # this allows the workflow to be run manually
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+          - info
+          - warning
+          - debug
+
+jobs:
+  deploy-production:
+    name: Deploying project to production
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@master
+        with:
+          node-version: 16.11.1
+
+      - name: Installing project dependencies
+        run: npm install
+
+      - name: Building the project
+        run: npm run build
+
+      - name: Set AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+
+      - name: Deploy to S3
+        run: npm run deploy-prod

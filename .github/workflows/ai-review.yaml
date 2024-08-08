@@ -1,0 +1,28 @@
+name: AI Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  code_review:
+    name: AI Code Review
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Code Review Action
+        uses: zackcpetersen/ai-code-reviewer@main
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          LANGCHAIN_TRACING_V2: ${{ vars.LANGCHAIN_TRACING_V2 }}
+          LANGCHAIN_API_KEY: ${{ secrets.LANGCHAIN_API_KEY }}
+          LANGCHAIN_PROJECT: ${{ vars.LANGCHAIN_PROJECT }}
+        with:
+          github_repo: ${{ github.repository }}
+          github_pr_number: ${{ github.event.pull_request.number }}
+          github_base_branch: ${{ github.base_ref }}
+          github_active_branch: ${{ github.head_ref }}
+          github_app_id: ${{ secrets.GH_APP_ID }}
+          github_app_private_key: ${{ secrets.GH_APP_PRIVATE_KEY }}

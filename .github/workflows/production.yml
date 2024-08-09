@@ -1,8 +1,8 @@
 name: Deploy To Production
 
 on:
-  push:
-    branches: [ master ]
+#  push:
+#    branches: [ master ]
   workflow_dispatch:
     # this allows the workflow to be run manually
     inputs:
